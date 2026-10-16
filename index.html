@@ -106,7 +106,7 @@
     .footer{margin-top:clamp(100px,11vw,170px);border-top:1px solid rgba(255,255,255,.3);padding-top:26px;display:flex;align-items:center;justify-content:space-between;gap:20px}
     .footer .logo{width:108px;display:block}.footer .logo img{width:100%;display:block}.footer-nav{display:flex;gap:22px}.footer .copyright{color:#aaa;font-size:11px;letter-spacing:.05em}
     #detail-view[hidden],#home-view[hidden]{display:none!important}
-    .detail{background:var(--white);color:var(--black);min-height:calc(100svh - var(--head));padding-bottom:110px}
+    .detail{background:var(--white);color:var(--black);min-height:calc(100svh - var(--head));padding-top:var(--head);padding-bottom:110px}
     .detail-nav{padding-top:45px}.detail-nav .pill{font-size:11px}
     .detail-head{padding:clamp(65px,9vw,145px) 0 30px}
     .detail-head .tiny{display:flex;align-items:center;gap:18px}.detail-head h1{font-size:clamp(78px,13.9vw,235px);line-height:.86;margin:29px 0 32px;letter-spacing:-.1em;font-weight:900}
@@ -247,6 +247,7 @@
     .ordi-pointer{position:fixed;inset:0 auto auto 0;z-index:9999;pointer-events:none;opacity:0;transform:translate3d(-120px,-120px,0);will-change:transform;transition:opacity .15s ease}
     .ordi-pointer.is-visible{opacity:1}
     .ordi-pointer-disc{width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center;transform:translate(-50%,-50%);background:#070707;border:1.5px solid rgba(255,255,255,.88);box-shadow:0 1px 8px rgba(0,0,0,.25);transition:width .28s cubic-bezier(.2,.8,.2,1),height .28s cubic-bezier(.2,.8,.2,1),background .22s ease,border-color .22s ease,transform .18s ease;white-space:nowrap}
+    .ordi-pointer.is-on-dark:not(.is-action) .ordi-pointer-disc{background:var(--white);border-color:rgba(0,0,0,.6);box-shadow:0 0 0 1px rgba(255,255,255,.35)}
     .ordi-pointer-label{font:900 13px/1 'Space Grotesk',sans-serif;letter-spacing:-.025em;color:#070707;opacity:0;transform:scale(.5);transition:opacity .14s ease,transform .25s cubic-bezier(.2,.8,.2,1)}
     .ordi-pointer.is-action .ordi-pointer-disc{width:102px;height:102px;background:var(--acid);border-color:var(--acid);box-shadow:0 10px 35px rgba(0,0,0,.16)}
     .ordi-pointer.is-action .ordi-pointer-label{opacity:1;transform:scale(1)}
@@ -346,13 +347,16 @@
     const customCursorMedia=window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) and (forced-colors: none)');
     const ordiPointer=document.getElementById('ordi-pointer');
     const actionSelector='a[href]:not([aria-disabled="true"]),button:not(:disabled),[role="button"]:not([aria-disabled="true"])';
-    function hideOrdiPointer(){ordiPointer.classList.remove('is-visible','is-action','is-pressed');document.documentElement.classList.remove('ordi-pointer-enabled')}
+    function hideOrdiPointer(){ordiPointer.classList.remove('is-visible','is-action','is-pressed','is-on-dark');document.documentElement.classList.remove('ordi-pointer-enabled')}
     function updateOrdiPointer(event){
       if(!customCursorMedia.matches || event.pointerType!=='mouse')return;
       const target=event.target instanceof Element?event.target:null;
       ordiPointer.style.transform=`translate3d(${event.clientX}px,${event.clientY}px,0)`;
       ordiPointer.classList.add('is-visible');
       ordiPointer.classList.toggle('is-action',Boolean(target?.closest(actionSelector)));
+      // White on dark sections; black on white/neon. Hover stays fluorescent yellow.
+      const darkArea=Boolean(target?.closest('.hero,.contact,.site-header,.mobile-nav,.identity-strip'));
+      ordiPointer.classList.toggle('is-on-dark',darkArea);
       document.documentElement.classList.add('ordi-pointer-enabled');
     }
     document.addEventListener('pointermove',updateOrdiPointer,{passive:true});
