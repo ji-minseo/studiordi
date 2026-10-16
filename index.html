@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#151515" />
+<meta name="description" content="Studio Ordi — Independent logo & brand identity design studio. An editorial portfolio of original brand concepts." />
+<title>STUDIO ORDI — Not just a logo. A distinct identity.</title>
+<style>
+  :root{--ink:#151515;--paper:#f3f1eb;--white:#fbfaf6;--coral:#ec5b43;--muted:#aaa9a5;--stroke:rgba(252,251,247,.19);--header:84px;--wrap:1420px;--gut:clamp(20px,5.2vw,86px)}
+  *,*:before,*:after{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:var(--header)}
+  body{margin:0;background:var(--ink);color:var(--white);font-family:Arial,'Helvetica Neue','Apple SD Gothic Neo','Malgun Gothic',sans-serif;-webkit-font-smoothing:antialiased}
+  body.no-scroll{overflow:hidden}
+  button,a{font:inherit}
+  a{color:inherit;text-decoration:none}
+  button{cursor:pointer}
+  button:focus-visible,a:focus-visible{outline:3px solid var(--coral);outline-offset:5px}
+  .hide{display:none!important}
+  .wrapper{max-width:var(--wrap);margin:0 auto;padding:0 var(--gut)}
+  .eyebrow,.mono{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;line-height:1.5}
+  .accent{color:var(--coral)}
+  .rule{height:1px;background:currentColor;opacity:.3}
+  #top{position:absolute;top:0}
+  header{height:var(--header);position:sticky;top:0;z-index:40;background:rgba(21,21,21,.97);border-bottom:1px solid rgba(255,255,255,.15);backdrop-filter:blur(12px)}
+  .header-inner{height:100%;display:flex;align-items:center;justify-content:space-between;gap:25px}
+  .brand{display:flex;align-items:center;width:138px;flex:none}
+  .brand img{width:100%;height:auto;display:block}
+  .desktop-links{display:flex;align-items:center;gap:38px;font-size:11px;font-weight:700;letter-spacing:.14em}
+  .desktop-links a{position:relative;padding:15px 0}
+  .desktop-links a:after{content:"";position:absolute;bottom:8px;left:0;width:0;height:2px;background:var(--coral);transition:width .23s}
+  .desktop-links a:hover:after{width:100%}
+  .header-cta{border:1px solid #eee;padding:12px 17px;font-weight:700;letter-spacing:.09em;font-size:11px;background:none;color:#fff}
+  .header-cta:hover{background:#fff;color:#111}
+  .menu-toggle{display:none;background:none;color:#fff;border:1px solid #777;padding:8px 12px;font-size:21px}
+  .mobile-menu{display:none}
+  .hero{min-height:min(910px,calc(100svh - var(--header)));display:flex;flex-direction:column;background:var(--ink);overflow:hidden}
+  .hero .wrapper{width:100%}
+  .hero-top{padding-top:clamp(39px,5.5vw,92px);display:flex;justify-content:space-between;gap:25px}
+  .hero-top .right{text-align:right;max-width:255px;color:#aaa9a5;font-size:13px;line-height:1.5}
+  .hero-headline{margin:clamp(40px,6vw,105px) 0 0;font-size:clamp(58px,10.55vw,166px);line-height:.86;letter-spacing:-.065em;font-weight:950;white-space:nowrap;transform-origin:left center}
+  .hero-headline>span{display:block}
+  .hero-headline .outline{-webkit-text-stroke:1.5px #f5f2eb;color:transparent}
+  .hero-bottom{margin-top:auto;padding-top:80px;padding-bottom:25px;display:flex;align-items:flex-end;justify-content:space-between;gap:25px}
+  .hero-bottom .copy{font-size:clamp(13px,1.5vw,19px);letter-spacing:-.025em;line-height:1.7;color:#d8d6d2}
+  .hero-bottom .scroll{font-size:11px;letter-spacing:.14em;font-weight:700;white-space:nowrap}
+  .hero-bottom .scroll span{color:var(--coral)}
+  .ticker{border-top:1px solid #444;border-bottom:1px solid #444;overflow:hidden;white-space:nowrap;background:var(--paper);color:var(--ink);height:59px;display:flex;align-items:center}
+  .ticker .words{font-size:12px;letter-spacing:.28em;font-weight:800;display:inline-block;animation:ticker 28s linear infinite}
+  @keyframes ticker{to{transform:translateX(-50%)}}
+  .works{background:var(--paper);color:var(--ink);padding:clamp(85px,10vw,154px) 0 clamp(100px,12vw,185px)}
+  .section-top{display:flex;justify-content:space-between;align-items:end;gap:35px}
+  .section-big{font-size:clamp(58px,10vw,150px);font-weight:950;line-height:.87;letter-spacing:-.085em;margin:20px 0 0}
+  .section-top aside{font-size:12px;line-height:1.7;max-width:270px;letter-spacing:-.015em}
+  .works-divider{margin:47px 0 30px;background:#171717;height:1px;opacity:.55}
+  .project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:clamp(22px,4vw,64px);row-gap:clamp(70px,8vw,127px)}
+  .project-card{display:block;border:0;background:transparent;padding:0;text-align:left;color:inherit;min-width:0}
+  .project-card:nth-child(even){transform:translateY(93px)}
+  .card-topline{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:14px;font-size:11px;letter-spacing:.12em;font-weight:700}
+  .num{color:var(--coral)}
+  .card-photo{width:100%;aspect-ratio:1/1.07;overflow:hidden;background:#ddd}
+  .card-photo img{width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .6s cubic-bezier(.22,.7,.2,1);display:block}
+  .project-card:hover img{transform:scale(1.035)}
+  .card-under{padding-top:16px;display:flex;align-items:end;justify-content:space-between;gap:10px}
+  .card-under h3{font-size:clamp(26px,3.9vw,55px);letter-spacing:-.055em;line-height:1;margin:0;font-weight:900}
+  .card-under span{font-size:11px;letter-spacing:.05em;white-space:nowrap}
+  .studio{background:var(--ink);color:var(--white);padding:clamp(95px,12vw,175px) 0}
+  .studio-label{display:flex;justify-content:space-between;gap:12px}
+  .studio-giant{font-size:clamp(62px,11vw,167px);line-height:.9;letter-spacing:-.09em;margin:60px 0 80px;font-weight:950}
+  .studio-giant em{font-style:normal;color:var(--coral)}
+  .studio-bottom{border-top:1px solid #777;display:grid;grid-template-columns:1fr 1fr;padding-top:29px;column-gap:35px}
+  .studio-bottom .statement{font-size:clamp(20px,2.8vw,35px);line-height:1.35;letter-spacing:-.05em;font-weight:700}
+  .studio-bottom .studio-description{max-width:430px;justify-self:end;font-size:15px;line-height:1.85;color:#bbb9b4;word-break:keep-all}
+  .process{padding:clamp(95px,12vw,165px) 0;background:var(--paper);color:var(--ink)}
+  .process h2{margin:35px 0 75px;font-size:clamp(65px,9vw,130px);line-height:.94;letter-spacing:-.085em}
+  .steps{border-top:2px solid var(--ink)}
+  .step{display:grid;grid-template-columns:80px 1fr 1fr;column-gap:30px;padding:34px 0 45px;border-bottom:1px solid #aaa;align-items:start}
+  .step .number{font-size:12px;color:var(--coral);font-weight:800}
+  .step h3{font-size:clamp(25px,3.8vw,47px);margin:0;line-height:1.1;letter-spacing:-.05em}
+  .step p{font-size:15px;line-height:1.8;margin:0;word-break:keep-all;max-width:415px}
+  .contact{background:var(--ink);color:var(--white);padding:clamp(100px,11vw,160px) 0 40px}
+  .contact h2{font-size:clamp(58px,10vw,150px);line-height:.87;letter-spacing:-.08em;margin:50px 0}
+  .contact h2 span{color:var(--coral)}
+  .contact-top{display:flex;justify-content:space-between;gap:20px}
+  .contact-sub{max-width:500px;font-size:clamp(15px,1.9vw,21px);color:#bcbab6;line-height:1.6;margin-bottom:34px}
+  .contact-actions{display:flex;gap:12px;flex-wrap:wrap}
+  .action{min-height:53px;display:inline-flex;align-items:center;justify-content:center;border:1px solid #fff;padding:14px 21px;font-size:12px;font-weight:800;letter-spacing:.06em;background:var(--white);color:var(--ink);gap:24px}
+  .action.secondary{background:transparent;color:var(--white)}
+  .action:hover{background:var(--coral);border-color:var(--coral);color:#fff}
+  .fineprint{display:block;font-size:11px;line-height:1.6;color:#8e8d88;margin-top:16px}
+  .footer{border-top:1px solid #555;margin-top:160px;padding-top:26px;display:flex;justify-content:space-between;gap:20px;align-items:center;font-size:11px;letter-spacing:.1em;color:#a9a8a2}
+  .footer b{color:#fff;font-size:17px;letter-spacing:-.06em}
+  /* Work detail preview */
+  .detail{background:var(--paper);color:var(--ink);min-height:100vh}
+  .detail-back{display:inline-flex;gap:10px;align-items:center;margin-top:50px;padding-bottom:8px;font-size:12px;border-bottom:1px solid #222;letter-spacing:.12em;font-weight:700}
+  .detail-title{margin:70px 0 24px;font-size:clamp(72px,13vw,200px);line-height:.82;letter-spacing:-.09em}
+  .detail-meta{border-top:1px solid #555;padding:21px 0 40px;display:flex;justify-content:space-between;gap:20px;font-size:12px;font-weight:700;letter-spacing:.1em}
+  .detail-img{display:block;width:100%;max-height:940px;object-fit:cover;object-position:center;background:#e4e0d8}
+  .detail-bottom{display:grid;grid-template-columns:1fr 1fr;gap:25px;padding:55px 0 115px}
+  .detail-bottom strong{font-size:25px;letter-spacing:-.04em}
+  .detail-bottom p{max-width:600px;line-height:1.85;word-break:keep-all}
+  .detail-sample{font-size:12px!important;color:#777}
+  .more-link{display:inline-flex;border-bottom:1px solid #151515;font-weight:800;padding:0 0 9px;font-size:12px;letter-spacing:.1em;margin-top:20px}
+  [data-animate]{opacity:0;transform:translateY(26px);transition:opacity .65s ease,transform .65s ease}
+  [data-animate].appear{opacity:1;transform:none}
+  @media(max-width:1050px){.hero-headline{font-size:11.4vw}.section-big{font-size:10.6vw}.card-under span{display:none}}
+  @media(max-width:700px){
+    :root{--header:70px;--gut:20px}
+    .brand{width:106px}
+    .desktop-links,.header-cta{display:none}
+    .menu-toggle{display:inline-block}
+    .mobile-menu{display:none;position:absolute;left:0;right:0;top:var(--header);background:#151515;border-bottom:1px solid #777;padding:20px;box-shadow:0 10px 20px #0008}
+    .mobile-menu.open{display:flex;flex-direction:column;gap:4px}
+    .mobile-menu a{padding:16px 0;font-weight:800;letter-spacing:.15em;border-bottom:1px solid #444}
+    .hero{min-height:calc(90svh - var(--header))}
+    .hero-top{padding-top:34px;flex-direction:column;gap:12px}
+    .hero-top .right{text-align:left;font-size:12px}
+    .hero-headline{font-size:clamp(52px,12.1vw,82px);line-height:.94;letter-spacing:-.065em;margin-top:65px}
+    .hero-headline .outline{-webkit-text-stroke:1px #f5f2eb}
+    .hero-bottom{padding-top:55px;padding-bottom:25px;align-items:start;gap:26px;flex-direction:column}
+    .hero-bottom .copy{font-size:13px}
+    .ticker{height:44px}
+    .works,.studio,.process,.contact{padding-top:85px;padding-bottom:105px}
+    .section-top{display:block}
+    .section-big{font-size:15vw}
+    .section-top aside{margin:22px 0 0;font-size:12px}
+    .works-divider{margin:33px 0 34px}
+    .project-grid{display:block}
+    .project-card,.project-card:nth-child(even){transform:none;margin-bottom:50px}
+    .card-photo{aspect-ratio:1/1.12}
+    .card-under h3{font-size:38px}
+    .studio-giant{font-size:14vw;margin:43px 0 52px}
+    .studio-bottom{grid-template-columns:1fr;gap:25px}
+    .studio-bottom .studio-description{justify-self:start;font-size:14px}
+    .process h2{font-size:13vw;margin-bottom:40px}
+    .step{grid-template-columns:36px 1fr;gap:12px;padding:27px 0}
+    .step h3{font-size:28px}
+    .step p{grid-column:2;font-size:13px}
+    .contact h2{font-size:13vw}
+    .contact-sub{font-size:15px}
+    .footer{margin-top:90px;flex-wrap:wrap}
+    .detail-title{font-size:15vw}
+    .detail-meta{flex-direction:column;gap:5px}
+    .detail-bottom{grid-template-columns:1fr;padding:34px 0 85px}
+  }
+  @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}[data-animate]{opacity:1;transform:none}}
+  .action.is-disabled{opacity:.58;cursor:not-allowed;user-select:none}
+  .studio-description{background:transparent;min-height:initial}
+  img{max-width:100%}
+  @media(max-width:390px){.hero-headline{font-size:12vw}.card-under h3{font-size:34px}}
+</style>
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="STUDIO ORDI" />
+<meta property="og:title" content="STUDIO ORDI — Not Just a Logo. A Distinct Identity." />
+<meta property="og:description" content="독립 로고 & 브랜드 아이덴티티 디자인 스튜디오. NOVEIL, OURIÉ, DAYSHIFT, YUMDAY 브랜드 콘셉트를 만나보세요." />
+<link rel="icon" type="image/png" href="assets/ordi-logo.png" />
+</head>
+<body>
+<header>
+  <div class="wrapper header-inner">
+    <a class="brand" href="#top" aria-label="Studio Ordi home"><img src="assets/ordi-logo.png" alt="ordi." /></a>
+    <nav class="desktop-links" aria-label="Main navigation"><a href="#work">WORK</a><a href="#studio">STUDIO</a><a href="#process">PROCESS</a><a href="#contact">CONTACT</a></nav>
+    <a class="header-cta" href="#contact">START A PROJECT ↗</a>
+    <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle navigation">☰</button>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Mobile navigation"><a href="#work">WORK</a><a href="#studio">STUDIO</a><a href="#process">PROCESS</a><a href="#contact">CONTACT</a></nav>
+</header>
+<main id="home-view">
+  <div id="top"></div>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrapper hero-top"><div class="eyebrow accent">STUDIO ORDI / EST. 2026</div><div class="right">INDEPENDENT<br>LOGO & BRAND IDENTITY<br>DESIGN STUDIO</div></div>
+    <div class="wrapper"><h1 id="hero-title" class="hero-headline"><span>NOT JUST</span><span>A LOGO.</span><span class="outline">A DISTINCT</span><span>IDENTITY.</span></h1></div>
+    <div class="wrapper hero-bottom"><div class="copy">예쁜 로고를 넘어,<br>브랜드의 분위기까지 디자인합니다.</div><a class="scroll" href="#work">EXPLORE THE WORK <span>↘</span></a></div>
+  </section>
+  <div class="ticker" aria-hidden="true"><span class="words">&nbsp; INDEPENDENT DESIGN STUDIO ✳ BRAND IDENTITY ✳ GRAPHIC EXPRESSION ✳ STUDIO ORDI ✳ INDEPENDENT DESIGN STUDIO ✳ BRAND IDENTITY ✳ GRAPHIC EXPRESSION ✳ STUDIO ORDI ✳&nbsp;&nbsp;</span><span class="words">&nbsp; INDEPENDENT DESIGN STUDIO ✳ BRAND IDENTITY ✳ GRAPHIC EXPRESSION ✳ STUDIO ORDI ✳ INDEPENDENT DESIGN STUDIO ✳ BRAND IDENTITY ✳ GRAPHIC EXPRESSION ✳ STUDIO ORDI ✳&nbsp;&nbsp;</span></div>
+  <section class="works" id="work" aria-labelledby="work-title">
+    <div class="wrapper">
+      <div class="section-top" data-animate><div><div class="eyebrow"><span class="accent">01 /</span> SELECTED PROJECTS</div><h2 id="work-title" class="section-big">OUR WORK.</h2></div><aside>Four identities. Four distinct expressions.<br>브랜드마다 다른 개성을 시각적으로 풀어낸 셀프 이니시에이티드 콘셉트 프로젝트입니다.</aside></div>
+      <div class="works-divider"></div>
+      <div class="project-grid">
+        <button class="project-card" data-project="noveil" aria-label="View NOVEIL project" data-animate><div class="card-topline"><span><span class="num">01</span> / FASHION IDENTITY</span><span>↗ VIEW PROJECT</span></div><div class="card-photo"><img src="assets/noveil.jpg" alt="NOVEIL logo on black fashion label mockup" loading="lazy" /></div><div class="card-under"><h3>NOVEIL</h3><span>FASHION / 2026</span></div></button>
+        <button class="project-card" data-project="ourie" aria-label="View OURIÉ project" data-animate><div class="card-topline"><span><span class="num">02</span> / BEAUTY IDENTITY</span><span>↗ VIEW PROJECT</span></div><div class="card-photo"><img src="assets/ourie.jpg" alt="OURIÉ logo on skincare serum bottle mockup" loading="lazy" /></div><div class="card-under"><h3>OURIÉ</h3><span>BEAUTY / 2026</span></div></button>
+        <button class="project-card" data-project="dayshift" aria-label="View DAYSHIFT project" data-animate><div class="card-topline"><span><span class="num">03</span> / ESPRESSO BAR IDENTITY</span><span>↗ VIEW PROJECT</span></div><div class="card-photo"><img src="assets/dayshift.jpg" alt="DAYSHIFT café storefront branding mockup" loading="lazy" /></div><div class="card-under"><h3>DAYSHIFT</h3><span>COFFEE / 2026</span></div></button>
+        <button class="project-card" data-project="yumday" aria-label="View YUMDAY project" data-animate><div class="card-topline"><span><span class="num">04</span> / F&B IDENTITY</span><span>↗ VIEW PROJECT</span></div><div class="card-photo"><img src="assets/yumday.jpg" alt="YUMDAY colorful sauce bottle branding mockup" loading="lazy" /></div><div class="card-under"><h3>YUMDAY</h3><span>FOOD / 2026</span></div></button>
+      </div>
+    </div>
+  </section>
+  <section class="studio" id="studio" aria-labelledby="studio-title">
+    <div class="wrapper">
+      <div class="studio-label eyebrow" data-animate><span><span class="accent">02 /</span> THE STUDIO</span><span>CREATIVE BY NATURE</span></div>
+      <h2 class="studio-giant" id="studio-title" data-animate>MAKE IT<br><em>FEEL</em><br>DIFFERENT.</h2>
+      <div class="studio-bottom" data-animate><div class="statement">디자인은 단순히 보이는 것이 아니라,<br>브랜드를 느끼게 하는 방식입니다.</div><div class="studio-description">Studio Ordi는 브랜드의 고유한 분위기를 시각 언어로 번역하는 독립 그래픽 디자인 스튜디오입니다. 하나의 정해진 스타일보다, 각 브랜드만의 태도와 개성을 발견하는 작업을 지향합니다.</div></div>
+    </div>
+  </section>
+  <section class="process" id="process" aria-labelledby="process-title">
+    <div class="wrapper">
+      <div class="eyebrow" data-animate><span class="accent">03 /</span> THE PROCESS</div>
+      <h2 id="process-title" data-animate>DESIGNED<br>WITH INTENT.</h2>
+      <div class="steps">
+        <div class="step" data-animate><span class="number">01 /</span><h3>DISCOVER.</h3><p>브랜드의 업종, 타깃, 취향과 목표를 함께 정리합니다. 무엇을 표현해야 하는지부터 명확하게 파악합니다.</p></div>
+        <div class="step" data-animate><span class="number">02 /</span><h3>DESIGN.</h3><p>브랜드에 맞는 로고 콘셉트와 시각적 방향을 전개합니다. 사용 환경에서의 인상과 활용성까지 고려합니다.</p></div>
+        <div class="step" data-animate><span class="number">03 /</span><h3>REFINE.</h3><p>선택한 방향을 다듬고 합의된 범위의 최종 파일을 전달합니다. 상세 납품 범위와 일정은 서비스 상품 안내를 기준으로 합니다.</p></div>
+      </div>
+    </div>
+  </section>
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrapper">
+      <div class="contact-top eyebrow" data-animate><span><span class="accent">04 /</span> GET IN TOUCH</span><span>NEW PROJECTS WELCOME</span></div>
+      <h2 id="contact-title" data-animate>HAVE A<br>PROJECT <span>IN</span><br>MIND?</h2>
+      <p class="contact-sub" data-animate>당신의 브랜드를 더욱 선명하게 표현할 방법을 함께 고민합니다. 프로젝트에 대해 들려주세요.</p>
+      <div class="contact-actions" data-animate><span class="action is-disabled" aria-disabled="true">KMONG — COMING SOON <span>↗</span></span><a class="action secondary" href="#work">EXPLORE WORK <span>↗</span></a></div>
+      <span class="fineprint">* 크몽 상품 승인 후 정식 의뢰 링크를 연결할 예정입니다.</span>
+      <div class="footer"><b>ordi.</b><span>© 2026 STUDIO ORDI.</span><a href="#top">BACK TO TOP ↑</a></div>
+    </div>
+  </section>
+</main>
+<main id="detail-view" class="detail hide" aria-live="polite" aria-hidden="true">
+  <div class="wrapper"><a class="detail-back" href="#work" id="detail-back">← BACK TO WORK</a><div class="eyebrow" style="margin-top:60px">SELF-INITIATED CONCEPT PROJECT / 2026</div><h1 class="detail-title" id="detail-title">NOVEIL</h1><div class="detail-meta"><span id="detail-type">FASHION IDENTITY</span><span>STUDIO ORDI — SELECTED WORKS</span></div><img class="detail-img" id="detail-img" src="assets/noveil.jpg" alt="Selected brand identity mockup"/><div class="detail-bottom"><strong id="detail-heading">THE IDENTITY.</strong><div><p id="detail-copy">Brand identity concept portfolio.</p><p class="detail-sample">이 프로젝트는 STUDIO ORDI가 자체 기획한 브랜드 아이덴티티 콘셉트 작업이며 실제 고객 의뢰 사례가 아닙니다.</p><a href="#work" id="detail-back-bottom" class="more-link">← ALL PROJECTS</a></div></div></div>
+</main>
+<script>
+  const source={
+    noveil:{name:'NOVEIL',type:'FASHION BRAND',img:'assets/noveil.jpg',heading:'BOLD BY DESIGN.',copy:'NOVEIL은 선명한 워드마크와 흑백 대비를 중심으로 구성된 패션 브랜드 아이덴티티 콘셉트입니다. 강한 조형성과 정제된 인상을 함께 전달합니다.'},
+    ourie:{name:'OURIÉ',type:'BEAUTY BRAND',img:'assets/ourie.jpg',heading:'SOFTLY DISTINCT.',copy:'OURIÉ는 부드러운 컬러, 섬세한 심볼과 미니멀한 패키지 언어를 통해 감각적인 뷰티 브랜드의 정체성을 표현합니다.'},
+    dayshift:{name:'DAYSHIFT',type:'ESPRESSO BAR',img:'assets/dayshift.jpg',heading:'SHIFT YOUR DAY.',copy:'DAYSHIFT는 코발트 블루의 강렬한 시각 체계와 공간 적용으로 도시형 에스프레소 바의 역동적인 성격을 담았습니다.'},
+    yumday:{name:'YUMDAY',type:'F&B BRAND',img:'assets/yumday.jpg',heading:'MAKE EVERY DAY YUM.',copy:'YUMDAY는 유쾌한 커스텀 워드마크와 심볼, 과감한 패키지 디자인으로 밝고 개성 있는 식품 브랜드 세계를 제안합니다.'}
+  };
+  const home=document.getElementById('home-view'),detail=document.getElementById('detail-view');
+  const menu=document.getElementById('mobile-menu'),toggle=document.getElementById('menu-toggle');
+  function closeMenu(){menu.classList.remove('open');toggle.setAttribute('aria-expanded','false');toggle.textContent='☰'}
+  toggle.addEventListener('click',()=>{const open=menu.classList.toggle('open');toggle.setAttribute('aria-expanded',String(open));toggle.textContent=open?'×':'☰'});
+  document.querySelectorAll('.mobile-menu a').forEach(a=>a.addEventListener('click',closeMenu));
+  window.addEventListener('keydown',event=>{if(event.key==='Escape')closeMenu()});
+  function showHome(scrollTarget){home.classList.remove('hide');detail.classList.add('hide');detail.setAttribute('aria-hidden','true');home.removeAttribute('aria-hidden');if(scrollTarget){setTimeout(()=>document.getElementById(scrollTarget)?.scrollIntoView({behavior:'auto'}),0)}}
+  function openProject(key){const p=source[key];if(!p)return;document.getElementById('detail-title').textContent=p.name;document.getElementById('detail-type').textContent=p.type;document.getElementById('detail-img').src=p.img;document.getElementById('detail-img').alt=p.name+' brand identity mockup';document.getElementById('detail-heading').textContent=p.heading;document.getElementById('detail-copy').textContent=p.copy;home.classList.add('hide');detail.classList.remove('hide');home.setAttribute('aria-hidden','true');detail.removeAttribute('aria-hidden');closeMenu();window.scrollTo({top:0,behavior:'auto'})}
+  function hashNavigation(){let hash=decodeURIComponent(location.hash.slice(1));if(hash.startsWith('project-'))openProject(hash.slice(8));else {showHome(hash);}}
+  document.querySelectorAll('[data-project]').forEach(card=>card.addEventListener('click',()=>{location.hash='project-'+card.dataset.project}));
+  document.querySelectorAll('#detail-back,#detail-back-bottom').forEach(a=>a.addEventListener('click',()=>{showHome('work')}));
+  window.addEventListener('hashchange',hashNavigation);if(location.hash.startsWith('#project-'))hashNavigation();
+  if('IntersectionObserver' in window){let observer=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('appear');observer.unobserve(e.target)}})},{threshold:.07});document.querySelectorAll('[data-animate]').forEach(el=>observer.observe(el))}else{document.querySelectorAll('[data-animate]').forEach(el=>el.classList.add('appear'))}
+</script>
+</body>
+</html>
