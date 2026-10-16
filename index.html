@@ -49,7 +49,8 @@
     .mobile-nav{display:none;position:absolute;top:var(--head);left:0;right:0;background:var(--black);padding:18px var(--pad) 28px;border-bottom:1px solid #444;box-shadow:0 18px 30px #0006}
     .mobile-nav.open{display:flex;flex-direction:column}.mobile-nav a{padding:17px 5px;border-bottom:1px solid #333;font-size:18px;font-weight:700}
     .hero{background:var(--black);color:var(--white);min-height:calc(100svh - var(--head));display:flex;flex-direction:column;position:relative;overflow:hidden}
-    .hero:after{content:'✳';font-family:Georgia,serif;position:absolute;top:9%;right:-4%;font-size:clamp(190px,29vw,490px);line-height:1;color:rgba(255,255,255,.035);pointer-events:none;transform:rotate(-12deg)}
+    .ordi-spark{display:block;aspect-ratio:1;flex-shrink:0}
+    .hero .hero-spark{position:absolute;top:9%;right:-4%;width:clamp(190px,29vw,490px);height:auto;color:rgba(255,255,255,.035);pointer-events:none;transform:rotate(-12deg)}
     .hero-main{width:100%;flex:1;display:flex;flex-direction:column;position:relative;z-index:1;padding-top:clamp(36px,5.2vw,81px)}
     .hero-meta{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}.hero-meta .aside{text-align:right;color:#a5a5a5;line-height:1.55}
     h1,.display{font-family:'DM Sans',Arial,sans-serif;font-weight:900;letter-spacing:-.085em;text-transform:uppercase}
@@ -85,7 +86,7 @@
     .project-id{display:block;position:absolute;top:-36px;left:0;font-size:18px;letter-spacing:-.04em}
     .editorial-rail{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);margin-top:120px;padding-top:23px;font-weight:700;font-size:12px;letter-spacing:.1em}
     .manifesto{background:var(--acid);color:var(--black);position:relative;padding:clamp(90px,10vw,160px) 0;overflow:hidden}
-    .manifesto:before{content:'✳';position:absolute;font-size:clamp(190px,35vw,600px);right:-2vw;top:-4vw;opacity:.11;font-family:Georgia,serif;line-height:1;pointer-events:none}
+    .manifesto .manifesto-spark{position:absolute;width:clamp(190px,35vw,600px);height:auto;right:-2vw;top:-4vw;opacity:.11;color:var(--black);pointer-events:none}
     .manifesto .section-meta{border-color:rgba(0,0,0,.43)}
     .manifesto-title{font-size:clamp(72px,12vw,200px);line-height:.88;letter-spacing:-.09em;margin:58px 0 65px;font-weight:900;position:relative}
     .manifesto-title .serif{font-size:.73em;letter-spacing:-.07em;text-transform:none;display:inline-block;transform:translateY(-.06em)}
@@ -174,7 +175,7 @@
     .hero-main{padding-top:clamp(28px,4.8vw,72px)}
     .hero h1{font-size:clamp(66px,10.5vw,182px);letter-spacing:-.087em}
     .hero h1 .ital{letter-spacing:-.095em}
-    .hero:after{opacity:.58}
+    .hero .hero-spark{opacity:.58}
     .hero .hero-bottom{padding-bottom:clamp(38px,5.1vw,75px)}
     .hero-bottom .down-circle{border:0;background:var(--acid);color:var(--black)}
     .identity-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:var(--black);height:clamp(240px,33vw,465px);overflow:hidden}
@@ -189,7 +190,7 @@
     .marquee-track{animation:travel 26s linear infinite;align-items:center}
     .marquee-track .marquee-unit{display:inline-flex;align-items:center;white-space:nowrap;gap:.16em;font:900 clamp(64px,10.4vw,180px)/.9 'DM Sans',Arial,sans-serif;letter-spacing:-.082em;padding-right:.7em}
     .marquee-unit em{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;text-transform:none;letter-spacing:-.10em;font-size:.92em;margin:0 .045em}
-    .marquee-unit b{font-family:'DM Sans',sans-serif;font-weight:500;font-size:.65em;line-height:1;margin:0 .10em}
+    .marquee-unit .marquee-spark{width:.65em;height:.65em;margin:0 .10em}
     .marquee:hover .marquee-track{animation-play-state:paused}
     /* Editorial hierarchy through whitespace and scale, not horizontal dividers */
     .section-meta,.works-intro,.editorial-rail,.manifesto-bottom,.step,.step:last-child,.footer,.detail-brief,.detail-ending{border:0}
@@ -278,6 +279,7 @@
   <main id="home-view">
     <div id="top"></div>
     <section class="hero" aria-labelledby="hero-heading">
+      <svg class="ordi-spark hero-spark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path d="M50 10V90M10 50H90M22 22L78 78M78 22L22 78" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/></svg>
       <div class="hero-main wrap">
         <div class="hero-meta eyebrow"><span class="acid">(01) — INDEPENDENT GRAPHIC STUDIO</span><span class="aside">SEOUL / SOUTH KOREA<br>BRAND IDENTITY & GRAPHIC DESIGN</span></div>
         <h1 id="hero-heading"><span>NOT JUST</span><span>A LOGO<span class="accent-dot">.</span></span><span>A <em class="ital">DISTINCT</em></span><span>IDENTITY<span class="accent-dot">.</span></span></h1>
@@ -292,8 +294,8 @@
     </section>
     <div class="marquee" aria-label="DIFFERENT BY DESIGN — STUDIO ORDI">
       <div class="marquee-track" aria-hidden="true">
-        <span class="marquee-unit">DIFFERENT <em>by</em> DESIGN <b>✳</b> STUDIO ORDI <b>✳</b>&nbsp;</span>
-        <span class="marquee-unit">DIFFERENT <em>by</em> DESIGN <b>✳</b> STUDIO ORDI <b>✳</b>&nbsp;</span>
+        <span class="marquee-unit">DIFFERENT <em>by</em> DESIGN <svg class="ordi-spark marquee-spark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path d="M50 10V90M10 50H90M22 22L78 78M78 22L22 78" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/></svg> STUDIO ORDI <svg class="ordi-spark marquee-spark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path d="M50 10V90M10 50H90M22 22L78 78M78 22L22 78" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/></svg>&nbsp;</span>
+        <span class="marquee-unit">DIFFERENT <em>by</em> DESIGN <svg class="ordi-spark marquee-spark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path d="M50 10V90M10 50H90M22 22L78 78M78 22L22 78" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/></svg> STUDIO ORDI <svg class="ordi-spark marquee-spark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path d="M50 10V90M10 50H90M22 22L78 78M78 22L22 78" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/></svg>&nbsp;</span>
       </div>
     </div>
     <section id="work" class="works" aria-labelledby="work-heading">
@@ -311,6 +313,7 @@
       </div>
     </section>
     <section class="manifesto" id="studio" aria-labelledby="studio-heading">
+      <svg class="ordi-spark manifesto-spark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path d="M50 10V90M10 50H90M22 22L78 78M78 22L22 78" fill="none" stroke="currentColor" stroke-width="12" stroke-linecap="round"/></svg>
       <div class="wrap">
         <div class="section-meta eyebrow" data-reveal><span>(03) — THE STUDIO</span><span>OUR POINT OF VIEW ↗</span></div>
         <h2 class="manifesto-title display" id="studio-heading" data-reveal>LESS<br>ORDINARY<span class="serif">,</span><br>MORE <span class="serif">you.</span></h2>
