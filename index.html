@@ -495,7 +495,7 @@
       <div class="wrap">
         <div class="section-meta eyebrow" data-reveal><span>(06) — GET IN TOUCH</span><span>NEW IDEAS ARE WELCOME</span></div>
         <h2 class="contact-title display" id="contact-heading" data-reveal>HAVE A<br>PROJECT <em>IN</em><br>MIND<span class="acid">?</span></h2>
-        <div class="contact-bottom" data-reveal><p>당신의 브랜드에 필요한 다음 장면을 함께 고민해요.<br>로고 디자인, 카페 로고 제작, 브랜드 아이덴티티 작업을 문의해 주세요.</p><div class="contact-actions"><a href="#inquiry" class="pill light">START A PROJECT <span class="icon-arrow">↓</span></a><a href="mailto:ordi.studiordi@gmail.com?subject=STUDIO%20ORDI%20%EB%94%94%EC%9E%90%EC%9D%B8%20%EB%AC%B8%EC%9D%98" class="pill outline-light">EMAIL US <span class="icon-arrow">→</span></a><button class="pill outline-light is-disabled" type="button" disabled aria-label="BOOK VIA KMONG — COMING SOON" title="크몽 서비스 준비 중">BOOK VIA KMONG <span class="icon-arrow">→</span><span class="kmong-soon">COMING SOON</span></button></div></div>
+        <div class="contact-bottom" data-reveal><p>당신의 브랜드에 필요한 다음 장면을 함께 고민해요.<br>로고 디자인, 카페 로고 제작, 브랜드 아이덴티티 작업을 문의해 주세요.</p><div class="contact-actions"><a href="#inquiry" class="pill light" id="contact-project-toggle" aria-expanded="false" aria-controls="inquiry">START A PROJECT <span class="icon-arrow">↓</span></a><a href="mailto:ordi.studiordi@gmail.com?subject=STUDIO%20ORDI%20%EB%94%94%EC%9E%90%EC%9D%B8%20%EB%AC%B8%EC%9D%98" class="pill outline-light">EMAIL US <span class="icon-arrow">→</span></a><button class="pill outline-light is-disabled" type="button" disabled aria-label="BOOK VIA KMONG — COMING SOON" title="크몽 서비스 준비 중">BOOK VIA KMONG <span class="icon-arrow">→</span><span class="kmong-soon">COMING SOON</span></button></div></div>
       </div>
       <div class="inquiry-full" id="inquiry-shell">
         <div class="wrap">
@@ -561,10 +561,13 @@
 
     const inquiryPanel=document.getElementById('inquiry');
     const inquiryShell=document.getElementById('inquiry-shell');
+    const contactProjectToggle=document.getElementById('contact-project-toggle');
     let inquiryAnimation=null;
     function setInquiryOpen(open,{scroll=false,animate=true}={}){
       if(inquiryAnimation){inquiryAnimation.cancel();inquiryAnimation=null;}
       const wasOpen=!inquiryPanel.hidden;
+      contactProjectToggle.innerHTML=open?'CLOSE <span class="icon-arrow">↑</span>':'START A PROJECT <span class="icon-arrow">↓</span>';
+      contactProjectToggle.setAttribute('aria-expanded',String(open));
       if(open){
         inquiryShell.classList.add('is-open');
         inquiryPanel.hidden=false;
