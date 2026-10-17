@@ -371,6 +371,19 @@
     .faq-items details p{margin:0;padding:0 25px 24px 0;font-size:15px;line-height:1.8;color:#444;word-break:keep-all}
     @media(max-width:900px){.packages-grid{grid-template-columns:1fr 1fr}.package-card{min-height:570px}.package-card.featured{grid-column:1/-1}.faq{grid-template-columns:1fr}}
     @media(max-width:760px){.services{padding:90px 0}.services-top{grid-template-columns:1fr;margin:35px 0 65px;gap:30px}.services-top h2{font-size:clamp(56px,12vw,94px)}.services-top p{justify-self:start;font-size:15px}.packages-grid{grid-template-columns:1fr;gap:12px}.package-card{min-height:0;padding:27px}.package-card.featured{grid-column:auto}.package-card h3{font-size:42px;margin:30px 0 20px}.package-card ul{margin-bottom:35px}.services-addon{grid-template-columns:1fr}.services-addon>span:last-child{grid-column:1}.faq-intro h3{margin-top:28px}.faq-items summary{font-size:15px}}
+
+    /* Expandable enquiry experience; footer remains visible when closed. */
+    .inquiry-panel[hidden]{display:none!important}
+    .inquiry-full{transition:background-color .38s ease,color .38s ease,margin-top .38s ease}
+    .inquiry-full:not(.is-open){background:#070707;color:#fff;margin-top:0;padding-top:0;border-radius:0}
+    .inquiry-full:not(.is-open) .footer{margin-top:0;color:#fff}
+    .inquiry-full:not(.is-open) .footer .copyright,.inquiry-full:not(.is-open) .footer-nav a{color:#fff}
+    .inquiry-full:not(.is-open) .footer .logo img{filter:none}
+    .inquiry-heading-actions{display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .inquiry-close{border:1px solid #141414;background:transparent;color:#141414;border-radius:999px;cursor:pointer;padding:12px 22px;font:700 11px/1 'DM Sans',Arial,sans-serif;letter-spacing:.06em;white-space:nowrap}
+    .inquiry-close:hover,.inquiry-close:focus-visible{background:#141414;color:#E5F58A}
+    @media(max-width:760px){.inquiry-close{padding:11px 17px;font-size:10px}}
+    @media(prefers-reduced-motion:reduce){.inquiry-full{transition:none!important}}
   </style>
 </head>
 <body>
@@ -484,10 +497,10 @@
         <h2 class="contact-title display" id="contact-heading" data-reveal>HAVE A<br>PROJECT <em>IN</em><br>MIND<span class="acid">?</span></h2>
         <div class="contact-bottom" data-reveal><p>당신의 브랜드에 필요한 다음 장면을 함께 고민해요.<br>로고 디자인, 카페 로고 제작, 브랜드 아이덴티티 작업을 문의해 주세요.</p><div class="contact-actions"><a href="#inquiry" class="pill light">START A PROJECT <span class="icon-arrow">↓</span></a><a href="mailto:ordi.studiordi@gmail.com?subject=STUDIO%20ORDI%20%EB%94%94%EC%9E%90%EC%9D%B8%20%EB%AC%B8%EC%9D%98" class="pill outline-light">EMAIL US <span class="icon-arrow">→</span></a><button class="pill outline-light is-disabled" type="button" disabled aria-label="BOOK VIA KMONG — COMING SOON" title="크몽 서비스 준비 중">BOOK VIA KMONG <span class="icon-arrow">→</span><span class="kmong-soon">COMING SOON</span></button></div></div>
       </div>
-      <div class="inquiry-full">
+      <div class="inquiry-full" id="inquiry-shell">
         <div class="wrap">
-        <section class="inquiry-panel" id="inquiry" aria-labelledby="inquiry-heading">
-          <div class="inquiry-heading"><span class="eyebrow acid">(07) — NEW PROJECT</span><h3 id="inquiry-heading">TELL US <em class="serif">your story.</em></h3><p>브랜드에 관한 몇 가지 이야기를 들려주세요.<br>폼을 제출하면 스튜디오 오디에 문의가 접수됩니다.</p></div>
+        <section class="inquiry-panel" id="inquiry" aria-labelledby="inquiry-heading" hidden>
+          <div class="inquiry-heading"><div class="inquiry-heading-actions"><span class="eyebrow acid">(07) — NEW PROJECT</span><button class="inquiry-close" type="button" id="inquiry-close" aria-label="문의 폼 닫기">CLOSE ↑</button></div><h3 id="inquiry-heading">TELL US <em class="serif">your story.</em></h3><p>브랜드에 관한 몇 가지 이야기를 들려주세요.<br>폼을 제출하면 스튜디오 오디에 문의가 접수됩니다.</p></div>
           <form id="inquiry-form" class="inquiry-form" action="https://formsubmit.co/ordi.studiordi@gmail.com" method="POST">
             <input type="hidden" name="_subject" value="STUDIO ORDI — NEW PROJECT INQUIRY">
             <input type="hidden" name="_template" value="table">
@@ -546,6 +559,33 @@
     window.addEventListener('blur',hideOrdiPointer);
     if(customCursorMedia.addEventListener)customCursorMedia.addEventListener('change',hideOrdiPointer);
 
+    const inquiryPanel=document.getElementById('inquiry');
+    const inquiryShell=document.getElementById('inquiry-shell');
+    const inquiryClose=document.getElementById('inquiry-close');
+    let inquiryAnimation=null;
+    function setInquiryOpen(open,{scroll=false,animate=true}={}){
+      if(inquiryAnimation){inquiryAnimation.cancel();inquiryAnimation=null;}
+      const wasOpen=!inquiryPanel.hidden;
+      if(open){
+        inquiryShell.classList.add('is-open');
+        inquiryPanel.hidden=false;
+        if(!wasOpen && animate && !reducedMotion){
+          inquiryPanel.style.overflow='hidden';
+          inquiryAnimation=inquiryPanel.animate([{height:'0px',opacity:0},{height:inquiryPanel.scrollHeight+'px',opacity:1}],{duration:480,easing:'cubic-bezier(.22,1,.36,1)'});
+          inquiryAnimation.finished.catch(()=>{}).then(()=>{if(!inquiryAnimation)return;inquiryPanel.style.overflow='';inquiryAnimation=null;});
+        }
+        if(scroll)requestAnimationFrame(()=>setTimeout(()=>inquiryPanel.scrollIntoView({behavior:reducedMotion?'auto':'smooth',block:'start'}),60));
+      }else{
+        inquiryPanel.hidden=true;
+        inquiryShell.classList.remove('is-open');
+        inquiryPanel.style.overflow='';
+        if(scroll){history.replaceState(null,'','#contact');document.getElementById('contact').scrollIntoView({behavior:reducedMotion?'auto':'smooth',block:'start'});}
+      }
+    }
+    document.querySelectorAll('a[href="#inquiry"]').forEach(link=>link.addEventListener('click',()=>{
+      setInquiryOpen(true,{scroll:true});
+    }));
+    inquiryClose.addEventListener('click',()=>setInquiryOpen(false,{scroll:true}));
     document.querySelectorAll('[data-package]').forEach(link=>link.addEventListener('click',()=>{
       const service=document.querySelector('#inquiry-form select[name="service"]');
       if(service)service.value=link.dataset.package.startsWith('STANDARD')?'로고 디자인':'로고 + 브랜드 아이덴티티';
@@ -607,7 +647,7 @@
       const gallery=document.getElementById('detail-gallery');gallery.replaceChildren();p.gallery.forEach(([src,alt])=>{const figure=document.createElement('figure');const image=document.createElement('img');image.src=src;image.alt=alt;image.loading='lazy';figure.append(image);gallery.append(figure)});
       home.hidden=true;detail.hidden=false;document.body.classList.add('project-open');closeMenu();window.scrollTo({top:0,behavior:'auto'});document.title=`${p.name} — STUDIO ORDI`;return true;
     }
-    function showHome(target){home.hidden=false;detail.hidden=true;document.body.classList.remove('project-open');document.title='로고 디자인·카페 로고 제작·브랜드 로고 디자인 | STUDIO ORDI';closeMenu();if(target){requestAnimationFrame(()=>document.getElementById(target)?.scrollIntoView({behavior:'auto',block:'start'}))}else window.scrollTo({top:0,behavior:'auto'})}
+    function showHome(target){home.hidden=false;detail.hidden=true;document.body.classList.remove('project-open');document.title='로고 디자인·카페 로고 제작·브랜드 로고 디자인 | STUDIO ORDI';closeMenu();if(target==='inquiry')setInquiryOpen(true,{animate:false});if(target){requestAnimationFrame(()=>document.getElementById(target)?.scrollIntoView({behavior:'auto',block:'start'}))}else window.scrollTo({top:0,behavior:'auto'})}
     function route(){const hash=decodeURIComponent(window.location.hash.slice(1));if(hash.startsWith('project-')&&renderProject(hash.slice(8)))return;showHome(hash||'top')}
     window.addEventListener('hashchange',route);route();
     // Reveal content progressively without hiding anything from reduced-motion users.
