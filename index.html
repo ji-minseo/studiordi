@@ -191,7 +191,7 @@
     .marquee-track .marquee-unit{display:inline-flex;align-items:center;white-space:nowrap;gap:.16em;font:900 clamp(64px,10.4vw,180px)/.9 'DM Sans',Arial,sans-serif;letter-spacing:-.082em;padding-right:.7em}
     .marquee-unit em{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;text-transform:none;letter-spacing:-.10em;font-size:.92em;margin:0 .045em}
     .marquee-unit .marquee-spark{width:.65em;height:.65em;margin:0 .10em}
-    .marquee:hover .marquee-track{animation-play-state:paused}
+    @media(hover:hover) and (pointer:fine){.marquee:hover .marquee-track{animation-play-state:paused}}
     /* Editorial hierarchy through whitespace and scale, not horizontal dividers */
     .section-meta,.works-intro,.editorial-rail,.manifesto-bottom,.step,.step:last-child,.footer,.detail-brief,.detail-ending{border:0}
     .section-meta{padding-top:0}
