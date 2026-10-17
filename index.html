@@ -372,9 +372,8 @@
     @media(max-width:900px){.packages-grid{grid-template-columns:1fr 1fr}.package-card{min-height:570px}.package-card.featured{grid-column:1/-1}.faq{grid-template-columns:1fr}}
     @media(max-width:760px){.services{padding:90px 0}.services-top{grid-template-columns:1fr;margin:35px 0 65px;gap:30px}.services-top h2{font-size:clamp(56px,12vw,94px)}.services-top p{justify-self:start;font-size:15px}.packages-grid{grid-template-columns:1fr;gap:12px}.package-card{min-height:0;padding:27px}.package-card.featured{grid-column:auto}.package-card h3{font-size:42px;margin:30px 0 20px}.package-card ul{margin-bottom:35px}.services-addon{grid-template-columns:1fr}.services-addon>span:last-child{grid-column:1}.faq-intro h3{margin-top:28px}.faq-items summary{font-size:15px}}
 
-    /* Give CONTACT more breathing room at the section entrance. */
-    .contact{padding-top:clamp(145px,14vw,210px)}
-    @media(max-width:760px){.contact{padding-top:125px}}
+    /* Anchor CONTACT exactly at the black section boundary, without global header scroll offset. */
+    #contact{scroll-margin-top:calc(-1 * var(--head))}
     /* Expandable enquiry experience; footer remains visible when closed. */
     .inquiry-panel[hidden]{display:none!important}
     .inquiry-full{transition:background-color .38s ease,color .38s ease,margin-top .38s ease}
