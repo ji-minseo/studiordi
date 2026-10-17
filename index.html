@@ -435,6 +435,11 @@
     .ordi-title-ready .ordi-title-line{opacity:0}
     .ordi-title-ready.ordi-title-visible .ordi-title-line{animation:ordi-title-enter .76s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--line-index,0) * 105ms)}
     @media(prefers-reduced-motion:reduce){.ordi-title-ready .ordi-title-line{opacity:1!important;animation:none!important}}
+
+    /* Playful secondary lime dot, separate from the functional custom cursor */
+    .hero-follow-dot{position:absolute;left:0;top:0;width:15px;height:15px;border-radius:50%;background:var(--acid);pointer-events:none;z-index:3;opacity:0;transform:translate3d(-30px,-30px,0);transition:opacity .23s ease}
+    .hero-follow-dot.is-active{opacity:.85}
+    @media(hover:none),(pointer:coarse),(prefers-reduced-motion:reduce),(forced-colors:active){.hero-follow-dot{display:none!important}}
   </style>
   <meta name="naver-site-verification" content="6cad94c060e1f9b5e7594318b588535d8ee04744" />
   <!-- Google Analytics 4: STUDIO ORDI -->
@@ -461,6 +466,7 @@
   <main id="home-view">
     <div id="top"></div>
     <section class="hero" aria-labelledby="hero-heading">
+      <span class="hero-follow-dot" aria-hidden="true"></span>
       <svg class="ordi-spark hero-spark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g fill="currentColor"><path d="M8 47.4 L50 48.45 L92 47.4 L92 52.6 L50 51.55 L8 52.6 Z"/><path d="M8 47.4 L50 48.45 L92 47.4 L92 52.6 L50 51.55 L8 52.6 Z" transform="rotate(45 50 50)"/><path d="M8 47.4 L50 48.45 L92 47.4 L92 52.6 L50 51.55 L8 52.6 Z" transform="rotate(90 50 50)"/><path d="M8 47.4 L50 48.45 L92 47.4 L92 52.6 L50 51.55 L8 52.6 Z" transform="rotate(135 50 50)"/></g></svg>
       <div class="hero-main wrap">
         <div class="hero-meta eyebrow"><span class="acid">(01) — INDEPENDENT GRAPHIC STUDIO</span><span class="aside">SEOUL / SOUTH KOREA<br>BRAND IDENTITY & GRAPHIC DESIGN</span></div>
@@ -754,6 +760,38 @@
         if(id==='hero-heading'){requestAnimationFrame(()=>title.classList.add('ordi-title-visible'));}
         else titleObserver.observe(title);
       });
+    }
+    // A delayed accent dot follows the pointer inside the hero only.
+    if(!reducedMotion && window.matchMedia('(hover:hover) and (pointer:fine) and (forced-colors:none)').matches){
+      const hero=document.querySelector('.hero'),dot=hero?.querySelector('.hero-follow-dot');
+      if(hero&&dot){
+        let x=-30,y=-30,targetX=-30,targetY=-30,frame=0,active=false;
+        const animate=()=>{
+          x+=(targetX-x)*.11;y+=(targetY-y)*.11;
+          dot.style.transform='translate3d('+x+'px,'+y+'px,0)';
+          if(active||Math.abs(x-targetX)>.4||Math.abs(y-targetY)>.4)frame=requestAnimationFrame(animate);
+          else frame=0;
+        };
+        hero.addEventListener('pointerenter',event=>{
+          if(event.pointerType!=='mouse')return;
+          const rect=hero.getBoundingClientRect();
+          x=targetX=event.clientX-rect.left+42;
+          y=targetY=event.clientY-rect.top+35;
+          dot.style.transform='translate3d('+x+'px,'+y+'px,0)';
+          active=true;dot.classList.add('is-active');
+          if(!frame)frame=requestAnimationFrame(animate);
+        });
+        hero.addEventListener('pointermove',event=>{
+          if(event.pointerType!=='mouse')return;
+          const rect=hero.getBoundingClientRect();
+          targetX=event.clientX-rect.left+42;
+          targetY=event.clientY-rect.top+35;
+        });
+        hero.addEventListener('pointerleave',()=>{
+          active=false;dot.classList.remove('is-active');
+        });
+        window.addEventListener('blur',()=>{active=false;dot.classList.remove('is-active')});
+      }
     }
     // Small motion details for desktop; reduced-motion users see the static design.
     if(!reducedMotion){
