@@ -428,6 +428,13 @@
     .inquiry-submit-action #inquiry-send.is-sent:after{content:"";display:inline-block;width:7px;height:7px;margin-left:10px;background:#E6FF38;border-radius:50%;animation:ordi-dot-pop .6s cubic-bezier(.15,1.3,.3,1) both}
     @keyframes ordi-dot-pop{0%{opacity:0;transform:scale(0) translateY(6px)}65%{opacity:1;transform:scale(1.5) translateY(-3px)}100%{opacity:1;transform:scale(1) translateY(0)}}
     @media(prefers-reduced-motion:reduce){.inquiry-submit-action #inquiry-send.is-sent:after{animation:none}}
+
+    /* Title-only staggered reveal; typography and line breaks stay untouched */
+    @keyframes ordi-title-enter{from{opacity:0;transform:translate3d(0,19px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+    .ordi-title-line{display:block}
+    .ordi-title-ready .ordi-title-line{opacity:0}
+    .ordi-title-ready.ordi-title-visible .ordi-title-line{animation:ordi-title-enter .76s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--line-index,0) * 105ms)}
+    @media(prefers-reduced-motion:reduce){.ordi-title-ready .ordi-title-line{opacity:1!important;animation:none!important}}
   </style>
   <meta name="naver-site-verification" content="6cad94c060e1f9b5e7594318b588535d8ee04744" />
   <!-- Google Analytics 4: STUDIO ORDI -->
@@ -720,6 +727,34 @@
     // Reveal content progressively without hiding anything from reduced-motion users.
     if(reducedMotion||!('IntersectionObserver' in window)){document.querySelectorAll('[data-reveal]').forEach(el=>el.classList.add('visible'))}
     else{const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.08,rootMargin:'0px 0px 35px 0px'});document.querySelectorAll('[data-reveal]').forEach(el=>observer.observe(el))}
+    // Editorial title reveal: wrap existing BR-delimited lines, preserving words and markup.
+    if(!reducedMotion && 'IntersectionObserver' in window){
+      const titleTargets=['hero-heading','work-heading','studio-heading','process-heading','services-heading','contact-heading'];
+      const titleObserver=new IntersectionObserver(entries=>{
+        entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('ordi-title-visible');titleObserver.unobserve(entry.target);}});
+      },{threshold:.12,rootMargin:'0px 0px 25px 0px'});
+      titleTargets.forEach(id=>{
+        const title=document.getElementById(id);if(!title)return;
+        if(id==='hero-heading'){
+          [...title.children].forEach((line,index)=>{line.classList.add('ordi-title-line');line.style.setProperty('--line-index',index)});
+        }else{
+          const nodes=[...title.childNodes],lines=[document.createDocumentFragment()];
+          nodes.forEach(node=>{
+            if(node.nodeName==='BR')lines.push(document.createDocumentFragment());
+            else lines[lines.length-1].appendChild(node);
+          });
+          title.replaceChildren();
+          lines.forEach((fragment,index)=>{
+            const line=document.createElement('span');line.className='ordi-title-line';
+            line.style.setProperty('--line-index',index);
+            line.appendChild(fragment);title.appendChild(line);
+          });
+        }
+        title.classList.add('ordi-title-ready');
+        if(id==='hero-heading'){requestAnimationFrame(()=>title.classList.add('ordi-title-visible'));}
+        else titleObserver.observe(title);
+      });
+    }
     // Small motion details for desktop; reduced-motion users see the static design.
     if(!reducedMotion){
       const rotatingSparks=document.querySelectorAll('.hero .hero-spark,.manifesto .manifesto-spark');
