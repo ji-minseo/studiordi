@@ -388,6 +388,14 @@
     @media(prefers-reduced-motion:reduce){.inquiry-full{transition:none!important}}
   </style>
   <meta name="naver-site-verification" content="6cad94c060e1f9b5e7594318b588535d8ee04744" />
+  <!-- Google Analytics 4: STUDIO ORDI -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-1GVKSX7PR9"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-1GVKSX7PR9');
+  </script>
 </head>
 <body>
   <div id="scroll-progress" aria-hidden="true"></div>
@@ -562,6 +570,7 @@
     window.addEventListener('blur',hideOrdiPointer);
     if(customCursorMedia.addEventListener)customCursorMedia.addEventListener('change',hideOrdiPointer);
 
+    function trackOrdiEvent(name,params={}){if(typeof window.gtag==='function')window.gtag('event',name,params);}
     const inquiryPanel=document.getElementById('inquiry');
     const inquiryShell=document.getElementById('inquiry-shell');
     const contactProjectToggle=document.getElementById('contact-project-toggle');
@@ -572,6 +581,7 @@
       contactProjectToggle.innerHTML=open?'CLOSE <span class="icon-arrow">↑</span>':'START A PROJECT <span class="icon-arrow">↓</span>';
       contactProjectToggle.setAttribute('aria-expanded',String(open));
       if(open){
+        if(!wasOpen)trackOrdiEvent('inquiry_open',{section:'contact'});
         inquiryShell.classList.add('is-open');
         inquiryPanel.hidden=false;
         if(!wasOpen && animate && !reducedMotion){
@@ -594,6 +604,7 @@
       if(opening)history.replaceState(null,'','#inquiry');
     }));
     document.querySelectorAll('[data-package]').forEach(link=>link.addEventListener('click',()=>{
+      trackOrdiEvent('package_click',{package_name:link.dataset.package.split(' — ')[0]});
       const service=document.querySelector('#inquiry-form select[name="service"]');
       if(service)service.value=link.dataset.package.startsWith('STANDARD')?'로고 디자인':'로고 + 브랜드 아이덴티티';
       const selectedPackage=document.querySelector('#inquiry-form select[name="package"]');
@@ -626,6 +637,7 @@
         if(!response.ok || !(data.success===true || data.success==='true'))throw new Error(data.message||'전송에 실패했습니다.');
         inquiryStatus.textContent='접수 요청을 전송했어요! 스튜디오 오디가 내용을 확인한 후 이메일로 답변드릴게요.';
         inquiryStatus.classList.add('is-success');
+        trackOrdiEvent('generate_lead',{method:'inquiry_form',package_name:inquiryForm.elements.namedItem('package')?.value || 'unspecified'});
         inquiryForm.reset();
       }catch(error){
         inquiryStatus.textContent='전송에 실패했어요. 입력 내용은 유지돼요. 잠시 후 다시 시도하거나 아래 이메일로 직접 보내주세요: ordi.studiordi@gmail.com';
