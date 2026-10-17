@@ -285,8 +285,13 @@
     .inquiry-status.is-success{color:var(--acid)}
     .inquiry-status.is-error{color:#ffbfb3}
     .inquiry-send:disabled,.inquiry-form button:disabled{opacity:.6;cursor:wait}
+    /* Contact ends flush with lime section, including mobile. */
+    .contact{padding-bottom:0}
+    .inquiry-heading h3{font-size:clamp(63px,10.7vw,178px);line-height:.88;letter-spacing:-.085em;max-width:100%}
+    @media(max-width:760px){.contact{padding-bottom:0}.inquiry-heading h3{font-size:clamp(57px,12vw,92px)}}
+    @media(max-width:390px){.inquiry-heading h3{font-size:12.1vw}}
     /* Full-width soft lime inquiry + seamless footer */
-    .inquiry-full{background:#E5F58A;color:var(--black);margin-top:clamp(100px,10vw,160px);padding:clamp(80px,8vw,135px) 0 0}
+    .inquiry-full{background:#E5F58A;color:var(--black);margin-top:clamp(100px,10vw,160px);padding:clamp(80px,8vw,135px) 0 0;border-radius:28px 28px 0 0}
     .inquiry-panel{margin:0;padding:0;background:transparent;color:var(--black);border:0;border-radius:0}
     .inquiry-panel .eyebrow{color:var(--black)}
     .inquiry-heading p{color:#333}
@@ -303,7 +308,7 @@
     .inquiry-full .footer .logo img{filter:brightness(0)}
     .inquiry-full .footer .copyright,.inquiry-full .footer-nav a{color:var(--black)}
     .inquiry-full .footer-nav a:hover{color:#555}
-    @media(max-width:760px){.inquiry-full{padding:70px 0 0}.inquiry-panel{padding:0}.inquiry-full .footer{margin-top:95px;padding-bottom:26px}}
+    @media(max-width:760px){.inquiry-full{padding:70px 0 0;border-radius:22px 22px 0 0}.inquiry-panel{padding:0}.inquiry-full .footer{margin-top:95px;padding-bottom:26px}}
   </style>
 </head>
 <body>
