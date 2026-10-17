@@ -513,7 +513,7 @@
             <label>브랜드명 *<input name="brand" required maxlength="100" placeholder="브랜드명 (미정이면 '미정' 입력)"></label>
             <label>업종 *<select name="industry" required><option value="" selected disabled>업종을 선택해 주세요</option><option>카페 / F&amp;B</option><option>패션</option><option>뷰티 / 코스메틱</option><option>라이프스타일</option><option>IT / 서비스</option><option>기타</option></select></label>
             <label>의뢰 유형 *<select name="service" required><option>로고 디자인</option><option>카페 로고 디자인</option><option>로고 + 브랜드 아이덴티티</option><option>브랜드 아이덴티티</option><option>상담 후 결정</option></select></label>
-            <label>예상 예산 (선택)<select name="budget"><option>상담 후 결정</option><option>10만원 미만</option><option>10만~20만원</option><option>20만원 이상</option></select></label>
+            <label>희망 패키지 *<select name="package" required><option value="상담 후 결정" selected>상담 후 결정</option><option value="STANDARD — LOGO BASIC (59,000원)">STANDARD — LOGO BASIC · 59,000원</option><option value="DELUXE — BRAND SIGNATURE (129,000원)">DELUXE — BRAND SIGNATURE · 129,000원</option><option value="PREMIUM — BRAND IDENTITY (239,000원)">PREMIUM — BRAND IDENTITY · 239,000원</option></select></label>
             <label class="full">원하는 디자인 방향 *<textarea name="direction" required maxlength="2000" rows="4" placeholder="예: 미니멀하고 세련된 분위기, 독특한 타이포 중심의 로고"></textarea></label>
             <label class="full">레퍼런스 링크 (선택)<input name="reference" type="url" maxlength="500" placeholder="https://... (없으면 비워두세요)"></label>
             <label class="full">추가 요청 · 피하고 싶은 스타일 · 일정 (선택)<textarea name="notes" maxlength="2000" rows="3" placeholder="원하지 않는 색상이나 스타일, 희망 납기 등을 알려주세요."></textarea></label>
@@ -596,8 +596,11 @@
     document.querySelectorAll('[data-package]').forEach(link=>link.addEventListener('click',()=>{
       const service=document.querySelector('#inquiry-form select[name="service"]');
       if(service)service.value=link.dataset.package.startsWith('STANDARD')?'로고 디자인':'로고 + 브랜드 아이덴티티';
-      const notes=document.querySelector('#inquiry-form textarea[name="notes"]');
-      if(notes && !notes.value.trim())notes.value='관심 패키지: '+link.dataset.package;
+      const selectedPackage=document.querySelector('#inquiry-form select[name="package"]');
+      if(selectedPackage){
+        const option=[...selectedPackage.options].find(item=>item.value.startsWith(link.dataset.package.split(' — ')[0]+' — '));
+        if(option)selectedPackage.value=option.value;
+      }
     }));
     const inquiryForm=document.getElementById('inquiry-form');
     const inquiryStatus=document.getElementById('inquiry-status');
