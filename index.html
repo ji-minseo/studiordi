@@ -600,21 +600,11 @@
     const customCursorMedia=window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) and (forced-colors: none)');
     const ordiPointer=document.getElementById('ordi-pointer');
     const actionSelector='a[href]:not([aria-disabled="true"]),button:not(:disabled),[role="button"]:not([aria-disabled="true"])';
-    let cursorX=0,cursorY=0,cursorTargetX=0,cursorTargetY=0,cursorFrame=0,cursorStarted=false;
-    function animateOrdiCursor(){
-      cursorX+=(cursorTargetX-cursorX)*.28;
-      cursorY+=(cursorTargetY-cursorY)*.28;
-      ordiPointer.style.transform=`translate3d(${cursorX}px,${cursorY}px,0)`;
-      if(Math.abs(cursorTargetX-cursorX)+Math.abs(cursorTargetY-cursorY)>.12)cursorFrame=requestAnimationFrame(animateOrdiCursor);
-      else{cursorX=cursorTargetX;cursorY=cursorTargetY;ordiPointer.style.transform=`translate3d(${cursorX}px,${cursorY}px,0)`;cursorFrame=0;}
-    }
-    function hideOrdiPointer(){if(cursorFrame)cancelAnimationFrame(cursorFrame);cursorFrame=0;cursorStarted=false;ordiPointer.classList.remove('is-visible','is-action','is-pressed','is-on-dark');document.documentElement.classList.remove('ordi-pointer-enabled')}
+    function hideOrdiPointer(){ordiPointer.classList.remove('is-visible','is-action','is-pressed','is-on-dark');document.documentElement.classList.remove('ordi-pointer-enabled')}
     function updateOrdiPointer(event){
       if(!customCursorMedia.matches || event.pointerType!=='mouse')return;
       const target=event.target instanceof Element?event.target:null;
-      cursorTargetX=event.clientX;cursorTargetY=event.clientY;
-      if(!cursorStarted){cursorX=cursorTargetX;cursorY=cursorTargetY;cursorStarted=true;ordiPointer.style.transform=`translate3d(${cursorX}px,${cursorY}px,0)`;}
-      else if(!cursorFrame)cursorFrame=requestAnimationFrame(animateOrdiCursor);
+      ordiPointer.style.transform=`translate3d(${event.clientX}px,${event.clientY}px,0)`;
       ordiPointer.classList.add('is-visible');
       ordiPointer.classList.toggle('is-action',Boolean(target?.closest(actionSelector)));
       // White on dark sections; black on white/neon. Hover stays fluorescent yellow.
