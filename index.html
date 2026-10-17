@@ -425,7 +425,7 @@
             <label class="full">원하는 디자인 방향 *<textarea name="direction" required maxlength="2000" rows="4" placeholder="예: 미니멀하고 세련된 분위기, 독특한 타이포 중심의 로고"></textarea></label>
             <label class="full">레퍼런스 링크 (선택)<input name="reference" type="url" maxlength="500" placeholder="https://... (없으면 비워두세요)"></label>
             <label class="full">추가 요청 · 피하고 싶은 스타일 · 일정 (선택)<textarea name="notes" maxlength="2000" rows="3" placeholder="원하지 않는 색상이나 스타일, 희망 납기 등을 알려주세요."></textarea></label>
-            <div class="inquiry-submit"><span>제출 정보는 외부 폼 전송 서비스(FormSubmit)를 통해 오디의 이메일로 전달됩니다. <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noopener noreferrer">서비스 개인정보 정책 ↗</a></span><div class="inquiry-submit-action"><p id="inquiry-status" class="inquiry-status" role="status" aria-live="polite"></p><button id="inquiry-send" class="pill light" type="submit">SEND INQUIRY →</button></div></div>
+            <div class="inquiry-submit"><span>제출 정보는 외부 폼 전송 서비스(FormSubmit)를 통해 오디의 이메일로 전달됩니다. <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noopener noreferrer">서비스 개인정보 정책 ↗</a></span><div class="inquiry-submit-action"><p id="inquiry-status" class="inquiry-status" role="status" aria-live="polite"></p><button id="inquiry-send" class="pill light" type="submit">SEND INQUIRY ↗</button></div></div>
           </form>
         </section>
         <footer class="footer"><a href="#top" class="logo" aria-label="Studio Ordi 맨 위로"><img src="assets/ordi-logo.png" width="108" height="45" alt="ordi."></a><span class="copyright">© 2026 STUDIO ORDI.</span><div class="footer-nav"><a href="#work">WORK</a><a href="#studio">ABOUT</a><a href="#top">BACK TO TOP ↑</a></div></footer>
@@ -501,7 +501,7 @@
       }finally{
         clearTimeout(timeout);
         inquirySend.disabled=false;
-        inquirySend.textContent='SEND INQUIRY →';
+        inquirySend.textContent='SEND INQUIRY ↗';
       }
     });
         const projects={
