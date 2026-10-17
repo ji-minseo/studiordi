@@ -375,7 +375,7 @@
     /* Expandable enquiry experience; footer remains visible when closed. */
     .inquiry-panel[hidden]{display:none!important}
     .inquiry-full{transition:background-color .38s ease,color .38s ease,margin-top .38s ease}
-    .inquiry-full:not(.is-open){background:#070707;color:#fff;margin-top:0;padding-top:0;border-radius:0}
+    .inquiry-full:not(.is-open){background:#070707;color:#fff;margin-top:clamp(100px,10vw,160px);padding-top:0;border-radius:0}
     .inquiry-full:not(.is-open) .footer{margin-top:0;color:#fff}
     .inquiry-full:not(.is-open) .footer .copyright,.inquiry-full:not(.is-open) .footer-nav a{color:#fff}
     .inquiry-full:not(.is-open) .footer .logo img{filter:none}
@@ -500,7 +500,7 @@
       <div class="inquiry-full" id="inquiry-shell">
         <div class="wrap">
         <section class="inquiry-panel" id="inquiry" aria-labelledby="inquiry-heading" hidden>
-          <div class="inquiry-heading"><div class="inquiry-heading-actions"><span class="eyebrow acid">(07) — NEW PROJECT</span><button class="inquiry-close" type="button" id="inquiry-close" aria-label="문의 폼 닫기">CLOSE ↑</button></div><h3 id="inquiry-heading">TELL US <em class="serif">your story.</em></h3><p>브랜드에 관한 몇 가지 이야기를 들려주세요.<br>폼을 제출하면 스튜디오 오디에 문의가 접수됩니다.</p></div>
+          <div class="inquiry-heading"><span class="eyebrow acid">(07) — NEW PROJECT</span><h3 id="inquiry-heading">TELL US <em class="serif">your story.</em></h3><p>브랜드에 관한 몇 가지 이야기를 들려주세요.<br>폼을 제출하면 스튜디오 오디에 문의가 접수됩니다.</p></div>
           <form id="inquiry-form" class="inquiry-form" action="https://formsubmit.co/ordi.studiordi@gmail.com" method="POST">
             <input type="hidden" name="_subject" value="STUDIO ORDI — NEW PROJECT INQUIRY">
             <input type="hidden" name="_template" value="table">
@@ -561,7 +561,6 @@
 
     const inquiryPanel=document.getElementById('inquiry');
     const inquiryShell=document.getElementById('inquiry-shell');
-    const inquiryClose=document.getElementById('inquiry-close');
     let inquiryAnimation=null;
     function setInquiryOpen(open,{scroll=false,animate=true}={}){
       if(inquiryAnimation){inquiryAnimation.cancel();inquiryAnimation=null;}
@@ -582,10 +581,12 @@
         if(scroll){history.replaceState(null,'','#contact');document.getElementById('contact').scrollIntoView({behavior:reducedMotion?'auto':'smooth',block:'start'});}
       }
     }
-    document.querySelectorAll('a[href="#inquiry"]').forEach(link=>link.addEventListener('click',()=>{
-      setInquiryOpen(true,{scroll:true});
+    document.querySelectorAll('a[href="#inquiry"]').forEach(link=>link.addEventListener('click',event=>{
+      event.preventDefault();
+      const opening=inquiryPanel.hidden;
+      setInquiryOpen(opening,{scroll:true});
+      if(opening)history.replaceState(null,'','#inquiry');
     }));
-    inquiryClose.addEventListener('click',()=>setInquiryOpen(false,{scroll:true}));
     document.querySelectorAll('[data-package]').forEach(link=>link.addEventListener('click',()=>{
       const service=document.querySelector('#inquiry-form select[name="service"]');
       if(service)service.value=link.dataset.package.startsWith('STANDARD')?'로고 디자인':'로고 + 브랜드 아이덴티티';
