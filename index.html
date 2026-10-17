@@ -6,13 +6,16 @@
   <meta name="google-site-verification" content="ygkMqyzE3fFth68GgPEwh2_vfr8f4__SKXdRzMF9sKc" />
   <link rel="canonical" href="https://studiordi.vercel.app/" />
   <meta name="theme-color" content="#060606">
-  <meta name="description" content="Studio Ordi — Independent logo & brand identity design studio. Discover distinctive identities for fashion, beauty, coffee, and food.">
+  <meta name="description" content="스튜디오 오디(STUDIO ORDI)는 로고 디자인·로고 제작·브랜드 아이덴티티를 전문으로 하는 독립 디자인 스튜디오입니다. 카페 로고, 뷰티·패션·F&B 브랜드 로고와 브랜딩 디자인을 소개합니다.">
   <meta property="og:title" content="STUDIO ORDI — Not Just a Logo. A Distinct Identity.">
-  <meta property="og:description" content="예쁜 로고를 넘어, 브랜드의 분위기까지 디자인합니다. 서울의 독립 그래픽 디자인 스튜디오.">
+  <meta property="og:description" content="로고 제작부터 브랜드 아이덴티티까지. 카페·뷰티·패션·F&B 브랜드의 첫인상을 디자인하는 스튜디오 오디.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="https://studiordi.vercel.app/assets/yumday-flatlay.webp">
+  <meta property="og:url" content="https://studiordi.vercel.app/">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"ProfessionalService","name":"STUDIO ORDI","alternateName":"스튜디오 오디","url":"https://studiordi.vercel.app/","email":"ordi.studiordi@gmail.com","description":"로고 디자인, 브랜드 로고 제작, 카페 로고 디자인 및 브랜드 아이덴티티 디자인 스튜디오","areaServed":{"@type":"Country","name":"KR"},"hasOfferCatalog":{"@type":"OfferCatalog","name":"Logo and Brand Identity Design","itemListElement":[{"@type":"OfferCatalog","name":"로고 디자인 및 제작"},{"@type":"OfferCatalog","name":"카페 로고 디자인"},{"@type":"OfferCatalog","name":"브랜드 아이덴티티 디자인"}]}}</script>
   <link rel="icon" href="assets/ordi-logo.png" type="image/png">
-  <title>STUDIO ORDI — Independent Brand Identity Studio</title>
+  <title>로고 디자인·카페 로고 제작·브랜드 로고 디자인 | STUDIO ORDI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600;1,700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -262,6 +265,19 @@
       html.ordi-pointer-enabled,html.ordi-pointer-enabled *{cursor:none!important}
     }
     @media (hover:none),(pointer:coarse),(prefers-reduced-motion:reduce),(forced-colors:active){.ordi-pointer{display:none!important}}
+    .inquiry-panel{margin-top:clamp(100px,10vw,160px);padding-top:40px;border-top:1px solid #ffffff40}
+    .inquiry-heading h3{font:900 clamp(35px,5.5vw,75px)/1 'DM Sans',sans-serif;letter-spacing:-.075em;margin:20px 0}
+    .inquiry-heading h3 em{font-weight:400;text-transform:none}
+    .inquiry-heading p{color:#b9b9b9;line-height:1.7;font-size:14px;word-break:keep-all}
+    .inquiry-form{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:23px 26px;max-width:980px}
+    .inquiry-form label{font:700 11px/1.5 'Space Grotesk',sans-serif;letter-spacing:.06em;display:flex;flex-direction:column;gap:10px}
+    .inquiry-form label.full{grid-column:1/-1}
+    .inquiry-form input,.inquiry-form select,.inquiry-form textarea{min-width:0;width:100%;background:#1c1c1c;border:1px solid #535353;border-radius:13px;color:var(--white);padding:16px;font:400 15px/1.5 'DM Sans',sans-serif;letter-spacing:0;resize:vertical}
+    .inquiry-form input:focus,.inquiry-form select:focus,.inquiry-form textarea:focus{outline:2px solid var(--acid);outline-offset:2px}
+    .inquiry-form ::placeholder{color:#aaa}
+    .inquiry-submit{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .inquiry-submit span{font-size:12px;color:#b7b7b7}
+    @media(max-width:760px){.inquiry-form{grid-template-columns:1fr}.inquiry-form label.full,.inquiry-submit{grid-column:1}.inquiry-heading h3{font-size:clamp(38px,9vw,58px)}}
   </style>
 </head>
 <body>
@@ -333,7 +349,18 @@
       <div class="wrap">
         <div class="section-meta eyebrow" data-reveal><span>(05) — GET IN TOUCH</span><span>NEW IDEAS ARE WELCOME</span></div>
         <h2 class="contact-title display" id="contact-heading" data-reveal>HAVE A<br>PROJECT <em>IN</em><br>MIND<span class="acid">?</span></h2>
-        <div class="contact-bottom" data-reveal><p>당신의 브랜드에 필요한 다음 장면을 함께 고민해요.<br>의뢰 창구는 크몽 서비스 승인 후 열릴 예정입니다.</p><div class="contact-actions"><span class="pill light is-disabled" aria-disabled="true">KMONG / COMING SOON <span class="icon-arrow">↗</span></span><a href="#work" class="pill outline-light">EXPLORE WORK <span class="icon-arrow">↗</span></a></div></div>
+        <div class="contact-bottom" data-reveal><p>당신의 브랜드에 필요한 다음 장면을 함께 고민해요.<br>로고 디자인, 카페 로고 제작, 브랜드 아이덴티티 작업을 문의해 주세요.</p><div class="contact-actions"><a href="mailto:ordi.studiordi@gmail.com?subject=STUDIO%20ORDI%20%EB%94%94%EC%9E%90%EC%9D%B8%20%EB%AC%B8%EC%9D%98" class="pill light">EMAIL US <span class="icon-arrow">↗</span></a><a href="#inquiry" class="pill outline-light">INQUIRY FORM <span class="icon-arrow">↗</span></a></div></div>
+        <section class="inquiry-panel" id="inquiry" aria-labelledby="inquiry-heading">
+          <div class="inquiry-heading"><span class="eyebrow acid">(06) — NEW PROJECT</span><h3 id="inquiry-heading">TELL US <em class="serif">your story.</em></h3><p>기본 정보를 작성하면 이메일 앱에 문의 내용이 자동으로 채워집니다.<br>실제 발송은 이메일 앱에서 보내기 버튼을 눌러야 완료돼요.</p></div>
+          <form id="inquiry-form" class="inquiry-form">
+            <label>이름 / 담당자<input name="sender" required maxlength="80" autocomplete="name" placeholder="성함 또는 담당자명"></label>
+            <label>이메일<input name="email" required type="email" maxlength="180" autocomplete="email" placeholder="hello@example.com"></label>
+            <label>브랜드명<input name="brand" maxlength="100" placeholder="브랜드명 (미정 가능)"></label>
+            <label>의뢰 유형<select name="service"><option value="로고 디자인">로고 디자인</option><option value="카페 로고 디자인">카페 로고 디자인</option><option value="브랜드 아이덴티티">브랜드 아이덴티티</option><option value="기타 디자인 문의">기타 디자인 문의</option></select></label>
+            <label class="full">프로젝트 소개<textarea name="details" required maxlength="2500" rows="4" placeholder="브랜드 소개, 원하는 분위기, 일정 등을 자유롭게 적어주세요."></textarea></label>
+            <div class="inquiry-submit"><span>이 양식은 정보를 서버에 저장하지 않습니다.</span><button class="pill light" type="submit">OPEN EMAIL DRAFT ↗</button></div>
+          </form>
+        </section>
         <footer class="footer"><a href="#top" class="logo" aria-label="Studio Ordi 맨 위로"><img src="assets/ordi-logo.png" width="108" height="45" alt="ordi."></a><span class="copyright">© 2026 STUDIO ORDI.</span><div class="footer-nav"><a href="#work">WORK</a><a href="#studio">ABOUT</a><a href="#top">BACK TO TOP ↑</a></div></footer>
       </div>
     </section>
@@ -375,6 +402,16 @@
     window.addEventListener('blur',hideOrdiPointer);
     if(customCursorMedia.addEventListener)customCursorMedia.addEventListener('change',hideOrdiPointer);
 
+    const inquiryForm=document.getElementById('inquiry-form');
+    inquiryForm.addEventListener('submit',event=>{
+      event.preventDefault();
+      if(!inquiryForm.reportValidity())return;
+      const data=new FormData(inquiryForm);
+      const val=key=>String(data.get(key)||'').trim();
+      const subject='[STUDIO ORDI 문의] '+(val('brand')||val('service'));
+      const body=['안녕하세요, 스튜디오 오디에 디자인 문의드립니다.','', '이름: '+val('sender'),'회신 이메일: '+val('email'),'브랜드명: '+(val('brand')||'미정'),'의뢰 유형: '+val('service'),'', '프로젝트 소개:',val('details')].join('\\n');
+      window.location.href='mailto:ordi.studiordi@gmail.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+    });
     const projects={
       noveil:{name:'NOVEIL',number:'1',type:'FASHION / BRAND IDENTITY',cover:'assets/noveil-fashion.webp',summary:'NOVEIL은 선명하고 실험적인 커스텀 타이포그래피를 중심으로 한 패션 아이덴티티입니다. 블랙과 화이트의 강한 대비가 브랜드의 독립적인 태도를 드러냅니다.',gallery:[['assets/noveil-logo.webp','검은 배경의 NOVEIL 워드마크'],['assets/noveil-fragrance.webp','NOVEIL 향수 공간 브랜딩']]},
       ourie:{name:'OURIÉ',number:'2',type:'BEAUTY / BRAND IDENTITY',cover:'assets/ourie-serum.webp',summary:'OURIÉ는 은은한 핑크 컬러와 부드러운 리본 형태의 심볼을 조합해 조용하고 우아한 아름다움을 표현한 뷰티 브랜드 아이덴티티입니다.',gallery:[['assets/ourie-logo.webp','OURIÉ 심볼 및 워드마크'],['assets/ourie-campaign.webp','OURIÉ 세럼 캠페인 콘셉트']]},
