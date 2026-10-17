@@ -336,6 +336,41 @@
     .inquiry-submit-action .inquiry-status{grid-column:auto;min-height:0;margin:0;flex:1;max-width:420px;overflow-wrap:anywhere;text-align:right}
     .inquiry-submit-action button{flex-shrink:0}
     @media(max-width:760px){.inquiry-submit-action{width:100%;flex-basis:100%;justify-content:flex-start;flex-wrap:wrap}.inquiry-submit-action .inquiry-status{text-align:left;flex-basis:100%;max-width:none}.inquiry-submit-action .inquiry-status:empty{display:none}}
+    /* Services and pricing — STUDIO ORDI editorial system */
+    .services{background:#f9f9f6;color:var(--black);padding:clamp(100px,11.3vw,170px) 0}
+    .services-top{display:grid;grid-template-columns:1.2fr .8fr;align-items:end;gap:36px;margin:clamp(48px,8vw,124px) 0 clamp(65px,8vw,118px)}
+    .services-top h2{margin:0;font:900 clamp(65px,10vw,156px)/.87 'DM Sans',Arial,sans-serif;letter-spacing:-.09em}
+    .services-top .serif{font-weight:400;font-size:.88em;letter-spacing:-.08em}
+    .services-top p{font-size:17px;line-height:1.7;max-width:440px;justify-self:end;word-break:keep-all;margin:0}
+    .packages-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+    .package-card{padding:clamp(23px,2.7vw,40px);background:#ededeb;display:flex;flex-direction:column;min-width:0;min-height:630px}
+    .package-card.featured{background:#101010;color:white}
+    .package-meta{display:flex;justify-content:space-between;gap:10px;font-size:10px;letter-spacing:.05em}
+    .package-card h3{font:900 clamp(34px,3.1vw,54px)/.93 'DM Sans',Arial,sans-serif;letter-spacing:-.076em;margin:55px 0 25px;overflow-wrap:anywhere}
+    .package-price{font:800 clamp(30px,3.2vw,48px)/1 'DM Sans',Arial,sans-serif;letter-spacing:-.06em}
+    .package-price small{font-size:.42em;letter-spacing:-.03em;margin-left:3px}
+    .package-card ul{list-style:none;margin:33px 0 50px;padding:25px 0 0;border-top:1px solid #0003;display:grid;align-content:start;gap:13px;line-height:1.6;font-size:14px;word-break:keep-all}
+    .package-card li{position:relative;padding-left:16px}
+    .package-card li:before{content:"";position:absolute;left:0;top:.64em;width:5px;height:5px;background:#879900;border-radius:50%}
+    .package-card.featured ul{border-color:#ffffff50}
+    .package-card.featured li:before{background:var(--acid)}
+    .package-link{margin-top:auto;justify-content:center;white-space:normal;text-align:center;font-size:10px}
+    .package-feature-link{background:var(--acid);color:var(--black);border:1px solid var(--acid)}
+    .services-addon{margin-top:22px;padding:26px 0;display:grid;grid-template-columns:145px 1fr;gap:10px 25px;align-items:start;border-top:1px solid #aaa}
+    .services-addon p{font-size:15px;line-height:1.7;margin:0}
+    .services-addon>span:last-child{grid-column:2;font-size:12px;color:#777}
+    .faq{margin-top:clamp(115px,13vw,200px);display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(35px,6vw,100px)}
+    .faq-intro h3{font:900 clamp(54px,7.5vw,110px)/.9 'DM Sans',Arial,sans-serif;letter-spacing:-.08em;margin:48px 0 0}
+    .faq-intro h3 .serif{font-weight:400;font-size:.8em}
+    .faq-items details{border-bottom:1px solid #bfbfbb}
+    .faq-items details:first-child{border-top:1px solid #bfbfbb}
+    .faq-items summary{padding:24px 0;display:flex;justify-content:space-between;align-items:center;gap:15px;cursor:pointer;font-weight:700;font-size:16px;list-style:none;word-break:keep-all}
+    .faq-items summary::-webkit-details-marker{display:none}
+    .faq-items summary span{font-size:25px;font-weight:400}
+    .faq-items details[open] summary span{transform:rotate(45deg)}
+    .faq-items details p{margin:0;padding:0 25px 24px 0;font-size:15px;line-height:1.8;color:#444;word-break:keep-all}
+    @media(max-width:900px){.packages-grid{grid-template-columns:1fr 1fr}.package-card{min-height:570px}.package-card.featured{grid-column:1/-1}.faq{grid-template-columns:1fr}}
+    @media(max-width:760px){.services{padding:90px 0}.services-top{grid-template-columns:1fr;margin:35px 0 65px;gap:30px}.services-top h2{font-size:clamp(56px,12vw,94px)}.services-top p{justify-self:start;font-size:15px}.packages-grid{grid-template-columns:1fr;gap:12px}.package-card{min-height:0;padding:27px}.package-card.featured{grid-column:auto}.package-card h3{font-size:42px;margin:30px 0 20px}.package-card ul{margin-bottom:35px}.services-addon{grid-template-columns:1fr}.services-addon>span:last-child{grid-column:1}.faq-intro h3{margin-top:28px}.faq-items summary{font-size:15px}}
   </style>
 </head>
 <body>
@@ -403,16 +438,56 @@
         <div class="step" data-reveal><span class="number serif">(03)</span><h3>REFINE.</h3><p>선택한 방향을 다듬고 합의된 범위의 최종 파일을 전달합니다. 실제 납품 항목과 수정 범위는 상품 안내를 따릅니다.</p></div>
       </div>
     </section>
+    <section class="services" id="services" aria-labelledby="services-heading">
+      <div class="wrap">
+        <div class="section-meta eyebrow" data-reveal><span>(05) — SERVICES &amp; PRICING</span><span>THE RIGHT FIT FOR YOUR BRAND</span></div>
+        <div class="services-top" data-reveal><h2 id="services-heading" class="display">WHAT YOU<br><span class="serif">get.</span><span class="acid">•</span></h2><p>브랜드의 시작점에 맞는 구성을 선택하세요.<br>로고 디자인부터 브랜드 아이덴티티까지, 필요한 범위를 명확하게 안내합니다.</p></div>
+        <div class="packages-grid">
+          <article class="package-card" data-reveal>
+            <div class="package-meta eyebrow"><span>(01) — STANDARD</span><span>LOGO DESIGN</span></div>
+            <h3>LOGO<br>BASIC<span class="acid">.</span></h3>
+            <div class="package-price">59,000<small>원</small></div>
+            <ul><li>로고 시안 1종</li><li>수정 2회</li><li>목업 1컷</li><li>PNG · JPG · 원본파일 제공</li><li>작업 기간 5영업일</li></ul>
+            <a href="#inquiry" class="pill outline-dark package-link" data-package="STANDARD — LOGO BASIC">INQUIRE ABOUT STANDARD <span class="icon-arrow">↓</span></a>
+          </article>
+          <article class="package-card" data-reveal>
+            <div class="package-meta eyebrow"><span>(02) — DELUXE</span><span>BRAND SIGNATURE</span></div>
+            <h3>BRAND<br>SIGNATURE<span class="acid">.</span></h3>
+            <div class="package-price">129,000<small>원</small></div>
+            <ul><li>로고 시안 2종</li><li>수정 3회</li><li>기본형 / 가로형 / 단색형</li><li>브랜드 컬러 제안</li><li>목업 2컷</li><li>PNG · JPG · 원본파일 제공</li><li>작업 기간 7영업일</li></ul>
+            <a href="#inquiry" class="pill outline-dark package-link" data-package="DELUXE — BRAND SIGNATURE">INQUIRE ABOUT DELUXE <span class="icon-arrow">↓</span></a>
+          </article>
+          <article class="package-card featured" data-reveal>
+            <div class="package-meta eyebrow"><span>(03) — PREMIUM</span><span>BRAND IDENTITY</span></div>
+            <h3>BRAND<br>IDENTITY<span class="acid">.</span></h3>
+            <div class="package-price">239,000<small>원</small></div>
+            <ul><li>로고 시안 3종</li><li>수정 4회</li><li>기본형 / 가로형 / 단색형</li><li>브랜드 컬러 시스템</li><li>목업 4컷</li><li>미니 브랜드 가이드 3~4P</li><li>PNG · JPG · 원본파일 제공</li><li>작업 기간 10영업일</li></ul>
+            <a href="#inquiry" class="pill package-link package-feature-link" data-package="PREMIUM — BRAND IDENTITY">INQUIRE ABOUT PREMIUM <span class="icon-arrow">↓</span></a>
+          </article>
+        </div>
+        <div class="services-addon" data-reveal><span class="eyebrow">(04) — ADD-ON</span><p>추가 수정 1회 · 시안 1종 추가 · 목업 1컷 추가 · 빠른 작업(상담 후 진행)</p><span>추가 비용은 상담 및 주문 과정에서 안내합니다.</span></div>
+        <div class="faq" aria-labelledby="faq-heading">
+          <div class="faq-intro" data-reveal><span class="eyebrow">( FAQ )</span><h3 id="faq-heading">GOOD<br><span class="serif">to know.</span></h3></div>
+          <div class="faq-items">
+            <details><summary>패키지는 어떻게 선택하나요?<span>+</span></summary><p>로고 1종과 기본 활용을 원한다면 STANDARD, 로고 형태와 컬러까지 정리하고 싶다면 DELUXE, 미니 브랜드 가이드까지 필요하다면 PREMIUM을 추천합니다.</p></details>
+            <details><summary>최종 파일은 어떤 형식으로 받나요?<span>+</span></summary><p>모든 패키지에서 PNG, JPG 및 원본파일을 제공합니다. 세부 형식과 사용 목적은 의뢰 시 함께 확인해 주세요.</p></details>
+            <details><summary>작업 기간은 언제부터 계산하나요?<span>+</span></summary><p>안내된 5·7·10영업일은 패키지별 기본 작업 기간입니다. 실제 시작일과 납품 일정은 접수 내용 및 일정 확인 후 협의합니다.</p></details>
+            <details><summary>원하는 스타일이나 레퍼런스가 없어도 괜찮나요?<span>+</span></summary><p>네. 브랜드명, 업종, 제품·서비스 성격과 선호하는 분위기를 알려주시면 디자인 방향을 함께 정리합니다.</p></details>
+            <details><summary>추가 수정이나 목업도 가능한가요?<span>+</span></summary><p>가능합니다. 추가 수정, 시안, 목업, 빠른 작업은 별도 옵션으로 상담 후 범위와 비용을 안내합니다.</p></details>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="contact" id="contact" aria-labelledby="contact-heading">
       <div class="wrap">
-        <div class="section-meta eyebrow" data-reveal><span>(05) — GET IN TOUCH</span><span>NEW IDEAS ARE WELCOME</span></div>
+        <div class="section-meta eyebrow" data-reveal><span>(06) — GET IN TOUCH</span><span>NEW IDEAS ARE WELCOME</span></div>
         <h2 class="contact-title display" id="contact-heading" data-reveal>HAVE A<br>PROJECT <em>IN</em><br>MIND<span class="acid">?</span></h2>
         <div class="contact-bottom" data-reveal><p>당신의 브랜드에 필요한 다음 장면을 함께 고민해요.<br>로고 디자인, 카페 로고 제작, 브랜드 아이덴티티 작업을 문의해 주세요.</p><div class="contact-actions"><a href="#inquiry" class="pill light">START A PROJECT <span class="icon-arrow">↓</span></a><a href="mailto:ordi.studiordi@gmail.com?subject=STUDIO%20ORDI%20%EB%94%94%EC%9E%90%EC%9D%B8%20%EB%AC%B8%EC%9D%98" class="pill outline-light">EMAIL US <span class="icon-arrow">→</span></a><button class="pill outline-light is-disabled" type="button" disabled aria-label="BOOK VIA KMONG — COMING SOON" title="크몽 서비스 준비 중">BOOK VIA KMONG <span class="icon-arrow">→</span><span class="kmong-soon">COMING SOON</span></button></div></div>
       </div>
       <div class="inquiry-full">
         <div class="wrap">
         <section class="inquiry-panel" id="inquiry" aria-labelledby="inquiry-heading">
-          <div class="inquiry-heading"><span class="eyebrow acid">(06) — NEW PROJECT</span><h3 id="inquiry-heading">TELL US <em class="serif">your story.</em></h3><p>브랜드에 관한 몇 가지 이야기를 들려주세요.<br>폼을 제출하면 스튜디오 오디에 문의가 접수됩니다.</p></div>
+          <div class="inquiry-heading"><span class="eyebrow acid">(07) — NEW PROJECT</span><h3 id="inquiry-heading">TELL US <em class="serif">your story.</em></h3><p>브랜드에 관한 몇 가지 이야기를 들려주세요.<br>폼을 제출하면 스튜디오 오디에 문의가 접수됩니다.</p></div>
           <form id="inquiry-form" class="inquiry-form" action="https://formsubmit.co/ordi.studiordi@gmail.com" method="POST">
             <input type="hidden" name="_subject" value="STUDIO ORDI — NEW PROJECT INQUIRY">
             <input type="hidden" name="_template" value="table">
@@ -471,6 +546,12 @@
     window.addEventListener('blur',hideOrdiPointer);
     if(customCursorMedia.addEventListener)customCursorMedia.addEventListener('change',hideOrdiPointer);
 
+    document.querySelectorAll('[data-package]').forEach(link=>link.addEventListener('click',()=>{
+      const service=document.querySelector('#inquiry-form select[name="service"]');
+      if(service)service.value=link.dataset.package.startsWith('STANDARD')?'로고 디자인':'로고 + 브랜드 아이덴티티';
+      const notes=document.querySelector('#inquiry-form textarea[name="notes"]');
+      if(notes && !notes.value.trim())notes.value='관심 패키지: '+link.dataset.package;
+    }));
     const inquiryForm=document.getElementById('inquiry-form');
     const inquiryStatus=document.getElementById('inquiry-status');
     const inquirySend=document.getElementById('inquiry-send');
