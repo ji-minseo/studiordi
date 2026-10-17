@@ -578,7 +578,7 @@
           inquiryAnimation=inquiryPanel.animate([{height:'0px',opacity:0},{height:inquiryPanel.scrollHeight+'px',opacity:1}],{duration:480,easing:'cubic-bezier(.22,1,.36,1)'});
           inquiryAnimation.finished.catch(()=>{}).then(()=>{if(!inquiryAnimation)return;inquiryPanel.style.overflow='';inquiryAnimation=null;});
         }
-        if(scroll)requestAnimationFrame(()=>setTimeout(()=>inquiryPanel.scrollIntoView({behavior:reducedMotion?'auto':'smooth',block:'start'}),60));
+        if(scroll)requestAnimationFrame(()=>setTimeout(()=>{const y=inquiryPanel.getBoundingClientRect().top+window.scrollY-parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--head'))-32;window.scrollTo({top:Math.max(0,y),behavior:reducedMotion?'auto':'smooth'});},60));
       }else{
         inquiryPanel.hidden=true;
         inquiryShell.classList.remove('is-open');
