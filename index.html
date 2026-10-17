@@ -418,6 +418,16 @@
       .faq-items summary,.faq-items summary span{transition:none!important}
       .faq-items details p{animation:none!important}
     }
+
+    /* Motion v2: image depth and submission acknowledgement */
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+      .project:hover .project-figure img,.project:focus-visible .project-figure img{transform:translate3d(var(--parallax-x,0px),var(--parallax-y,0px),0) scale(1.065)}
+      .project-figure img{transition:transform .55s cubic-bezier(.22,1,.36,1),filter .65s}
+    }
+    .inquiry-submit-action #inquiry-send.is-sent{background:#111!important;color:#E5F58A!important;border-color:#111!important}
+    .inquiry-submit-action #inquiry-send.is-sent:after{content:"";display:inline-block;width:7px;height:7px;margin-left:10px;background:#E6FF38;border-radius:50%;animation:ordi-dot-pop .6s cubic-bezier(.15,1.3,.3,1) both}
+    @keyframes ordi-dot-pop{0%{opacity:0;transform:scale(0) translateY(6px)}65%{opacity:1;transform:scale(1.5) translateY(-3px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+    @media(prefers-reduced-motion:reduce){.inquiry-submit-action #inquiry-send.is-sent:after{animation:none}}
   </style>
   <meta name="naver-site-verification" content="6cad94c060e1f9b5e7594318b588535d8ee04744" />
   <!-- Google Analytics 4: STUDIO ORDI -->
@@ -652,6 +662,7 @@
       event.preventDefault();
       if(!inquiryForm.reportValidity() || inquirySend.disabled)return;
       inquirySend.disabled=true;
+      inquirySend.classList.remove('is-sent');
       inquirySend.textContent='SENDING...';
       inquiryStatus.textContent='문의를 전송하고 있어요...';
       inquiryStatus.classList.remove('is-error','is-success');
@@ -669,6 +680,8 @@
         if(!response.ok || !(data.success===true || data.success==='true'))throw new Error(data.message||'전송에 실패했습니다.');
         inquiryStatus.textContent='접수 요청을 전송했어요! 스튜디오 오디가 내용을 확인한 후 이메일로 답변드릴게요.';
         inquiryStatus.classList.add('is-success');
+        inquirySend.classList.add('is-sent');
+        inquirySend.textContent='INQUIRY SENT ✓';
         trackOrdiEvent('generate_lead',{method:'inquiry_form',package_name:inquiryForm.elements.namedItem('package')?.value || 'unspecified'});
         inquiryForm.reset();
       }catch(error){
@@ -677,7 +690,7 @@
       }finally{
         clearTimeout(timeout);
         inquirySend.disabled=false;
-        inquirySend.textContent='SEND INQUIRY ↗';
+        if(!inquirySend.classList.contains('is-sent'))inquirySend.textContent='SEND INQUIRY ↗';
       }
     });
         const projects={
@@ -714,7 +727,40 @@
       const updateSparkRotation=()=>{const angle=window.scrollY*.075;rotatingSparks.forEach(el=>el.style.setProperty('--scroll-spin',angle+'deg'));spinTicking=false;};
       window.addEventListener('scroll',()=>{if(!spinTicking){spinTicking=true;requestAnimationFrame(updateSparkRotation)}},{passive:true});
       updateSparkRotation();
+      // Marquee responds to scroll velocity, then eases back to its baseline rhythm.
+      const marqueeTrack=document.querySelector('.marquee-track');
+      const marqueeMotion=marqueeTrack?.getAnimations().find(animation=>animation.effect);
+      if(marqueeMotion){
+        let lastScrollY=window.scrollY,lastScrollTime=performance.now(),speed=1,marqueeFrame=0;
+        const settleMarquee=()=>{
+          speed+=(1-speed)*.065;
+          marqueeMotion.playbackRate=speed;
+          if(Math.abs(speed-1)>.01)marqueeFrame=requestAnimationFrame(settleMarquee);
+          else{marqueeMotion.playbackRate=1;marqueeFrame=0;}
+        };
+        window.addEventListener('scroll',()=>{
+          const now=performance.now(),delta=Math.abs(window.scrollY-lastScrollY),dt=Math.max(16,now-lastScrollTime);
+          lastScrollY=window.scrollY;lastScrollTime=now;
+          speed=Math.min(2.7,1+delta/dt*.7);
+          marqueeMotion.playbackRate=speed;
+          if(marqueeFrame)cancelAnimationFrame(marqueeFrame);
+          marqueeFrame=requestAnimationFrame(settleMarquee);
+        },{passive:true});
+      }
       if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+        document.querySelectorAll('.project').forEach(card=>{
+          const image=card.querySelector('.project-figure img');
+          if(!image)return;
+          card.addEventListener('pointermove',event=>{
+            const rect=card.querySelector('.project-figure').getBoundingClientRect();
+            const x=(event.clientX-rect.left)/rect.width-.5;
+            const y=(event.clientY-rect.top)/rect.height-.5;
+            image.style.setProperty('--parallax-x',Math.max(-1,Math.min(1,x*2))*-7+'px');
+            image.style.setProperty('--parallax-y',Math.max(-1,Math.min(1,y*2))*-7+'px');
+          });
+          card.addEventListener('pointerleave',()=>{image.style.removeProperty('--parallax-x');image.style.removeProperty('--parallax-y');});
+          card.addEventListener('blur',()=>{image.style.removeProperty('--parallax-x');image.style.removeProperty('--parallax-y');},true);
+        });
         document.querySelectorAll('.pill:not(:disabled)').forEach(el=>{
           if(el.classList.contains('is-disabled'))return;
           el.dataset.magnetic='';
