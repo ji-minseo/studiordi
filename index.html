@@ -340,7 +340,7 @@
     .services{background:#f9f9f6;color:var(--black);padding:clamp(100px,11.3vw,170px) 0}
     .services-top{display:grid;grid-template-columns:1.2fr .8fr;align-items:end;gap:36px;margin:clamp(48px,8vw,124px) 0 clamp(65px,8vw,118px)}
     .services-top h2{margin:0;font:900 clamp(65px,10vw,156px)/.87 'DM Sans',Arial,sans-serif;letter-spacing:-.09em}
-    .services-top .serif{font-weight:400;font-size:.88em;letter-spacing:-.08em}
+    .services-top .serif{font-weight:400;font-size:.88em;letter-spacing:-.025em}
     .services-top p{font-size:17px;line-height:1.7;max-width:440px;justify-self:end;word-break:keep-all;margin:0}
     .packages-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
     .package-card{padding:clamp(23px,2.7vw,40px);background:#ededeb;display:flex;flex-direction:column;min-width:0;min-height:630px}
@@ -373,7 +373,7 @@
     @media(max-width:760px){.services{padding:90px 0}.services-top{grid-template-columns:1fr;margin:35px 0 65px;gap:30px}.services-top h2{font-size:clamp(56px,12vw,94px)}.services-top p{justify-self:start;font-size:15px}.packages-grid{grid-template-columns:1fr;gap:12px}.package-card{min-height:0;padding:27px}.package-card.featured{grid-column:auto}.package-card h3{font-size:42px;margin:30px 0 20px}.package-card ul{margin-bottom:35px}.services-addon{grid-template-columns:1fr}.services-addon>span:last-child{grid-column:1}.faq-intro h3{margin-top:28px}.faq-items summary{font-size:15px}}
 
     /* Anchor CONTACT exactly at the black section boundary, without global header scroll offset. */
-    #contact{scroll-margin-top:calc(-1 * var(--head))}
+    #contact{scroll-margin-top:calc(-1 * var(--head) - 22px)}
     /* Expandable enquiry experience; footer remains visible when closed. */
     .inquiry-panel[hidden]{display:none!important}
     .inquiry-full{transition:background-color .38s ease,color .38s ease,margin-top .38s ease}
