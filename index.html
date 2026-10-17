@@ -386,6 +386,22 @@
     .inquiry-close:hover,.inquiry-close:focus-visible{background:#141414;color:#E5F58A}
     @media(max-width:760px){.inquiry-close{padding:11px 17px;font-size:10px}}
     @media(prefers-reduced-motion:reduce){.inquiry-full{transition:none!important}}
+    /* ORDI motion accents: preserve layout and original palette */
+    .hero .hero-spark{transform:rotate(calc(-12deg + var(--scroll-spin,0deg)));will-change:transform}
+    .manifesto .manifesto-spark{transform:rotate(var(--scroll-spin,0deg));will-change:transform}
+    @media(hover:hover) and (pointer:fine){
+      .package-card{transition:transform .42s cubic-bezier(.2,.8,.2,1),box-shadow .42s,border-color .3s;outline:1px solid transparent;outline-offset:-1px}
+      .package-card:hover{transform:translateY(-9px);box-shadow:0 20px 40px #00000012;outline-color:#a5b71f}
+      .package-card.featured:hover{box-shadow:0 22px 42px #00000035;outline-color:var(--acid)}
+      .package-card .package-link{transition:background .25s,color .25s,border-color .25s,transform .35s}
+      .package-card:hover .package-link{transform:translateY(-3px)}
+      .pill[data-magnetic]{transition:background .24s,color .24s,border-color .24s,transform .3s cubic-bezier(.22,1,.36,1)}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .hero .hero-spark{transform:rotate(-12deg)!important;will-change:auto}
+      .manifesto .manifesto-spark{transform:none!important;will-change:auto}
+      .package-card,.package-card:hover,.package-card:hover .package-link,.pill[data-magnetic]{transform:none!important;transition:none!important}
+    }
   </style>
   <meta name="naver-site-verification" content="6cad94c060e1f9b5e7594318b588535d8ee04744" />
   <!-- Google Analytics 4: STUDIO ORDI -->
@@ -586,7 +602,7 @@
         inquiryPanel.hidden=false;
         if(!wasOpen && animate && !reducedMotion){
           inquiryPanel.style.overflow='hidden';
-          inquiryAnimation=inquiryPanel.animate([{height:'0px',opacity:0},{height:inquiryPanel.scrollHeight+'px',opacity:1}],{duration:480,easing:'cubic-bezier(.22,1,.36,1)'});
+          inquiryAnimation=inquiryPanel.animate([{height:'0px',opacity:0,transform:'translateY(-8px) scaleY(.985)'},{offset:.78,height:(inquiryPanel.scrollHeight*1.012)+'px',opacity:1,transform:'translateY(0) scaleY(1.008)'},{height:inquiryPanel.scrollHeight+'px',opacity:1,transform:'translateY(0) scaleY(1)'}],{duration:580,easing:'cubic-bezier(.22,1,.36,1)'});
           inquiryAnimation.finished.catch(()=>{}).then(()=>{if(!inquiryAnimation)return;inquiryPanel.style.overflow='';inquiryAnimation=null;});
         }
         if(scroll)requestAnimationFrame(()=>setTimeout(()=>{const y=inquiryPanel.getBoundingClientRect().top+window.scrollY-parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--head'))-52;window.scrollTo({top:Math.max(0,y),behavior:reducedMotion?'auto':'smooth'});},60));
@@ -675,6 +691,26 @@
     // Reveal content progressively without hiding anything from reduced-motion users.
     if(reducedMotion||!('IntersectionObserver' in window)){document.querySelectorAll('[data-reveal]').forEach(el=>el.classList.add('visible'))}
     else{const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add('visible');observer.unobserve(entry.target)}})},{threshold:.08,rootMargin:'0px 0px 35px 0px'});document.querySelectorAll('[data-reveal]').forEach(el=>observer.observe(el))}
+    // Small motion details for desktop; reduced-motion users see the static design.
+    if(!reducedMotion){
+      const rotatingSparks=document.querySelectorAll('.hero .hero-spark,.manifesto .manifesto-spark');
+      let spinTicking=false;
+      const updateSparkRotation=()=>{const angle=window.scrollY*.075;rotatingSparks.forEach(el=>el.style.setProperty('--scroll-spin',angle+'deg'));spinTicking=false;};
+      window.addEventListener('scroll',()=>{if(!spinTicking){spinTicking=true;requestAnimationFrame(updateSparkRotation)}},{passive:true});
+      updateSparkRotation();
+      if(window.matchMedia('(hover:hover) and (pointer:fine)').matches){
+        document.querySelectorAll('.pill:not(:disabled)').forEach(el=>{
+          if(el.classList.contains('is-disabled'))return;
+          el.dataset.magnetic='';
+          el.addEventListener('pointermove',event=>{
+            const rect=el.getBoundingClientRect(),x=(event.clientX-rect.left-rect.width/2)/rect.width,y=(event.clientY-rect.top-rect.height/2)/rect.height;
+            el.style.transform='translate('+Math.max(-5,Math.min(5,x*8)).toFixed(1)+'px,'+Math.max(-5,Math.min(5,y*8-2)).toFixed(1)+'px)';
+          });
+          el.addEventListener('pointerleave',()=>{el.style.transform='';});
+          el.addEventListener('blur',()=>{el.style.transform='';});
+        });
+      }
+    }
     let progressTicking=false;
     const siteHeader=document.getElementById('site-header');
     function syncHeader(){
