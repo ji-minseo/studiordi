@@ -285,20 +285,25 @@
     .inquiry-status.is-success{color:var(--acid)}
     .inquiry-status.is-error{color:#ffbfb3}
     .inquiry-send:disabled,.inquiry-form button:disabled{opacity:.6;cursor:wait}
-    /* Charcoal project inquiry card — four rounded corners */
-    .inquiry-panel{background:#242424;color:#fefefd;padding:clamp(34px,4vw,58px) clamp(22px,4.8vw,70px) clamp(45px,5.5vw,78px);border-top:0;border-radius:28px}
-    .inquiry-panel .eyebrow{color:var(--acid)}
-    .inquiry-heading p{color:#c9c9c9}
-    .inquiry-form label{color:#fefefd}
-    .inquiry-form input,.inquiry-form select,.inquiry-form textarea{background:#f5f5f1;border:1px solid #deded8;color:#070707}
+    /* Full-bleed neon inquiry section and integrated footer */
+    .inquiry-full{background:var(--acid);color:var(--black);margin-top:clamp(100px,10vw,160px);padding:clamp(80px,8vw,135px) 0 32px}
+    .inquiry-panel{margin:0;padding:0;background:transparent;color:var(--black);border:0;border-radius:0}
+    .inquiry-panel .eyebrow{color:var(--black)}
+    .inquiry-heading p{color:#333}
+    .inquiry-form label{color:var(--black)}
+    .inquiry-form input,.inquiry-form select,.inquiry-form textarea{background:#fefefd;border:1px solid rgba(7,7,7,.25);color:var(--black)}
     .inquiry-form ::placeholder{color:#777}
-    .inquiry-form input:focus,.inquiry-form select:focus,.inquiry-form textarea:focus{outline:2px solid var(--acid);outline-offset:2px}
-    .inquiry-submit span,.inquiry-status{color:#c9c9c9}
-    .inquiry-submit span a{color:var(--acid)}
-    .inquiry-submit button.pill.light{background:var(--acid);color:#070707;border-color:var(--acid)}
-    .inquiry-status.is-success{color:var(--acid)}
-    .inquiry-status.is-error{color:#ffbfb3}
-    @media(max-width:760px){.inquiry-panel{border-radius:22px;padding:36px 21px 48px}}
+    .inquiry-form input:focus,.inquiry-form select:focus,.inquiry-form textarea:focus{outline:2px solid var(--black);outline-offset:2px}
+    .inquiry-submit span,.inquiry-status{color:#333}
+    .inquiry-submit span a{color:var(--black)}
+    .inquiry-submit button.pill.light{background:var(--black);color:var(--acid);border-color:var(--black)}
+    .inquiry-status.is-success{color:#15421e}
+    .inquiry-status.is-error{color:#7d1a10}
+    .inquiry-full .footer{margin-top:clamp(95px,10vw,155px);border-top:1px solid rgba(7,7,7,.3);padding-top:26px;color:var(--black)}
+    .inquiry-full .footer .logo img{filter:brightness(0)}
+    .inquiry-full .footer .copyright,.inquiry-full .footer-nav a{color:var(--black)}
+    .inquiry-full .footer-nav a:hover{color:#555}
+    @media(max-width:760px){.inquiry-full{padding:70px 0 26px}.inquiry-panel{padding:0}.inquiry-full .footer{margin-top:95px}}
   </style>
 </head>
 <body>
@@ -371,6 +376,9 @@
         <div class="section-meta eyebrow" data-reveal><span>(05) — GET IN TOUCH</span><span>NEW IDEAS ARE WELCOME</span></div>
         <h2 class="contact-title display" id="contact-heading" data-reveal>HAVE A<br>PROJECT <em>IN</em><br>MIND<span class="acid">?</span></h2>
         <div class="contact-bottom" data-reveal><p>당신의 브랜드에 필요한 다음 장면을 함께 고민해요.<br>로고 디자인, 카페 로고 제작, 브랜드 아이덴티티 작업을 문의해 주세요.</p><div class="contact-actions"><a href="mailto:ordi.studiordi@gmail.com?subject=STUDIO%20ORDI%20%EB%94%94%EC%9E%90%EC%9D%B8%20%EB%AC%B8%EC%9D%98" class="pill light">EMAIL US <span class="icon-arrow">↗</span></a><a href="#inquiry" class="pill outline-light">INQUIRY FORM <span class="icon-arrow">↗</span></a></div></div>
+      </div>
+      <div class="inquiry-full">
+        <div class="wrap">
         <section class="inquiry-panel" id="inquiry" aria-labelledby="inquiry-heading">
           <div class="inquiry-heading"><span class="eyebrow acid">(06) — NEW PROJECT</span><h3 id="inquiry-heading">TELL US <em class="serif">your story.</em></h3><p>브랜드에 관한 몇 가지 이야기를 들려주세요.<br>폼을 제출하면 스튜디오 오디에 문의가 접수됩니다.</p></div>
           <form id="inquiry-form" class="inquiry-form" action="https://formsubmit.co/ordi.studiordi@gmail.com" method="POST">
@@ -391,6 +399,7 @@
           </form>
         </section>
         <footer class="footer"><a href="#top" class="logo" aria-label="Studio Ordi 맨 위로"><img src="assets/ordi-logo.png" width="108" height="45" alt="ordi."></a><span class="copyright">© 2026 STUDIO ORDI.</span><div class="footer-nav"><a href="#work">WORK</a><a href="#studio">ABOUT</a><a href="#top">BACK TO TOP ↑</a></div></footer>
+        </div>
       </div>
     </section>
   </main>
