@@ -436,6 +436,22 @@
     .ordi-title-ready.ordi-title-visible .ordi-title-line{animation:ordi-title-enter .76s cubic-bezier(.22,1,.36,1) both;animation-delay:calc(var(--line-index,0) * 105ms)}
     @media(prefers-reduced-motion:reduce){.ordi-title-ready .ordi-title-line{opacity:1!important;animation:none!important}}
 
+
+    /* Gentle breathing lime halo for the primary enquiry CTA only */
+    #contact-project-toggle.glow-cta[aria-expanded="false"]{
+      animation:ordi-cta-glow 2.8s ease-in-out infinite;
+    }
+    @keyframes ordi-cta-glow{
+      0%,100%{box-shadow:0 0 10px rgba(230,255,56,.18),0 0 22px rgba(230,255,56,.09)}
+      50%{box-shadow:0 0 22px rgba(230,255,56,.53),0 0 46px rgba(230,255,56,.23)}
+    }
+    #contact-project-toggle.glow-cta[aria-expanded="false"]:hover{
+      animation-play-state:paused;
+      box-shadow:0 0 24px rgba(230,255,56,.65),0 0 50px rgba(230,255,56,.30);
+    }
+    @media(prefers-reduced-motion:reduce){
+      #contact-project-toggle.glow-cta{animation:none!important}
+    }
   </style>
   <meta name="naver-site-verification" content="6cad94c060e1f9b5e7594318b588535d8ee04744" />
   <!-- Google Analytics 4: STUDIO ORDI -->
@@ -556,7 +572,7 @@
       <div class="wrap">
         <div class="section-meta eyebrow" data-reveal><span>(06) — GET IN TOUCH</span><span>NEW IDEAS ARE WELCOME</span></div>
         <h2 class="contact-title display" id="contact-heading" data-reveal>HAVE A<br>PROJECT <em>IN</em><br>MIND<span class="acid">?</span></h2>
-        <div class="contact-bottom" data-reveal><p>당신의 브랜드에 필요한 다음 장면을 함께 고민해요.<br>로고 디자인, 카페 로고 제작, 브랜드 아이덴티티 작업을 문의해 주세요.</p><div class="contact-actions"><a href="#inquiry" class="pill light" id="contact-project-toggle" aria-expanded="false" aria-controls="inquiry">START A PROJECT <span class="icon-arrow">↓</span></a><a href="mailto:ordi.studiordi@gmail.com?subject=STUDIO%20ORDI%20%EB%94%94%EC%9E%90%EC%9D%B8%20%EB%AC%B8%EC%9D%98" class="pill outline-light">EMAIL US <span class="icon-arrow">→</span></a></div></div>
+        <div class="contact-bottom" data-reveal><p>당신의 브랜드에 필요한 다음 장면을 함께 고민해요.<br>로고 디자인, 카페 로고 제작, 브랜드 아이덴티티 작업을 문의해 주세요.</p><div class="contact-actions"><a href="#inquiry" class="pill light glow-cta" id="contact-project-toggle" aria-expanded="false" aria-controls="inquiry">START A PROJECT <span class="icon-arrow">↓</span></a><a href="mailto:ordi.studiordi@gmail.com?subject=STUDIO%20ORDI%20%EB%94%94%EC%9E%90%EC%9D%B8%20%EB%AC%B8%EC%9D%98" class="pill outline-light">EMAIL US <span class="icon-arrow">→</span></a></div></div>
       </div>
       <div class="inquiry-full" id="inquiry-shell">
         <div class="wrap">
