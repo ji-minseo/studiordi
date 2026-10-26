@@ -789,7 +789,7 @@
       identityTrack.prepend(prepend);identityTrack.append(append);
       const itemWidth=()=>identityTrack.firstElementChild.getBoundingClientRect().width;
       const columnWidth=()=>itemWidth();
-      let index=count,autoplay=null,resetTimer=0,hovering=false;
+      let index=count,autoplay=null,resetTimer=0,hoverPause=null;
       const sync=()=>{const logical=((index%count)+count)%count;position.textContent=String(logical+1).padStart(2,'0')+' / '+String(count).padStart(2,'0');prev.disabled=false;next.disabled=false};
       const jump=(target)=>{
         identityTrack.style.scrollBehavior='auto';
@@ -821,14 +821,16 @@
       };
       prev.addEventListener('click',()=>move(-1));next.addEventListener('click',()=>move(1));
       const stop=()=>{if(autoplay){clearInterval(autoplay);autoplay=null}};
-      const play=()=>{stop();if(!reduce.matches&&!document.hidden&&!hovering)autoplay=setInterval(()=>move(1),3600)};
-      identityTrack.addEventListener('pointerenter',()=>{hovering=true;stop()});
-      identityTrack.addEventListener('pointerleave',()=>{hovering=false;play()});
-      identityTrack.addEventListener('focusin',stop);
-      identityTrack.addEventListener('focusout',play);
-      identityTrack.addEventListener('touchstart',stop,{passive:true});
-      identityTrack.addEventListener('touchend',()=>{setTimeout(play,2400)},{passive:true});
-      document.addEventListener('visibilitychange',()=>document.hidden?stop():play());
+      const play=()=>{stop();if(!reduce.matches&&!document.hidden)autoplay=setInterval(()=>move(1),2400)};
+      const briefPause=()=>{
+        stop();clearTimeout(hoverPause);
+        hoverPause=setTimeout(play,1100);
+      };
+      identityTrack.addEventListener('pointerenter',briefPause);
+      identityTrack.addEventListener('focusin',briefPause);
+      identityTrack.addEventListener('touchstart',()=>{stop();clearTimeout(hoverPause)},{passive:true});
+      identityTrack.addEventListener('touchend',()=>{clearTimeout(hoverPause);hoverPause=setTimeout(play,1300)},{passive:true});
+      document.addEventListener('visibilitychange',()=>{if(document.hidden){stop();clearTimeout(hoverPause)}else play()});
       window.addEventListener('resize',()=>jump(Math.floor(index/unit())));
       jump(Math.floor(index/unit()));sync();play();
     }
