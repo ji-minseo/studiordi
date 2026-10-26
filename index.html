@@ -909,7 +909,6 @@
       };
       prev.addEventListener('click',()=>{pause();move(-1)});
       next.addEventListener('click',()=>{pause();move(1)});
-      identityTrack.addEventListener('pointerenter',pause);
       identityTrack.addEventListener('focusin',pause);
       identityTrack.addEventListener('touchstart',()=>{stop();clearTimeout(pauseTimer)},{passive:true});
       identityTrack.addEventListener('touchend',()=>{
