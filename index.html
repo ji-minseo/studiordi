@@ -824,50 +824,53 @@
           else if(index<count){index+=count;jump(Math.floor(index/unit()))}
         },700);
       };
-      // Drag with mouse events so normal clicks still reach each project link.
-      let mouseDrag=null,blockNextClick=false;
-      identityTrack.querySelectorAll('img').forEach(img=>img.addEventListener('dragstart',event=>event.preventDefault()));
-      identityTrack.addEventListener('mousedown',event=>{
-        if(event.button!==0)return;
-        mouseDrag={startX:event.clientX,lastX:event.clientX,startLeft:identityTrack.scrollLeft,moved:false};
-        stop();clearTimeout(hoverPause);clearTimeout(resetTimer);
+      // Click stays a click. Only a deliberate horizontal gesture starts dragging.
+      let dragState=null,swallowDragClick=false;
+      identityTrack.addEventListener('dragstart',e=>e.preventDefault());
+      identityTrack.addEventListener('mousedown',e=>{
+        if(e.button!==0||e.target.closest('button'))return;
+        dragState={x:e.clientX,y:e.clientY,left:identityTrack.scrollLeft,active:false};
       });
-      window.addEventListener('mousemove',event=>{
-        if(!mouseDrag)return;
-        const delta=event.clientX-mouseDrag.startX;
-        if(Math.abs(delta)>7)mouseDrag.moved=true;
-        if(!mouseDrag.moved)return;
-        event.preventDefault();
-        identityTrack.classList.add('is-dragging');
-        identityTrack.style.scrollSnapType='none';
-        identityTrack.style.scrollBehavior='auto';
-        identityTrack.scrollLeft=mouseDrag.startLeft-delta;
+      window.addEventListener('mousemove',e=>{
+        if(!dragState)return;
+        const dx=e.clientX-dragState.x,dy=e.clientY-dragState.y;
+        if(!dragState.active){
+          if(Math.abs(dx)<18||Math.abs(dx)<Math.abs(dy)*1.3)return;
+          dragState.active=true;
+          stop();clearTimeout(hoverPause);clearTimeout(resetTimer);
+          identityTrack.classList.add('is-dragging');
+          identityTrack.style.scrollSnapType='none';
+          identityTrack.style.scrollBehavior='auto';
+          dragState.left=identityTrack.scrollLeft+dx;
+        }
+        e.preventDefault();
+        identityTrack.scrollLeft=dragState.left-dx;
       });
-      window.addEventListener('mouseup',event=>{
-        if(!mouseDrag)return;
-        const moved=mouseDrag.moved;
-        mouseDrag=null;
+      window.addEventListener('mouseup',()=>{
+        if(!dragState)return;
+        const moved=dragState.active;
+        dragState=null;
+        if(!moved)return;
         identityTrack.classList.remove('is-dragging');
         identityTrack.style.scrollSnapType='';
         identityTrack.style.scrollBehavior='';
-        if(moved){
-          blockNextClick=true;
-          setTimeout(()=>{blockNextClick=false},300);
-          const target=Math.round(identityTrack.scrollLeft/columnWidth());
-          index=target*unit();
-          identityTrack.scrollTo({left:target*columnWidth(),behavior:reduce.matches?'instant':'smooth'});
+        swallowDragClick=true;
+        setTimeout(()=>{swallowDragClick=false},0);
+        const target=Math.round(identityTrack.scrollLeft/columnWidth());
+        index=target*unit();
+        identityTrack.scrollTo({left:target*columnWidth(),behavior:reduce.matches?'instant':'smooth'});
+        sync();
+        clearTimeout(resetTimer);
+        resetTimer=setTimeout(()=>{
+          if(index>=count*2){index-=count;jump(Math.floor(index/unit()))}
+          else if(index<count){index+=count;jump(Math.floor(index/unit()))}
           sync();
-          clearTimeout(resetTimer);
-          resetTimer=setTimeout(()=>{
-            if(index>=count*2){index-=count;jump(Math.floor(index/unit()))}
-            else if(index<count){index+=count;jump(Math.floor(index/unit()))}
-            sync();
-          },650);
-        }
+        },700);
         clearTimeout(hoverPause);hoverPause=setTimeout(play,1100);
       });
-      identityTrack.addEventListener('click',event=>{
-        if(blockNextClick){event.preventDefault();event.stopPropagation();blockNextClick=false;}
+      identityTrack.addEventListener('click',e=>{
+        if(!swallowDragClick)return;
+        e.preventDefault();e.stopImmediatePropagation();swallowDragClick=false;
       },true);
       prev.addEventListener('click',()=>move(-1));next.addEventListener('click',()=>move(1));
       const stop=()=>{if(autoplay){clearInterval(autoplay);autoplay=null}};
