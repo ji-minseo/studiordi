@@ -494,6 +494,12 @@
     /* Restore the taller editorial showcase instead of compressing the crops. */
     .identity-slider .identity-strip{height:clamp(340px,42vw,610px)}
     @media(max-width:760px){.identity-slider .identity-strip{height:auto}}
+    .projects-grid>.project:nth-child(5){grid-column:1/span 5;margin-top:clamp(25px,4vw,70px)}
+    .works-more{display:flex;align-items:center;justify-content:space-between;width:100%;margin-top:clamp(52px,7vw,110px);padding:22px 2px;border:0;border-top:1px solid #c9c9c6;border-bottom:1px solid #c9c9c6;background:transparent;color:var(--black);font-size:clamp(13px,1.2vw,18px);font-weight:800;letter-spacing:.09em;cursor:pointer;text-align:left;transition:padding .25s,background .25s}
+    .works-more:hover{padding-left:14px;padding-right:14px;background:#f1f1ed}
+    .works-more-symbol{font-size:27px;line-height:1;transition:transform .3s}
+    .works-more[aria-expanded="true"] .works-more-symbol{transform:rotate(45deg)}
+    @media(max-width:760px){.projects-grid>.project:nth-child(5){grid-column:1/span 5;margin-top:35px}}
     @media(prefers-reduced-motion:reduce){.identity-slider .identity-strip{scroll-behavior:auto}}
     @media(hover:hover) and (pointer:fine){
       .identity-slider .identity-strip{cursor:grab}
@@ -563,8 +569,10 @@
           <a href="#project-ourie" class="project" data-reveal aria-label="OURIÉ 포트폴리오 보기"><span class="project-id serif">(02)</span><figure class="project-figure"><img src="assets/ourie-serum.webp" alt="로즈빛 세럼 보틀의 OURIÉ 뷰티 브랜딩" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">OURIÉ</span><span class="category">BEAUTY / IDENTITY</span></div></a>
           <a href="#project-dayshift" class="project" data-reveal aria-label="DAYSHIFT 포트폴리오 보기"><span class="project-id serif">(03)</span><figure class="project-figure"><img src="assets/dayshift-store.webp" alt="블루 사인이 적용된 DAYSHIFT 에스프레소 바 외관" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">DAYSHIFT</span><span class="category">ESPRESSO BAR / IDENTITY</span></div></a>
           <a href="#project-yumday" class="project" data-reveal aria-label="YUMDAY 포트폴리오 보기"><span class="project-id serif">(04)</span><figure class="project-figure"><img src="assets/yumday-bottles.webp" alt="세 가지 소스병에 적용된 YUMDAY 브랜딩" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">YUMDAY</span><span class="category">F&B / PACKAGING</span></div></a>
-          <a href="#project-folden" class="project" data-reveal aria-label="FOLDEN 포트폴리오 보기"><span class="project-id serif">(05)</span><figure class="project-figure"><img src="assets/folden-book.webp" alt="FOLDEN 브랜드 아이덴티티 북 목업" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">FOLDEN</span><span class="category">FURNITURE / IDENTITY</span></div></a>
+          <a href="#project-folden" class="project" hidden aria-label="FOLDEN 포트폴리오 보기"><span class="project-id serif">(05)</span><figure class="project-figure"><img src="assets/folden-book.webp" alt="FOLDEN 브랜드 아이덴티티 북 목업" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">FOLDEN</span><span class="category">FURNITURE / IDENTITY</span></div></a>
         </div>
+        <button type="button" class="works-more" id="works-more" aria-expanded="false" aria-controls="folden-extra"><span>VIEW MORE WORK</span><span class="works-more-symbol">＋</span></button>
+        <div id="folden-extra" hidden aria-hidden="true"></div>
         <div class="editorial-rail" data-reveal><span><span id="portfolio-count">05 SELECTED PROJECTS</span></span><span class="serif" style="font-size:25px;font-weight:400;letter-spacing:-.08em">Independent & intentional.</span><span>SCROLL TO EXPLORE ↓</span></div>
       </div>
     </section>
@@ -820,8 +828,8 @@
         identityTrack.scrollTo({left:Math.floor(index/unit())*columnWidth(),behavior:reduce.matches?'instant':'smooth'});
         sync();clearTimeout(resetTimer);
         resetTimer=setTimeout(()=>{
-          if(index>=count*2){index-=count;jump(Math.floor(index/unit()))}
-          else if(index<count){index+=count;jump(Math.floor(index/unit()))}
+          if(index>=count+2){index-=count;jump(Math.floor(index/unit()))}
+          else if(index<count-2){index+=count;jump(Math.floor(index/unit()))}
         },700);
       };
       // Click stays a click. Only a deliberate horizontal gesture starts dragging.
@@ -829,6 +837,11 @@
       identityTrack.addEventListener('dragstart',e=>e.preventDefault());
       identityTrack.addEventListener('mousedown',e=>{
         if(e.button!==0||e.target.closest('button'))return;
+        // Re-center the repeated strip before dragging, so no visual end is ever reached.
+        const width=columnWidth();
+        const current=Math.round(identityTrack.scrollLeft/width);
+        const canonical=((current%count)+count)%count+count;
+        if(current!==canonical){index=canonical;jump(canonical)}
         dragState={x:e.clientX,y:e.clientY,left:identityTrack.scrollLeft,active:false};
       });
       window.addEventListener('mousemove',e=>{
@@ -862,8 +875,8 @@
         sync();
         clearTimeout(resetTimer);
         resetTimer=setTimeout(()=>{
-          if(index>=count*2){index-=count;jump(Math.floor(index/unit()))}
-          else if(index<count){index+=count;jump(Math.floor(index/unit()))}
+          if(index>=count+2){index-=count;jump(Math.floor(index/unit()))}
+          else if(index<count-2){index+=count;jump(Math.floor(index/unit()))}
           sync();
         },700);
         clearTimeout(hoverPause);hoverPause=setTimeout(play,1100);
@@ -886,6 +899,16 @@
       document.addEventListener('visibilitychange',()=>{if(document.hidden){stop();clearTimeout(hoverPause)}else play()});
       window.addEventListener('resize',()=>jump(Math.floor(index/unit())));
       jump(Math.floor(index/unit()));sync();play();
+    }
+    const worksMore=document.getElementById('works-more');
+    const extraWork=document.querySelector('.projects-grid>a[href="#project-folden"]');
+    if(worksMore&&extraWork){
+      worksMore.addEventListener('click',()=>{
+        const expanded=worksMore.getAttribute('aria-expanded')==='true';
+        extraWork.hidden=expanded;
+        worksMore.setAttribute('aria-expanded',String(!expanded));
+        worksMore.querySelector('span:first-child').textContent=expanded?'VIEW MORE WORK':'SHOW LESS WORK';
+      });
     }
     const home=document.getElementById('home-view');
     const detail=document.getElementById('detail-view');
