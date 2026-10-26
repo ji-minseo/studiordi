@@ -202,22 +202,6 @@
     @media(max-width:760px){
       .identity-slider .identity-strip{height:auto;grid-template-rows:repeat(2,clamp(165px,45vw,285px))}
     }
-    /* Mobile carousel uses four images per panel in original row-major order. */
-    @media(max-width:760px){
-      .identity-slider .identity-strip{
-        display:flex;flex-direction:row;flex-wrap:nowrap;
-        height:auto;grid-template-rows:none;grid-auto-flow:initial;grid-auto-columns:initial;
-      }
-      .identity-slider .identity-strip>.identity-mobile-panel{
-        display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-        grid-template-rows:repeat(2,clamp(165px,45vw,285px));
-        flex:0 0 100%;width:100%;min-width:100%;scroll-snap-align:start;
-      }
-      .identity-slider .identity-mobile-panel>a{display:block;min-width:0;min-height:0;overflow:hidden;position:relative}
-      .identity-slider .identity-mobile-panel img{display:block;width:100%;height:100%;object-fit:cover}
-      .identity-slider .identity-mobile-panel>a[href="#project-dayshift"] img{object-position:left center}
-      .identity-slider .identity-mobile-panel>a[href="#project-folden"] img{object-position:left center}
-    }
     @media(hover:hover) and (pointer:fine){.marquee:hover .marquee-track{animation-play-state:paused}}
     /* Editorial hierarchy through whitespace and scale, not horizontal dividers */
     .section-meta,.works-intro,.editorial-rail,.manifesto-bottom,.step,.step:last-child,.footer,.detail-brief,.detail-ending{border:0}
@@ -529,6 +513,40 @@
       .identity-slider .identity-strip{cursor:grab}
       .identity-slider .identity-strip.is-dragging{cursor:grabbing;user-select:none}
       .identity-slider .identity-strip img{user-select:none;-webkit-user-drag:none}
+    }
+    /* FINAL MOBILE CAROUSEL OVERRIDE: always exactly one 2x2 panel per viewport. */
+    /* Mobile carousel uses four images per panel in original row-major order. */
+    @media(max-width:760px){
+      .identity-slider .identity-strip{
+        display:flex;flex-direction:row;flex-wrap:nowrap;
+        height:auto;grid-template-rows:none;grid-auto-flow:initial;grid-auto-columns:initial;
+      }
+      .identity-slider .identity-strip>.identity-mobile-panel{
+        display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+        grid-template-rows:repeat(2,clamp(165px,45vw,285px));
+        flex:0 0 100%;width:100%;min-width:100%;scroll-snap-align:start;
+      }
+      .identity-slider .identity-mobile-panel>a{display:block;min-width:0;min-height:0;overflow:hidden;position:relative}
+      .identity-slider .identity-mobile-panel img{display:block;width:100%;height:100%;object-fit:cover}
+      .identity-slider .identity-mobile-panel>a[href="#project-dayshift"] img{object-position:left center}
+      .identity-slider .identity-mobile-panel>a[href="#project-folden"] img{object-position:left center}
+    }
+    @media(max-width:760px){
+      .identity-slider{overflow:hidden}
+      .identity-slider #identity-strip{
+        display:flex;flex-wrap:nowrap;flex-direction:row;overflow-x:auto;overflow-y:hidden;
+        scroll-snap-type:x mandatory;width:100%;max-width:100%;
+        height:calc(2 * clamp(165px,45vw,285px));grid-template-rows:none;grid-auto-flow:initial;
+      }
+      .identity-slider #identity-strip>.identity-mobile-panel{
+        box-sizing:border-box;flex:0 0 100%;width:100%;min-width:100%;max-width:100%;
+        display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+        grid-template-rows:repeat(2,clamp(165px,45vw,285px));scroll-snap-align:start;
+      }
+      .identity-slider #identity-strip>.identity-mobile-panel>a{
+        display:block;width:100%;height:100%;min-width:0;min-height:0;overflow:hidden;
+      }
+      .identity-slider #identity-strip>.identity-mobile-panel>a img{width:100%;height:100%;object-fit:cover}
     }
   </style>
   <meta name="naver-site-verification" content="6cad94c060e1f9b5e7594318b588535d8ee04744" />
