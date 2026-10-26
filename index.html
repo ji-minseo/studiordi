@@ -841,10 +841,11 @@
       const mq=window.matchMedia('(max-width:760px)');
       const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
       let mobile=false,slide=0,timer=null,pauseTimer=null,settleTimer=null,drag=null,preventLink=false;
+      const pageCount=()=>mobile?2:count;
       const unitWidth=()=>mobile?identityTrack.clientWidth:identityTrack.clientWidth/4;
       const stop=()=>{clearInterval(timer);timer=null};
       const showPosition=()=>{
-        position.textContent=String((slide%count+count)%count+1).padStart(2,'0')+' / '+String(count).padStart(2,'0');
+        position.textContent=String((slide%pageCount()+pageCount())%pageCount()+1).padStart(2,'0')+' / '+String(pageCount()).padStart(2,'0');
         prev.disabled=false;next.disabled=false;
       };
       const jump=(n)=>{
@@ -854,8 +855,8 @@
         identityTrack.style.scrollSnapType=snap;
       };
       const normalize=()=>{
-        if(slide>=count*2){slide-=count;jump(slide)}
-        else if(slide<count){slide+=count;jump(slide)}
+        if(slide>=pageCount()*2){slide-=pageCount();jump(slide)}
+        else if(slide<pageCount()){slide+=pageCount();jump(slide)}
         showPosition();
       };
       const move=(step)=>{
@@ -879,21 +880,27 @@
         identityTrack.replaceChildren();
         const frag=document.createDocumentFragment();
         for(let copy=0;copy<3;copy++){
-          for(let i=0;i<count;i++){
-            if(mobile){
+          if(mobile){
+            for(let page=0;page<2;page++){
               const panel=document.createElement('div');
               panel.className='identity-mobile-panel';
-              for(let k=0;k<4;k++){
-                panel.appendChild(sources[(i+k)%count].cloneNode(true));
+              const items=page===0?sources.slice(0,4):sources.slice(4,5);
+              items.forEach(item=>panel.appendChild(item.cloneNode(true)));
+              // Empty cells stay black; no repeated brands on page two.
+              for(let blank=items.length;blank<4;blank++){
+                const cell=document.createElement('div');
+                cell.className='identity-empty-cell';
+                cell.setAttribute('aria-hidden','true');
+                panel.appendChild(cell);
               }
               frag.appendChild(panel);
-            }else{
-              frag.appendChild(sources[i].cloneNode(true));
             }
+          }else{
+            sources.forEach(item=>frag.appendChild(item.cloneNode(true)));
           }
         }
         identityTrack.appendChild(frag);
-        slide=count;
+        slide=pageCount();
         jump(slide);showPosition();play();
       };
       prev.addEventListener('click',()=>{pause();move(-1)});
