@@ -569,10 +569,9 @@
           <a href="#project-ourie" class="project" data-reveal aria-label="OURIÉ 포트폴리오 보기"><span class="project-id serif">(02)</span><figure class="project-figure"><img src="assets/ourie-serum.webp" alt="로즈빛 세럼 보틀의 OURIÉ 뷰티 브랜딩" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">OURIÉ</span><span class="category">BEAUTY / IDENTITY</span></div></a>
           <a href="#project-dayshift" class="project" data-reveal aria-label="DAYSHIFT 포트폴리오 보기"><span class="project-id serif">(03)</span><figure class="project-figure"><img src="assets/dayshift-store.webp" alt="블루 사인이 적용된 DAYSHIFT 에스프레소 바 외관" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">DAYSHIFT</span><span class="category">ESPRESSO BAR / IDENTITY</span></div></a>
           <a href="#project-yumday" class="project" data-reveal aria-label="YUMDAY 포트폴리오 보기"><span class="project-id serif">(04)</span><figure class="project-figure"><img src="assets/yumday-bottles.webp" alt="세 가지 소스병에 적용된 YUMDAY 브랜딩" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">YUMDAY</span><span class="category">F&B / PACKAGING</span></div></a>
-          <a href="#project-folden" class="project" hidden aria-label="FOLDEN 포트폴리오 보기"><span class="project-id serif">(05)</span><figure class="project-figure"><img src="assets/folden-book.webp" alt="FOLDEN 브랜드 아이덴티티 북 목업" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">FOLDEN</span><span class="category">FURNITURE / IDENTITY</span></div></a>
+          <a href="#project-folden" class="project" id="folden-extra" hidden aria-label="FOLDEN 포트폴리오 보기"><span class="project-id serif">(05)</span><figure class="project-figure"><img src="assets/folden-book.webp" alt="FOLDEN 브랜드 아이덴티티 북 목업" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">FOLDEN</span><span class="category">FURNITURE / IDENTITY</span></div></a>
         </div>
         <button type="button" class="works-more" id="works-more" aria-expanded="false" aria-controls="folden-extra"><span>VIEW MORE WORK</span><span class="works-more-symbol">＋</span></button>
-        <div id="folden-extra" hidden aria-hidden="true"></div>
         <div class="editorial-rail" data-reveal><span><span id="portfolio-count">05 SELECTED PROJECTS</span></span><span class="serif" style="font-size:25px;font-weight:400;letter-spacing:-.08em">Independent & intentional.</span><span>SCROLL TO EXPLORE ↓</span></div>
       </div>
     </section>
@@ -840,7 +839,8 @@
         // Re-center the repeated strip before dragging, so no visual end is ever reached.
         const width=columnWidth();
         const current=Math.round(identityTrack.scrollLeft/width);
-        const canonical=((current%count)+count)%count+count;
+        const canonicalBase=((current%count)+count)%count+count;
+        const canonical=canonicalBase>=count+3?canonicalBase-count:canonicalBase;
         if(current!==canonical){index=canonical;jump(canonical)}
         dragState={x:e.clientX,y:e.clientY,left:identityTrack.scrollLeft,active:false};
       });
