@@ -868,8 +868,8 @@
         identityTrack.style.scrollSnapType=snap;
       };
       const normalize=()=>{
-        if(slide>=pageCount()*2){slide-=pageCount();jump(slide)}
-        else if(slide<pageCount()){slide+=pageCount();jump(slide)}
+        if(slide>=pageCount()*3){slide-=pageCount();jump(slide)}
+        else if(slide<pageCount()*2){slide+=pageCount();jump(slide)}
         showPosition();
       };
       const move=(step)=>{
@@ -892,7 +892,7 @@
         clearTimeout(settleTimer);clearTimeout(pauseTimer);stop();
         identityTrack.replaceChildren();
         const frag=document.createDocumentFragment();
-        for(let copy=0;copy<3;copy++){
+        for(let copy=0;copy<5;copy++){
           if(mobile){
             for(let page=0;page<2;page++){
               const panel=document.createElement('div');
@@ -913,7 +913,7 @@
           }
         }
         identityTrack.appendChild(frag);
-        slide=pageCount();
+        slide=pageCount()*2;
         jump(slide);showPosition();play();
       };
       prev.addEventListener('click',()=>{pause();move(-1)});
@@ -931,6 +931,11 @@
       identityTrack.addEventListener('dragstart',event=>event.preventDefault());
       identityTrack.addEventListener('mousedown',event=>{
         if(event.button!==0)return;
+        // Recenter identical loop copies before grabbing so both directions have space.
+        const page=pageCount(),width=unitWidth();
+        const current=Math.round(identityTrack.scrollLeft/width);
+        const centered=((current%page)+page)%page+page*2;
+        if(current!==centered){slide=centered;jump(centered)}
         drag={x:event.clientX,y:event.clientY,left:identityTrack.scrollLeft,active:false};
       });
       window.addEventListener('mousemove',event=>{
