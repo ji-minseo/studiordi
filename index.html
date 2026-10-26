@@ -495,6 +495,11 @@
     .identity-slider .identity-strip{height:clamp(340px,42vw,610px)}
     @media(max-width:760px){.identity-slider .identity-strip{height:auto}}
     @media(prefers-reduced-motion:reduce){.identity-slider .identity-strip{scroll-behavior:auto}}
+    @media(hover:hover) and (pointer:fine){
+      .identity-slider .identity-strip{cursor:grab}
+      .identity-slider .identity-strip.is-dragging{cursor:grabbing;user-select:none}
+      .identity-slider .identity-strip img{user-select:none;-webkit-user-drag:none}
+    }
   </style>
   <meta name="naver-site-verification" content="6cad94c060e1f9b5e7594318b588535d8ee04744" />
   <!-- Google Analytics 4: STUDIO ORDI -->
@@ -819,6 +824,53 @@
           else if(index<count){index+=count;jump(Math.floor(index/unit()))}
         },700);
       };
+      // Desktop mouse drag; touch keeps native swipe. Avoid opening links after a drag.
+      let drag=null,suppressClick=false;
+      identityTrack.addEventListener('pointerdown',event=>{
+        if(event.pointerType!=='mouse'||event.button!==0)return;
+        drag={id:event.pointerId,x:event.clientX,left:identityTrack.scrollLeft,moved:false};
+        identityTrack.setPointerCapture(event.pointerId);
+        identityTrack.classList.add('is-dragging');
+        stop();clearTimeout(hoverPause);clearTimeout(resetTimer);
+      });
+      identityTrack.addEventListener('pointermove',event=>{
+        if(!drag||event.pointerId!==drag.id)return;
+        const distance=event.clientX-drag.x;
+        if(Math.abs(distance)>5)drag.moved=true;
+        if(!drag.moved)return;
+        identityTrack.style.scrollBehavior='auto';
+        identityTrack.style.scrollSnapType='none';
+        identityTrack.scrollLeft=drag.left-distance;
+      });
+      const finishDrag=event=>{
+        if(!drag||event.pointerId!==drag.id)return;
+        const moved=drag.moved;
+        drag=null;
+        identityTrack.classList.remove('is-dragging');
+        identityTrack.style.scrollSnapType='';
+        identityTrack.style.scrollBehavior='';
+        if(identityTrack.hasPointerCapture(event.pointerId))identityTrack.releasePointerCapture(event.pointerId);
+        if(moved){
+          suppressClick=true;
+          const target=Math.round(identityTrack.scrollLeft/columnWidth());
+          index=target*unit();
+          identityTrack.scrollTo({left:target*columnWidth(),behavior:reduce.matches?'instant':'smooth'});
+          sync();
+          clearTimeout(resetTimer);
+          resetTimer=setTimeout(()=>{
+            if(index>=count*2){index-=count;jump(Math.floor(index/unit()))}
+            else if(index<count){index+=count;jump(Math.floor(index/unit()))}
+            sync();
+          },650);
+          setTimeout(()=>{suppressClick=false},100);
+        }
+        clearTimeout(hoverPause);hoverPause=setTimeout(play,1100);
+      };
+      identityTrack.addEventListener('pointerup',finishDrag);
+      identityTrack.addEventListener('pointercancel',finishDrag);
+      identityTrack.addEventListener('click',event=>{
+        if(suppressClick){event.preventDefault();event.stopPropagation();suppressClick=false;}
+      },true);
       prev.addEventListener('click',()=>move(-1));next.addEventListener('click',()=>move(1));
       const stop=()=>{if(autoplay){clearInterval(autoplay);autoplay=null}};
       const play=()=>{stop();if(!reduce.matches&&!document.hidden)autoplay=setInterval(()=>move(1),2400)};
