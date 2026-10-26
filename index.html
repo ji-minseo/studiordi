@@ -489,6 +489,9 @@
       .identity-slider .identity-strip>a{width:100%;height:100%;scroll-snap-align:start}
       .project:nth-child(5){grid-column:1/span 6}
     }
+    /* Restore the taller editorial showcase instead of compressing the crops. */
+    .identity-slider .identity-strip{height:clamp(340px,42vw,610px)}
+    @media(max-width:760px){.identity-slider .identity-strip{height:auto}}
     @media(prefers-reduced-motion:reduce){.identity-slider .identity-strip{scroll-behavior:auto}}
   </style>
   <meta name="naver-site-verification" content="6cad94c060e1f9b5e7594318b588535d8ee04744" />
@@ -771,22 +774,61 @@
       folden:{name:'FOLDEN',number:'5',type:'FURNITURE / BRAND IDENTITY',cover:'assets/folden-book.webp',summary:'FOLDEN은 모듈형 가구와 일상 오브제를 위한 컨템포러리 라이프스타일 브랜드 콘셉트입니다. 기하학적 심볼과 블랙 워드마크, 따뜻한 아이보리·오렌지 포인트로 건축적인 질서와 편안한 생활 감각을 표현했습니다.',gallery:[['assets/folden-room.webp','FOLDEN 브랜드 공간 목업'],['assets/folden-furniture.webp','FOLDEN 모듈형 수납 가구와 테이블'],['assets/folden-web.webp','FOLDEN 데스크톱과 모바일 웹 목업']]},
       yumday:{name:'YUMDAY',number:'4',type:'F&B / BRAND IDENTITY',cover:'assets/yumday-flatlay.webp',summary:'YUMDAY는 유쾌한 스마일 심볼과 대담한 커스텀 워드마크, 선명한 컬러를 사용하여 평범한 식사에 즐거움을 더하는 F&B 브랜드입니다.',gallery:[['assets/yumday-bottles.webp','YUMDAY 소스 라인업'],['assets/yumday-boxes.webp','YUMDAY 패키지 및 식품 브랜드 캠페인']]}
     };
-    // Native scroll-snap keeps the identity showcase swipeable without a slider library.
+    // Looping auto-playing gallery; mouse, touch and keyboard remain usable.
     const identityTrack=document.getElementById('identity-strip');
     if(identityTrack){
       const prev=document.querySelector('.identity-prev'),next=document.querySelector('.identity-next'),position=document.querySelector('.identity-position');
-      const syncIdentity=()=>{
-        const tile=identityTrack.firstElementChild.getBoundingClientRect().width;
-        const total=Math.max(1,Math.round((identityTrack.scrollWidth-identityTrack.clientWidth)/tile)+1);
-        const index=Math.min(total-1,Math.round(identityTrack.scrollLeft/tile));
-        prev.disabled=index===0;next.disabled=index>=total-1;
-        position.textContent=String(index+1).padStart(2,'0')+' / '+String(total).padStart(2,'0');
+      const originals=Array.from(identityTrack.children),count=originals.length;
+      const reduce=window.matchMedia('(prefers-reduced-motion:reduce)');
+      const copy=(node)=>{const clone=node.cloneNode(true);clone.removeAttribute('id');return clone};
+      const prepend=document.createDocumentFragment(),append=document.createDocumentFragment();
+      originals.forEach(node=>prepend.appendChild(copy(node)));
+      originals.forEach(node=>append.appendChild(copy(node)));
+      identityTrack.prepend(prepend);identityTrack.append(append);
+      const itemWidth=()=>identityTrack.firstElementChild.getBoundingClientRect().width;
+      const columnWidth=()=>itemWidth();
+      let index=count,autoplay=null,resetTimer=0,hovering=false;
+      const sync=()=>{const logical=((index%count)+count)%count;position.textContent=String(logical+1).padStart(2,'0')+' / '+String(count).padStart(2,'0');prev.disabled=false;next.disabled=false};
+      const jump=(target)=>{
+        identityTrack.style.scrollBehavior='auto';
+        identityTrack.scrollLeft=target*columnWidth();
+        identityTrack.style.scrollBehavior='';
       };
-      const advance=direction=>identityTrack.scrollBy({left:direction*identityTrack.firstElementChild.getBoundingClientRect().width,behavior:window.matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});
-      prev.addEventListener('click',()=>advance(-1));next.addEventListener('click',()=>advance(1));
-      identityTrack.addEventListener('scroll',()=>requestAnimationFrame(syncIdentity),{passive:true});
-      window.addEventListener('resize',syncIdentity);
-      syncIdentity();
+      const go=(direction)=>{
+        index+=direction;
+        identityTrack.scrollTo({left:index*columnWidth(),behavior:reduce.matches?'instant':'smooth'});
+        sync();
+        clearTimeout(resetTimer);
+        resetTimer=setTimeout(()=>{
+          if(index>=count*2){index-=count;jump(index)}
+          else if(index<count){index+=count;jump(index)}
+          sync();
+        },650);
+      };
+      // Mobile retains the original two-row editorial presentation.
+      const mobile=()=>window.matchMedia('(max-width:760px)').matches;
+      const unit=()=>mobile()?2:1;
+      const move=(direction)=>{
+        index+=direction*unit();
+        identityTrack.scrollTo({left:Math.floor(index/unit())*columnWidth(),behavior:reduce.matches?'instant':'smooth'});
+        sync();clearTimeout(resetTimer);
+        resetTimer=setTimeout(()=>{
+          if(index>=count*2){index-=count;jump(Math.floor(index/unit()))}
+          else if(index<count){index+=count;jump(Math.floor(index/unit()))}
+        },700);
+      };
+      prev.addEventListener('click',()=>move(-1));next.addEventListener('click',()=>move(1));
+      const stop=()=>{if(autoplay){clearInterval(autoplay);autoplay=null}};
+      const play=()=>{stop();if(!reduce.matches&&!document.hidden&&!hovering)autoplay=setInterval(()=>move(1),3600)};
+      identityTrack.addEventListener('pointerenter',()=>{hovering=true;stop()});
+      identityTrack.addEventListener('pointerleave',()=>{hovering=false;play()});
+      identityTrack.addEventListener('focusin',stop);
+      identityTrack.addEventListener('focusout',play);
+      identityTrack.addEventListener('touchstart',stop,{passive:true});
+      identityTrack.addEventListener('touchend',()=>{setTimeout(play,2400)},{passive:true});
+      document.addEventListener('visibilitychange',()=>document.hidden?stop():play());
+      window.addEventListener('resize',()=>jump(Math.floor(index/unit())));
+      jump(Math.floor(index/unit()));sync();play();
     }
     const home=document.getElementById('home-view');
     const detail=document.getElementById('detail-view');
