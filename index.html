@@ -456,6 +456,27 @@
     .project:nth-child(5) .project-figure{aspect-ratio:1.38}
     @media(max-width:760px){.project:nth-child(5){grid-column:1/span 6;margin-top:0}.project:nth-child(5) .project-figure{aspect-ratio:1.15}}
     .project[hidden]{display:none!important}
+
+    /* Five identities, four desktop tiles visible: swipe, scroll or use arrow controls. */
+    .identity-slider{position:relative;background:var(--black)}
+    .identity-slider .identity-strip{display:flex;height:clamp(240px,33vw,465px);overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior-x:contain}
+    .identity-slider .identity-strip::-webkit-scrollbar{display:none}
+    .identity-slider .identity-strip>a{flex:0 0 25%;height:100%;scroll-snap-align:start}
+    .identity-controls{position:absolute;right:clamp(12px,3vw,38px);bottom:16px;z-index:5;display:flex;align-items:center;gap:11px;padding:5px 7px;border-radius:30px;background:rgba(7,7,7,.76);color:#fff;backdrop-filter:blur(8px)}
+    .identity-controls button{border:0;background:transparent;color:inherit;width:31px;height:31px;border-radius:50%;cursor:pointer;font-size:21px;line-height:1}
+    .identity-controls button:hover:not(:disabled),.identity-controls button:focus-visible{background:var(--acid);color:var(--black)}
+    .identity-controls button:disabled{opacity:.3;cursor:default}
+    .identity-position{font:700 10px 'Space Grotesk',sans-serif;letter-spacing:.11em;min-width:43px;text-align:center}
+    .project:nth-child(5){grid-column:8/span 5;margin-top:clamp(35px,6vw,115px)}
+    .project:nth-child(5) .project-figure{aspect-ratio:1.11}
+    @media(max-width:760px){
+      .identity-slider .identity-strip{height:clamp(165px,45vw,285px)}
+      .identity-slider .identity-strip>a{flex:0 0 50%;height:100%}
+      .identity-controls{bottom:9px;right:10px}
+      .project:nth-child(5){grid-column:2/span 5;margin-top:0}
+      .project:nth-child(5) .project-figure{aspect-ratio:.98}
+    }
+    @media(prefers-reduced-motion:reduce){.identity-slider .identity-strip{scroll-behavior:auto}}
   </style>
   <meta name="naver-site-verification" content="6cad94c060e1f9b5e7594318b588535d8ee04744" />
   <!-- Google Analytics 4: STUDIO ORDI -->
@@ -489,11 +510,19 @@
         <div class="hero-bottom"><p>예쁜 로고를 넘어,<br>브랜드의 분위기까지 디자인합니다.</p><a class="scroll-link" href="#work">EXPLORE THE WORK <span class="down-circle" aria-hidden="true">↓</span></a></div>
       </div>
     </section>
-    <section class="identity-strip" aria-label="Selected brand identities — quick overview">
-      <a href="#project-noveil" aria-label="View NOVEIL project"><img src="assets/noveil-fashion.webp" alt="NOVEIL fashion label" fetchpriority="high"></a>
-      <a href="#project-ourie" aria-label="View OURIÉ project"><img src="assets/ourie-serum.webp" alt="OURIÉ serum packaging" fetchpriority="high"></a>
-      <a href="#project-dayshift" aria-label="View DAYSHIFT project"><img src="assets/dayshift-store.webp" alt="DAYSHIFT espresso bar" fetchpriority="high"></a>
-      <a href="#project-yumday" aria-label="View YUMDAY project"><img src="assets/yumday-bottles.webp" alt="YUMDAY sauce bottle packaging" fetchpriority="high"></a>
+    <section class="identity-slider" aria-label="Selected brand identities — swipe to explore">
+      <div class="identity-strip" id="identity-strip">
+        <a href="#project-noveil" aria-label="View NOVEIL project"><img src="assets/noveil-fashion.webp" alt="NOVEIL fashion label" fetchpriority="high"></a>
+        <a href="#project-ourie" aria-label="View OURIÉ project"><img src="assets/ourie-serum.webp" alt="OURIÉ serum packaging" fetchpriority="high"></a>
+        <a href="#project-dayshift" aria-label="View DAYSHIFT project"><img src="assets/dayshift-store.webp" alt="DAYSHIFT espresso bar" fetchpriority="high"></a>
+        <a href="#project-yumday" aria-label="View YUMDAY project"><img src="assets/yumday-bottles.webp" alt="YUMDAY sauce bottle packaging" fetchpriority="high"></a>
+        <a href="#project-folden" aria-label="View FOLDEN project"><img src="assets/folden-book.webp" alt="FOLDEN furniture brand identity book" loading="lazy"></a>
+      </div>
+      <div class="identity-controls" aria-label="Portfolio carousel controls">
+        <button class="identity-prev" type="button" aria-label="Previous projects" disabled>←</button>
+        <span class="identity-position" aria-live="polite">01 / 02</span>
+        <button class="identity-next" type="button" aria-label="Next projects">→</button>
+      </div>
     </section>
     <div class="marquee" aria-label="DIFFERENT BY DESIGN — STUDIO ORDI">
       <div class="marquee-track" aria-hidden="true">
@@ -729,6 +758,24 @@
       folden:{name:'FOLDEN',number:'5',type:'FURNITURE / BRAND IDENTITY',cover:'assets/folden-book.webp',summary:'FOLDEN은 모듈형 가구와 일상 오브제를 위한 컨템포러리 라이프스타일 브랜드 콘셉트입니다. 기하학적 심볼과 블랙 워드마크, 따뜻한 아이보리·오렌지 포인트로 건축적인 질서와 편안한 생활 감각을 표현했습니다.',gallery:[['assets/folden-room.webp','FOLDEN 브랜드 공간 목업'],['assets/folden-furniture.webp','FOLDEN 모듈형 수납 가구와 테이블'],['assets/folden-web.webp','FOLDEN 데스크톱과 모바일 웹 목업']]},
       yumday:{name:'YUMDAY',number:'4',type:'F&B / BRAND IDENTITY',cover:'assets/yumday-flatlay.webp',summary:'YUMDAY는 유쾌한 스마일 심볼과 대담한 커스텀 워드마크, 선명한 컬러를 사용하여 평범한 식사에 즐거움을 더하는 F&B 브랜드입니다.',gallery:[['assets/yumday-bottles.webp','YUMDAY 소스 라인업'],['assets/yumday-boxes.webp','YUMDAY 패키지 및 식품 브랜드 캠페인']]}
     };
+    // Native scroll-snap keeps the identity showcase swipeable without a slider library.
+    const identityTrack=document.getElementById('identity-strip');
+    if(identityTrack){
+      const prev=document.querySelector('.identity-prev'),next=document.querySelector('.identity-next'),position=document.querySelector('.identity-position');
+      const syncIdentity=()=>{
+        const max=Math.max(0,identityTrack.scrollWidth-identityTrack.clientWidth);
+        const visible=Math.max(1,Math.round(identityTrack.clientWidth/identityTrack.firstElementChild.getBoundingClientRect().width));
+        const total=Math.max(1,identityTrack.children.length-visible+1);
+        const index=Math.min(total-1,Math.round(identityTrack.scrollLeft/identityTrack.firstElementChild.getBoundingClientRect().width));
+        prev.disabled=index===0;next.disabled=index>=total-1;
+        position.textContent=String(index+1).padStart(2,'0')+' / '+String(total).padStart(2,'0');
+      };
+      const advance=direction=>identityTrack.scrollBy({left:direction*identityTrack.firstElementChild.getBoundingClientRect().width,behavior:window.matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});
+      prev.addEventListener('click',()=>advance(-1));next.addEventListener('click',()=>advance(1));
+      identityTrack.addEventListener('scroll',()=>requestAnimationFrame(syncIdentity),{passive:true});
+      window.addEventListener('resize',syncIdentity);
+      syncIdentity();
+    }
     const home=document.getElementById('home-view');
     const detail=document.getElementById('detail-view');
     const menu=document.getElementById('mobile-nav');
