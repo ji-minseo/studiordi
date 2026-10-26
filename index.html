@@ -489,6 +489,8 @@
       .identity-slider .identity-strip>a{width:100%;height:100%;scroll-snap-align:start}
       .project:nth-child(5){grid-column:1/span 6}
     }
+    /* DAYSHIFT must keep its left-side crop, including looping slide clones. */
+    .identity-slider .identity-strip>a[href="#project-dayshift"] img{object-position:left center}
     /* Restore the taller editorial showcase instead of compressing the crops. */
     .identity-slider .identity-strip{height:clamp(340px,42vw,610px)}
     @media(max-width:760px){.identity-slider .identity-strip{height:auto}}
