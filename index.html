@@ -202,6 +202,22 @@
     @media(max-width:760px){
       .identity-slider .identity-strip{height:auto;grid-template-rows:repeat(2,clamp(165px,45vw,285px))}
     }
+    /* Mobile carousel uses four images per panel in original row-major order. */
+    @media(max-width:760px){
+      .identity-slider .identity-strip{
+        display:flex;flex-direction:row;flex-wrap:nowrap;
+        height:auto;grid-template-rows:none;grid-auto-flow:initial;grid-auto-columns:initial;
+      }
+      .identity-slider .identity-strip>.identity-mobile-panel{
+        display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+        grid-template-rows:repeat(2,clamp(165px,45vw,285px));
+        flex:0 0 100%;width:100%;min-width:100%;scroll-snap-align:start;
+      }
+      .identity-slider .identity-mobile-panel>a{display:block;min-width:0;min-height:0;overflow:hidden;position:relative}
+      .identity-slider .identity-mobile-panel img{display:block;width:100%;height:100%;object-fit:cover}
+      .identity-slider .identity-mobile-panel>a[href="#project-dayshift"] img{object-position:left center}
+      .identity-slider .identity-mobile-panel>a[href="#project-folden"] img{object-position:left center}
+    }
     @media(hover:hover) and (pointer:fine){.marquee:hover .marquee-track{animation-play-state:paused}}
     /* Editorial hierarchy through whitespace and scale, not horizontal dividers */
     .section-meta,.works-intro,.editorial-rail,.manifesto-bottom,.step,.step:last-child,.footer,.detail-brief,.detail-ending{border:0}
@@ -796,128 +812,127 @@
       folden:{name:'FOLDEN',number:'5',type:'FURNITURE / BRAND IDENTITY',cover:'assets/folden-furniture.webp',summary:'FOLDEN은 모듈형 가구와 일상 오브제를 위한 컨템포러리 라이프스타일 브랜드 콘셉트입니다. 기하학적 심볼과 블랙 워드마크, 따뜻한 아이보리·오렌지 포인트로 건축적인 질서와 편안한 생활 감각을 표현했습니다.',gallery:[['assets/folden-book.webp','FOLDEN 브랜드 아이덴티티 북'],['assets/folden-room.webp','FOLDEN 브랜드 공간 목업'],['assets/folden-web.webp','FOLDEN 데스크톱과 모바일 웹 목업']]},
       yumday:{name:'YUMDAY',number:'4',type:'F&B / BRAND IDENTITY',cover:'assets/yumday-flatlay.webp',summary:'YUMDAY는 유쾌한 스마일 심볼과 대담한 커스텀 워드마크, 선명한 컬러를 사용하여 평범한 식사에 즐거움을 더하는 F&B 브랜드입니다.',gallery:[['assets/yumday-bottles.webp','YUMDAY 소스 라인업'],['assets/yumday-boxes.webp','YUMDAY 패키지 및 식품 브랜드 캠페인']]}
     };
-    // Looping auto-playing gallery; mouse, touch and keyboard remain usable.
+    // Carousel: desktop shows four tiles; mobile shows original row-major 2x2 panels.
     const identityTrack=document.getElementById('identity-strip');
     if(identityTrack){
-      const prev=document.querySelector('.identity-prev'),next=document.querySelector('.identity-next'),position=document.querySelector('.identity-position');
-      const originals=Array.from(identityTrack.children),count=originals.length;
-      const reduce=window.matchMedia('(prefers-reduced-motion:reduce)');
-      const copy=(node)=>{const clone=node.cloneNode(true);clone.removeAttribute('id');return clone};
-      const prepend=document.createDocumentFragment(),append=document.createDocumentFragment();
-      const initialMobile=window.matchMedia('(max-width:760px)').matches;
-      const copies=initialMobile?4:1;
-      for(let n=0;n<copies;n++)originals.forEach(node=>prepend.appendChild(copy(node)));
-      for(let n=0;n<copies;n++)originals.forEach(node=>append.appendChild(copy(node)));
-      identityTrack.prepend(prepend);identityTrack.append(append);
-      if(initialMobile){
-        // Mobile original gallery was row-major: NOVEIL, OURIÉ / DAYSHIFT, YUMDAY.
-        // Grid auto-flow is column-major, so reorder each four-card group visually.
-        Array.from(identityTrack.children).forEach((card,i)=>{
-          const offsets=[0,2,1,3];
-          card.style.order=4*Math.floor(i/4)+offsets[i%4];
-        });
-      }
-      const itemWidth=()=>identityTrack.firstElementChild.getBoundingClientRect().width;
-      const columnWidth=()=>itemWidth();
-      let index=count*copies,autoplay=null,resetTimer=0,hoverPause=null;
-      const sync=()=>{const logical=((index%count)+count)%count;position.textContent=String(logical+1).padStart(2,'0')+' / '+String(count).padStart(2,'0');prev.disabled=false;next.disabled=false};
-      const jump=(target)=>{
-        identityTrack.style.scrollBehavior='auto';
-        identityTrack.scrollLeft=target*columnWidth();
-        identityTrack.style.scrollBehavior='';
+      const prev=document.querySelector('.identity-prev');
+      const next=document.querySelector('.identity-next');
+      const position=document.querySelector('.identity-position');
+      const sources=Array.from(identityTrack.children).map(el=>el.cloneNode(true));
+      const count=sources.length;
+      const mq=window.matchMedia('(max-width:760px)');
+      const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+      let mobile=false,slide=0,timer=null,pauseTimer=null,settleTimer=null,drag=null,preventLink=false;
+      const unitWidth=()=>mobile?identityTrack.clientWidth:identityTrack.clientWidth/4;
+      const stop=()=>{clearInterval(timer);timer=null};
+      const showPosition=()=>{
+        position.textContent=String((slide%count+count)%count+1).padStart(2,'0')+' / '+String(count).padStart(2,'0');
+        prev.disabled=false;next.disabled=false;
       };
-      const go=(direction)=>{
-        index+=direction;
-        identityTrack.scrollTo({left:index*columnWidth(),behavior:reduce.matches?'instant':'smooth'});
-        sync();
-        clearTimeout(resetTimer);
-        resetTimer=setTimeout(()=>{
-          if(index>=count*2){index-=count;jump(index)}
-          else if(index<count){index+=count;jump(index)}
-          sync();
-        },650);
+      const jump=(n)=>{
+        const snap=identityTrack.style.scrollSnapType;
+        identityTrack.style.scrollSnapType='none';
+        identityTrack.scrollTo({left:n*unitWidth(),behavior:'instant'});
+        identityTrack.style.scrollSnapType=snap;
       };
-      // Mobile retains the original two-row editorial presentation.
-      const mobile=()=>window.matchMedia('(max-width:760px)').matches;
-      const unit=()=>mobile()?2:1;
-      const move=(direction)=>{
-        index+=direction*unit();
-        identityTrack.scrollTo({left:Math.floor(index/unit())*columnWidth(),behavior:reduce.matches?'instant':'smooth'});
-        sync();clearTimeout(resetTimer);
-        resetTimer=setTimeout(()=>{
-          if(index>=count*copies+count+2){index-=count*copies;jump(Math.floor(index/unit()))}
-          else if(index<count*copies-2){index+=count*copies;jump(Math.floor(index/unit()))}
-        },700);
+      const normalize=()=>{
+        if(slide>=count*2){slide-=count;jump(slide)}
+        else if(slide<count){slide+=count;jump(slide)}
+        showPosition();
       };
-      // Click stays a click. Only a deliberate horizontal gesture starts dragging.
-      let dragState=null,swallowDragClick=false;
-      identityTrack.addEventListener('dragstart',e=>e.preventDefault());
-      identityTrack.addEventListener('mousedown',e=>{
-        if(e.button!==0||e.target.closest('button'))return;
-        // Re-center the repeated strip before dragging, so no visual end is ever reached.
-        const width=columnWidth();
-        const current=Math.round(identityTrack.scrollLeft/width);
-        const cycle=count*copies;
-        const canonicalBase=((current%cycle)+cycle)%cycle+cycle;
-        const canonical=canonicalBase>=cycle+count+3?canonicalBase-cycle:canonicalBase;
-        if(current!==canonical){index=canonical;jump(canonical)}
-        dragState={x:e.clientX,y:e.clientY,left:identityTrack.scrollLeft,active:false};
+      const move=(step)=>{
+        clearTimeout(settleTimer);
+        slide+=step;
+        identityTrack.scrollTo({left:slide*unitWidth(),behavior:reduced.matches?'instant':'smooth'});
+        showPosition();
+        settleTimer=setTimeout(normalize,650);
+      };
+      const play=()=>{
+        stop();
+        if(!reduced.matches&&!document.hidden)timer=setInterval(()=>move(1),2400);
+      };
+      const pause=()=>{
+        stop();clearTimeout(pauseTimer);
+        pauseTimer=setTimeout(play,1100);
+      };
+      const build=()=>{
+        mobile=mq.matches;
+        clearTimeout(settleTimer);clearTimeout(pauseTimer);stop();
+        identityTrack.replaceChildren();
+        const frag=document.createDocumentFragment();
+        for(let copy=0;copy<3;copy++){
+          for(let i=0;i<count;i++){
+            if(mobile){
+              const panel=document.createElement('div');
+              panel.className='identity-mobile-panel';
+              for(let k=0;k<4;k++){
+                panel.appendChild(sources[(i+k)%count].cloneNode(true));
+              }
+              frag.appendChild(panel);
+            }else{
+              frag.appendChild(sources[i].cloneNode(true));
+            }
+          }
+        }
+        identityTrack.appendChild(frag);
+        slide=count;
+        jump(slide);showPosition();play();
+      };
+      prev.addEventListener('click',()=>{pause();move(-1)});
+      next.addEventListener('click',()=>{pause();move(1)});
+      identityTrack.addEventListener('pointerenter',pause);
+      identityTrack.addEventListener('focusin',pause);
+      identityTrack.addEventListener('touchstart',()=>{stop();clearTimeout(pauseTimer)},{passive:true});
+      identityTrack.addEventListener('touchend',()=>{
+        clearTimeout(settleTimer);
+        settleTimer=setTimeout(()=>{
+          slide=Math.round(identityTrack.scrollLeft/unitWidth());
+          normalize();
+        },350);
+        clearTimeout(pauseTimer);pauseTimer=setTimeout(play,1300);
+      },{passive:true});
+      identityTrack.addEventListener('dragstart',event=>event.preventDefault());
+      identityTrack.addEventListener('mousedown',event=>{
+        if(event.button!==0)return;
+        drag={x:event.clientX,y:event.clientY,left:identityTrack.scrollLeft,active:false};
       });
-      window.addEventListener('mousemove',e=>{
-        if(!dragState)return;
-        const dx=e.clientX-dragState.x,dy=e.clientY-dragState.y;
-        if(!dragState.active){
+      window.addEventListener('mousemove',event=>{
+        if(!drag)return;
+        const dx=event.clientX-drag.x,dy=event.clientY-drag.y;
+        if(!drag.active){
           if(Math.abs(dx)<18||Math.abs(dx)<Math.abs(dy)*1.3)return;
-          dragState.active=true;
-          stop();clearTimeout(hoverPause);clearTimeout(resetTimer);
+          drag.active=true;stop();clearTimeout(pauseTimer);clearTimeout(settleTimer);
           identityTrack.classList.add('is-dragging');
           identityTrack.style.scrollSnapType='none';
           identityTrack.style.scrollBehavior='auto';
-          dragState.left=identityTrack.scrollLeft+dx;
         }
-        e.preventDefault();
-        identityTrack.scrollLeft=dragState.left-dx;
+        event.preventDefault();
+        identityTrack.scrollLeft=drag.left-dx;
       });
       window.addEventListener('mouseup',()=>{
-        if(!dragState)return;
-        const moved=dragState.active;
-        dragState=null;
+        if(!drag)return;
+        const moved=drag.active;drag=null;
         if(!moved)return;
         identityTrack.classList.remove('is-dragging');
         identityTrack.style.scrollSnapType='';
         identityTrack.style.scrollBehavior='';
-        swallowDragClick=true;
-        setTimeout(()=>{swallowDragClick=false},0);
-        const target=Math.round(identityTrack.scrollLeft/columnWidth());
-        index=target*unit();
-        identityTrack.scrollTo({left:target*columnWidth(),behavior:reduce.matches?'instant':'smooth'});
-        sync();
-        clearTimeout(resetTimer);
-        resetTimer=setTimeout(()=>{
-          if(index>=count*copies+count+2){index-=count*copies;jump(Math.floor(index/unit()))}
-          else if(index<count*copies-2){index+=count*copies;jump(Math.floor(index/unit()))}
-          sync();
-        },700);
-        clearTimeout(hoverPause);hoverPause=setTimeout(play,1100);
+        preventLink=true;
+        setTimeout(()=>{preventLink=false},80);
+        slide=Math.round(identityTrack.scrollLeft/unitWidth());
+        identityTrack.scrollTo({left:slide*unitWidth(),behavior:reduced.matches?'instant':'smooth'});
+        showPosition();
+        settleTimer=setTimeout(normalize,650);
+        pauseTimer=setTimeout(play,1100);
       });
-      identityTrack.addEventListener('click',e=>{
-        if(!swallowDragClick)return;
-        e.preventDefault();e.stopImmediatePropagation();swallowDragClick=false;
+      identityTrack.addEventListener('click',event=>{
+        if(preventLink){event.preventDefault();event.stopImmediatePropagation();preventLink=false}
       },true);
-      prev.addEventListener('click',()=>move(-1));next.addEventListener('click',()=>move(1));
-      const stop=()=>{if(autoplay){clearInterval(autoplay);autoplay=null}};
-      const play=()=>{stop();if(!reduce.matches&&!document.hidden)autoplay=setInterval(()=>move(1),2400)};
-      const briefPause=()=>{
-        stop();clearTimeout(hoverPause);
-        hoverPause=setTimeout(play,1100);
-      };
-      identityTrack.addEventListener('pointerenter',briefPause);
-      identityTrack.addEventListener('focusin',briefPause);
-      identityTrack.addEventListener('touchstart',()=>{stop();clearTimeout(hoverPause)},{passive:true});
-      identityTrack.addEventListener('touchend',()=>{clearTimeout(hoverPause);hoverPause=setTimeout(play,1300)},{passive:true});
-      document.addEventListener('visibilitychange',()=>{if(document.hidden){stop();clearTimeout(hoverPause)}else play()});
-      window.addEventListener('resize',()=>jump(Math.floor(index/unit())));
-      jump(Math.floor(index/unit()));sync();play();
+      document.addEventListener('visibilitychange',()=>document.hidden?stop():play());
+      mq.addEventListener('change',build);
+      window.addEventListener('resize',()=>{
+        if(mobile===mq.matches)jump(slide);
+      });
+      build();
     }
     const worksMore=document.getElementById('works-more');
     const extraWork=document.querySelector('.projects-grid>a[href="#project-folden"]');
