@@ -557,10 +557,25 @@
       .projects-grid>.project:nth-child(5){grid-column:2/span 5;margin-top:30px}
       .projects-grid>.project:nth-child(5) .project-figure{aspect-ratio:1.1}
     }
-    /* NUÉ STAY / sixth hospitality project and full-width website study. */
+    /* NUÉ STAY / three-column card aligned with FOLDEN on the third editorial row. */
     @media(min-width:761px){
-      .projects-grid>.project:nth-child(6){grid-column:2/span 5;margin-top:clamp(30px,4.5vw,75px)}
-      .projects-grid>.project:nth-child(6) .project-figure{aspect-ratio:.98}
+      .projects-grid>.project:nth-child(5){
+        grid-column:7/span 6;
+        grid-row:3;
+      }
+      .projects-grid>.project:nth-child(6){
+        grid-column:3/span 3;
+        grid-row:3;
+        margin-top:clamp(36px,5.2vw,84px);
+      }
+      .projects-grid>.project:nth-child(6) .project-figure{aspect-ratio:.78}
+      .projects-grid>.project:nth-child(6) .project-label{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+      }
+      .projects-grid>.project:nth-child(6) .project-label .name{font-size:clamp(20px,2.4vw,38px)}
+      .projects-grid>.project:nth-child(6) .project-label .category{text-align:left}
     }
     .projects-grid>.project:nth-child(6) .project-figure{background:#efe7d9}
     .projects-grid>.project:nth-child(6) .project-figure img{object-position:58% 46%}
@@ -615,7 +630,7 @@
         <a href="#project-dayshift" aria-label="View DAYSHIFT project"><img src="assets/dayshift-store.webp" alt="DAYSHIFT espresso bar" fetchpriority="high"></a>
         <a href="#project-yumday" aria-label="View YUMDAY project"><img src="assets/yumday-bottles.webp" alt="YUMDAY sauce bottle packaging" fetchpriority="high"></a>
         <a href="#project-folden" aria-label="View FOLDEN project"><img src="assets/folden-web.webp" alt="FOLDEN furniture brand identity book" loading="lazy"></a>
-        <a href="#project-nue-stay" aria-label="View NUÉ STAY project"><img src="assets/nue-stay-door.webp" alt="NUÉ STAY boutique hotel cobalt-blue guestroom door and branded room sign" loading="lazy"></a>
+        <a href="#project-nue-stay" aria-label="View NUÉ STAY project"><img src="assets/nue-stay-reception.webp" alt="NUÉ STAY boutique hotel reception counter and blue monogram wall signage" loading="lazy"></a>
       </div>
       <div class="identity-controls" aria-label="Portfolio carousel controls">
         <button class="identity-prev" type="button" aria-label="Previous projects" disabled>←</button>
