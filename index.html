@@ -464,7 +464,7 @@
     @media(max-width:760px){.project:nth-child(5){grid-column:1/span 6;margin-top:0}.project:nth-child(5) .project-figure{aspect-ratio:1.15}}
     .project[hidden]{display:none!important}
 
-    /* Five identities, four desktop tiles visible: swipe, scroll or use arrow controls. */
+    /* Six identities, four desktop tiles visible: swipe, scroll or use arrow controls. */
     .identity-slider{position:relative;background:var(--black)}
     .identity-slider .identity-strip{display:flex;height:clamp(240px,33vw,465px);overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;overscroll-behavior-x:contain}
     .identity-slider .identity-strip::-webkit-scrollbar{display:none}
@@ -557,6 +557,31 @@
       .projects-grid>.project:nth-child(5){grid-column:2/span 5;margin-top:30px}
       .projects-grid>.project:nth-child(5) .project-figure{aspect-ratio:1.1}
     }
+    /* PROJECT 005/006: one aligned row; NUÉ STAY leads at six columns.
+       Shared .project-label styles keep both projects' typography consistent. */
+    @media(min-width:761px){
+      .projects-grid>.project:nth-child(5){
+        grid-column:8/span 5;
+        grid-row:3;
+      }
+      .projects-grid>.project:nth-child(6){
+        grid-column:1/span 6;
+        grid-row:3;
+        margin-top:clamp(36px,5.2vw,84px);
+      }
+      /* Comparable image heights, despite different card widths. */
+      .projects-grid>.project:nth-child(5) .project-figure{aspect-ratio:.94}
+      .projects-grid>.project:nth-child(6) .project-figure{aspect-ratio:1.13}
+    }
+    .projects-grid>.project:nth-child(6) .project-figure{background:#efe7d9}
+    .projects-grid>.project:nth-child(6) .project-figure img{object-position:58% 46%}
+    #detail-view[data-project="nue-stay"] .detail-gallery figure:nth-child(3){grid-column:1/-1;margin-top:0}
+    #detail-view[data-project="nue-stay"] .detail-gallery figure:nth-child(3) img{width:100%;max-height:850px;object-fit:contain;background:#f6f2ea}
+    @media(max-width:760px){
+      .projects-grid>.project:nth-child(6){grid-column:1/span 6;margin-top:25px}
+      .projects-grid>.project:nth-child(6) .project-figure{aspect-ratio:1.1}
+      #detail-view[data-project="nue-stay"] .detail-gallery figure:nth-child(3){grid-column:auto}
+    }
     /* FOLDEN carousel: another 10% zoom, preserving the same 6.5% hover multiplier. */
     .identity-slider #identity-strip a[href="#project-folden"] img{transform:scale(1.21)}
     .identity-slider #identity-strip a[href="#project-folden"]:hover img,
@@ -601,6 +626,7 @@
         <a href="#project-dayshift" aria-label="View DAYSHIFT project"><img src="assets/dayshift-store.webp" alt="DAYSHIFT espresso bar" fetchpriority="high"></a>
         <a href="#project-yumday" aria-label="View YUMDAY project"><img src="assets/yumday-bottles.webp" alt="YUMDAY sauce bottle packaging" fetchpriority="high"></a>
         <a href="#project-folden" aria-label="View FOLDEN project"><img src="assets/folden-web.webp" alt="FOLDEN furniture brand identity book" loading="lazy"></a>
+        <a href="#project-nue-stay" aria-label="View NUÉ STAY project"><img src="assets/nue-stay-reception.webp" alt="NUÉ STAY boutique hotel reception counter and blue monogram wall signage" loading="lazy"></a>
       </div>
       <div class="identity-controls" aria-label="Portfolio carousel controls">
         <button class="identity-prev" type="button" aria-label="Previous projects" disabled>←</button>
@@ -618,16 +644,17 @@
       <div class="wrap">
         <div class="section-meta eyebrow" data-reveal><span>(02) — CURATED PORTFOLIO</span><span>© 2026 / STUDIO ORDI</span></div>
         <h2 class="section-heading display" id="work-heading" data-reveal>SELECTED<br>WORK<span class="acid">.</span></h2>
-        <div class="works-intro" data-reveal><span class="serif">Different by nature.</span><p>패션과 뷰티부터 커피, F&B, 가구까지. 단 하나의 공식이 아닌 브랜드마다 고유한 시각 언어를 만듭니다.<br><small>All works are self-initiated concept projects.</small></p></div>
+        <div class="works-intro" data-reveal><span class="serif">Different by nature.</span><p>패션과 뷰티부터 커피, F&B, 가구와 호스피탈리티까지. 단 하나의 공식이 아닌 브랜드마다 고유한 시각 언어를 만듭니다.<br><small>All works are self-initiated concept projects.</small></p></div>
         <div class="projects-grid">
           <a href="#project-noveil" class="project" data-reveal aria-label="NOVEIL 포트폴리오 보기"><span class="project-id serif">(01)</span><figure class="project-figure"><img src="assets/noveil-fashion.webp" alt="검정 의류 라벨에 적용된 NOVEIL 패션 로고" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">NOVEIL</span><span class="category">FASHION / IDENTITY</span></div></a>
           <a href="#project-ourie" class="project" data-reveal aria-label="OURIÉ 포트폴리오 보기"><span class="project-id serif">(02)</span><figure class="project-figure"><img src="assets/ourie-serum.webp" alt="로즈빛 세럼 보틀의 OURIÉ 뷰티 브랜딩" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">OURIÉ</span><span class="category">BEAUTY / IDENTITY</span></div></a>
           <a href="#project-dayshift" class="project" data-reveal aria-label="DAYSHIFT 포트폴리오 보기"><span class="project-id serif">(03)</span><figure class="project-figure"><img src="assets/dayshift-store.webp" alt="블루 사인이 적용된 DAYSHIFT 에스프레소 바 외관" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">DAYSHIFT</span><span class="category">ESPRESSO BAR / IDENTITY</span></div></a>
           <a href="#project-yumday" class="project" data-reveal aria-label="YUMDAY 포트폴리오 보기"><span class="project-id serif">(04)</span><figure class="project-figure"><img src="assets/yumday-bottles.webp" alt="세 가지 소스병에 적용된 YUMDAY 브랜딩" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">YUMDAY</span><span class="category">F&B / PACKAGING</span></div></a>
-          <a href="#project-folden" class="project" id="folden-extra" hidden aria-label="FOLDEN 포트폴리오 보기"><span class="project-id serif">(05)</span><figure class="project-figure"><img src="assets/folden-book.webp" alt="FOLDEN 브랜드 아이덴티티 북 목업" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">FOLDEN</span><span class="category">FURNITURE / IDENTITY</span></div></a>
+          <a href="#project-folden" class="project" id="folden-extra" data-extra-work hidden aria-label="FOLDEN 포트폴리오 보기"><span class="project-id serif">(05)</span><figure class="project-figure"><img src="assets/folden-book.webp" alt="FOLDEN 브랜드 아이덴티티 북 목업" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">FOLDEN</span><span class="category">FURNITURE / IDENTITY</span></div></a>
+          <a href="#project-nue-stay" class="project" id="nue-stay-extra" data-extra-work hidden aria-label="NUÉ STAY 포트폴리오 보기"><span class="project-id serif">(06)</span><figure class="project-figure"><img src="assets/nue-stay-reception.webp" alt="NUÉ STAY 로고가 적용된 파리지앵 부티크 호텔 리셉션" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">NUÉ STAY</span><span class="category">HOSPITALITY / IDENTITY</span></div></a>
         </div>
-        <button type="button" class="works-more" id="works-more" aria-expanded="false" aria-controls="folden-extra"><span>VIEW MORE WORK</span><span class="works-more-symbol">＋</span></button>
-        <div class="editorial-rail" data-reveal><span><span id="portfolio-count">05 SELECTED PROJECTS</span></span><span class="serif" style="font-size:25px;font-weight:400;letter-spacing:-.08em">Independent & intentional.</span><span>SCROLL TO EXPLORE ↓</span></div>
+        <button type="button" class="works-more" id="works-more" aria-expanded="false" aria-controls="folden-extra nue-stay-extra"><span>VIEW MORE WORK</span><span class="works-more-symbol">＋</span></button>
+        <div class="editorial-rail" data-reveal><span><span id="portfolio-count">06 SELECTED PROJECTS</span></span><span class="serif" style="font-size:25px;font-weight:400;letter-spacing:-.08em">Independent & intentional.</span><span>SCROLL TO EXPLORE ↓</span></div>
       </div>
     </section>
     <section class="manifesto" id="studio" aria-labelledby="studio-heading">
@@ -841,6 +868,7 @@
       ourie:{name:'OURIÉ',number:'2',type:'BEAUTY / BRAND IDENTITY',cover:'assets/ourie-serum.webp',summary:'OURIÉ는 은은한 핑크 컬러와 부드러운 리본 형태의 심볼을 조합해 조용하고 우아한 아름다움을 표현한 뷰티 브랜드 아이덴티티입니다.',gallery:[['assets/ourie-logo.webp','OURIÉ 심볼 및 워드마크'],['assets/ourie-campaign.webp','OURIÉ 세럼 캠페인 콘셉트']]},
       dayshift:{name:'DAYSHIFT',number:'3',type:'COFFEE / BRAND IDENTITY',cover:'assets/dayshift-store.webp',summary:'DAYSHIFT는 코발트블루와 일출을 연상시키는 심볼로 도시의 하루를 전환하는 에스프레소 바의 에너지를 구현한 공간 브랜드 콘셉트입니다.',gallery:[['assets/dayshift-interior.webp','DAYSHIFT 실내 공간 브랜딩'],['assets/dayshift-cups.webp','DAYSHIFT 커피컵 패키징'],['assets/dayshift-logo.webp','DAYSHIFT 코발트 블루 브랜드 로고']]},
       folden:{name:'FOLDEN',number:'5',type:'FURNITURE / BRAND IDENTITY',cover:'assets/folden-furniture.webp',summary:'FOLDEN은 모듈형 가구와 일상 오브제를 위한 컨템포러리 라이프스타일 브랜드 콘셉트입니다. 기하학적 심볼과 블랙 워드마크, 따뜻한 아이보리·오렌지 포인트로 건축적인 질서와 편안한 생활 감각을 표현했습니다.',gallery:[['assets/folden-book.webp','FOLDEN 브랜드 아이덴티티 북'],['assets/folden-room.webp','FOLDEN 브랜드 공간 목업'],['assets/folden-web.webp','FOLDEN 데스크톱과 모바일 웹 목업']]},
+      'nue-stay':{name:'NUÉ STAY',number:'6',type:'HOSPITALITY / BRAND IDENTITY',cover:'assets/nue-stay-reception.webp',summary:'NUÉ STAY는 도심 속 조용한 쉼을 제안하는 유럽 부티크 호텔 브랜드 콘셉트입니다. 조형적인 세리프 모노그램, 깊은 코발트블루, 따뜻한 아이보리와 섬세한 공간 디테일을 통해 A Private Pause in the City라는 브랜드 경험을 구현했습니다.',gallery:[['assets/nue-stay-door.webp','NUÉ STAY 코발트블루 객실문과 룸 사인'],['assets/nue-stay-suite.webp','햇살이 드는 NUÉ STAY 스위트룸 인테리어'],['assets/nue-stay-website.webp','NUÉ STAY 호텔 웹사이트 디자인'],['assets/nue-stay-stationery.webp','NUÉ STAY 키카드와 웰컴 스테이셔너리'],['assets/nue-stay-monogram.webp','아이보리 벽면에 적용된 NUÉ STAY 코발트블루 모노그램']]},
       yumday:{name:'YUMDAY',number:'4',type:'F&B / BRAND IDENTITY',cover:'assets/yumday-flatlay.webp',summary:'YUMDAY는 유쾌한 스마일 심볼과 대담한 커스텀 워드마크, 선명한 컬러를 사용하여 평범한 식사에 즐거움을 더하는 F&B 브랜드입니다.',gallery:[['assets/yumday-bottles.webp','YUMDAY 소스 라인업'],['assets/yumday-boxes.webp','YUMDAY 패키지 및 식품 브랜드 캠페인']]}
     };
     // Carousel: desktop shows four tiles; mobile shows original row-major 2x2 panels.
@@ -854,7 +882,7 @@
       const mq=window.matchMedia('(max-width:760px)');
       const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
       let mobile=false,slide=0,timer=null,pauseTimer=null,settleTimer=null,drag=null,preventLink=false;
-      const pageCount=()=>mobile?2:count;
+      const pageCount=()=>mobile?Math.ceil(count/4):count;
       const unitWidth=()=>mobile?identityTrack.clientWidth:identityTrack.clientWidth/4;
       const stop=()=>{clearInterval(timer);timer=null};
       const showPosition=()=>{
@@ -894,10 +922,10 @@
         const frag=document.createDocumentFragment();
         for(let copy=0;copy<5;copy++){
           if(mobile){
-            for(let page=0;page<2;page++){
+            for(let page=0;page<Math.ceil(count/4);page++){
               const panel=document.createElement('div');
               panel.className='identity-mobile-panel';
-              const items=page===0?sources.slice(0,4):sources.slice(4,5);
+              const items=sources.slice(page*4,(page+1)*4);
               items.forEach(item=>panel.appendChild(item.cloneNode(true)));
               // Empty cells stay black; no repeated brands on page two.
               for(let blank=items.length;blank<4;blank++){
@@ -977,11 +1005,11 @@
       build();
     }
     const worksMore=document.getElementById('works-more');
-    const extraWork=document.querySelector('.projects-grid>a[href="#project-folden"]');
-    if(worksMore&&extraWork){
+    const extraWorks=[...document.querySelectorAll('.projects-grid>.project[data-extra-work]')];
+    if(worksMore&&extraWorks.length){
       worksMore.addEventListener('click',()=>{
         const expanded=worksMore.getAttribute('aria-expanded')==='true';
-        extraWork.hidden=expanded;
+        extraWorks.forEach(card=>{card.hidden=expanded});
         worksMore.setAttribute('aria-expanded',String(!expanded));
         worksMore.querySelector('span:first-child').textContent=expanded?'VIEW MORE WORK':'SHOW LESS WORK';
       });
@@ -995,7 +1023,7 @@
     menuToggle.addEventListener('click',()=>{const open=menu.classList.toggle('open');document.getElementById('site-header').classList.toggle('menu-open',open);menuToggle.setAttribute('aria-expanded',String(open));menuToggle.setAttribute('aria-label',open?'메뉴 닫기':'메뉴 열기');menuToggle.textContent=open?'×':'☰'});
     document.querySelectorAll('.mobile-nav a').forEach(a=>a.addEventListener('click',closeMenu));
     document.addEventListener('keydown',event=>{if(event.key==='Escape')closeMenu()});
-    function renderProject(key){const p=projects[key];if(!p)return false;
+    function renderProject(key){const p=projects[key];if(!p)return false;detail.dataset.project=key;
       document.getElementById('detail-title').textContent=p.name;document.getElementById('detail-count').textContent=p.number;document.getElementById('detail-type').textContent=p.type;document.getElementById('detail-text').textContent=p.summary;
       const cover=document.getElementById('detail-cover');cover.src=p.cover;cover.alt=`${p.name} 브랜드 메인 목업`;
       const gallery=document.getElementById('detail-gallery');gallery.replaceChildren();p.gallery.forEach(([src,alt])=>{const figure=document.createElement('figure');const image=document.createElement('img');image.src=src;image.alt=alt;image.loading='lazy';figure.append(image);gallery.append(figure)});
