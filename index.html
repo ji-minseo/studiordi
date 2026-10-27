@@ -557,25 +557,21 @@
       .projects-grid>.project:nth-child(5){grid-column:2/span 5;margin-top:30px}
       .projects-grid>.project:nth-child(5) .project-figure{aspect-ratio:1.1}
     }
-    /* NUÉ STAY / five-column card aligned with FOLDEN on the third editorial row. */
+    /* PROJECT 005/006: one aligned row; NUÉ STAY leads at six columns.
+       Shared .project-label styles keep both projects' typography consistent. */
     @media(min-width:761px){
       .projects-grid>.project:nth-child(5){
-        grid-column:7/span 6;
+        grid-column:8/span 5;
         grid-row:3;
       }
       .projects-grid>.project:nth-child(6){
-        grid-column:1/span 5;
+        grid-column:1/span 6;
         grid-row:3;
         margin-top:clamp(36px,5.2vw,84px);
       }
-      .projects-grid>.project:nth-child(6) .project-figure{aspect-ratio:.94}
-      .projects-grid>.project:nth-child(6) .project-label{
-        flex-direction:column;
-        align-items:flex-start;
-        gap:8px;
-      }
-      .projects-grid>.project:nth-child(6) .project-label .name{font-size:clamp(20px,2.4vw,38px)}
-      .projects-grid>.project:nth-child(6) .project-label .category{text-align:left}
+      /* Comparable image heights, despite different card widths. */
+      .projects-grid>.project:nth-child(5) .project-figure{aspect-ratio:.94}
+      .projects-grid>.project:nth-child(6) .project-figure{aspect-ratio:1.13}
     }
     .projects-grid>.project:nth-child(6) .project-figure{background:#efe7d9}
     .projects-grid>.project:nth-child(6) .project-figure img{object-position:58% 46%}
