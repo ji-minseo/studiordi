@@ -586,6 +586,49 @@
     .identity-slider #identity-strip a[href="#project-folden"] img{transform:scale(1.21)}
     .identity-slider #identity-strip a[href="#project-folden"]:hover img,
     .identity-slider #identity-strip a[href="#project-folden"]:focus-visible img{transform:scale(1.28865)}
+    /* SELECTED WORK / editorial rebalance (2026-10-28)
+       A deliberate 7/4, 5/5, 6/5 rhythm across three rows.
+       Keep project titles on the existing shared typography scale. */
+    @media(min-width:761px){
+      .projects-grid{
+        column-gap:clamp(18px,3vw,50px);
+        row-gap:clamp(80px,8.4vw,136px);
+      }
+      .projects-grid>.project:nth-child(1){
+        grid-column:1/span 7;grid-row:1;margin-top:0;
+      }
+      .projects-grid>.project:nth-child(2){
+        grid-column:9/span 4;grid-row:1;
+        margin-top:clamp(52px,6.2vw,104px);
+      }
+      .projects-grid>.project:nth-child(3){
+        grid-column:2/span 5;grid-row:2;margin-top:0;
+      }
+      .projects-grid>.project:nth-child(4){
+        grid-column:8/span 5;grid-row:2;
+        margin-top:clamp(42px,5vw,82px);
+      }
+      .projects-grid>.project:nth-child(5){
+        grid-column:8/span 5;grid-row:3;
+        margin-top:clamp(38px,4.4vw,76px);
+      }
+      .projects-grid>.project:nth-child(6){
+        grid-column:1/span 6;grid-row:3;margin-top:0;
+      }
+      .projects-grid>.project:nth-child(1) .project-figure{aspect-ratio:1.22}
+      .projects-grid>.project:nth-child(2) .project-figure{aspect-ratio:.86}
+      .projects-grid>.project:nth-child(3) .project-figure{aspect-ratio:.98}
+      .projects-grid>.project:nth-child(4) .project-figure{aspect-ratio:1.12}
+      .projects-grid>.project:nth-child(5) .project-figure{aspect-ratio:1.04}
+      .projects-grid>.project:nth-child(6) .project-figure{aspect-ratio:1.13}
+      .projects-grid>.project:nth-child(5) .project-figure img{object-position:center center}
+      .projects-grid>.project:nth-child(6) .project-figure img{object-position:58% 46%}
+    }
+    @media(max-width:760px){
+      .projects-grid{row-gap:clamp(72px,12vw,96px)}
+      .projects-grid>.project:nth-child(5){grid-column:2/span 5;margin-top:0}
+      .projects-grid>.project:nth-child(6){grid-column:1/span 6;margin-top:0}
+    }
   </style>
   <meta name="naver-site-verification" content="6cad94c060e1f9b5e7594318b588535d8ee04744" />
   <!-- Google Analytics 4: STUDIO ORDI -->
@@ -650,10 +693,9 @@
           <a href="#project-ourie" class="project" data-reveal aria-label="OURIÉ 포트폴리오 보기"><span class="project-id serif">(02)</span><figure class="project-figure"><img src="assets/ourie-serum.webp" alt="로즈빛 세럼 보틀의 OURIÉ 뷰티 브랜딩" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">OURIÉ</span><span class="category">BEAUTY / IDENTITY</span></div></a>
           <a href="#project-dayshift" class="project" data-reveal aria-label="DAYSHIFT 포트폴리오 보기"><span class="project-id serif">(03)</span><figure class="project-figure"><img src="assets/dayshift-store.webp" alt="블루 사인이 적용된 DAYSHIFT 에스프레소 바 외관" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">DAYSHIFT</span><span class="category">ESPRESSO BAR / IDENTITY</span></div></a>
           <a href="#project-yumday" class="project" data-reveal aria-label="YUMDAY 포트폴리오 보기"><span class="project-id serif">(04)</span><figure class="project-figure"><img src="assets/yumday-bottles.webp" alt="세 가지 소스병에 적용된 YUMDAY 브랜딩" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">YUMDAY</span><span class="category">F&B / PACKAGING</span></div></a>
-          <a href="#project-folden" class="project" id="folden-extra" data-extra-work hidden aria-label="FOLDEN 포트폴리오 보기"><span class="project-id serif">(05)</span><figure class="project-figure"><img src="assets/folden-book.webp" alt="FOLDEN 브랜드 아이덴티티 북 목업" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">FOLDEN</span><span class="category">FURNITURE / IDENTITY</span></div></a>
-          <a href="#project-nue-stay" class="project" id="nue-stay-extra" data-extra-work hidden aria-label="NUÉ STAY 포트폴리오 보기"><span class="project-id serif">(06)</span><figure class="project-figure"><img src="assets/nue-stay-reception.webp" alt="NUÉ STAY 로고가 적용된 파리지앵 부티크 호텔 리셉션" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">NUÉ STAY</span><span class="category">HOSPITALITY / IDENTITY</span></div></a>
+          <a href="#project-folden" class="project" id="folden-extra" data-reveal aria-label="FOLDEN 포트폴리오 보기"><span class="project-id serif">(05)</span><figure class="project-figure"><img src="assets/folden-book.webp" alt="FOLDEN 브랜드 아이덴티티 북 목업" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">FOLDEN</span><span class="category">FURNITURE / IDENTITY</span></div></a>
+          <a href="#project-nue-stay" class="project" id="nue-stay-extra" data-reveal aria-label="NUÉ STAY 포트폴리오 보기"><span class="project-id serif">(06)</span><figure class="project-figure"><img src="assets/nue-stay-reception.webp" alt="NUÉ STAY 로고가 적용된 파리지앵 부티크 호텔 리셉션" loading="lazy"><span class="float-link" aria-hidden="true">↗</span></figure><div class="project-label"><span class="name">NUÉ STAY</span><span class="category">HOSPITALITY / IDENTITY</span></div></a>
         </div>
-        <button type="button" class="works-more" id="works-more" aria-expanded="false" aria-controls="folden-extra nue-stay-extra"><span>VIEW MORE WORK</span><span class="works-more-symbol">＋</span></button>
         <div class="editorial-rail" data-reveal><span><span id="portfolio-count">06 SELECTED PROJECTS</span></span><span class="serif" style="font-size:25px;font-weight:400;letter-spacing:-.08em">Independent & intentional.</span><span>SCROLL TO EXPLORE ↓</span></div>
       </div>
     </section>
@@ -1003,16 +1045,6 @@
         if(mobile===mq.matches)jump(slide);
       });
       build();
-    }
-    const worksMore=document.getElementById('works-more');
-    const extraWorks=[...document.querySelectorAll('.projects-grid>.project[data-extra-work]')];
-    if(worksMore&&extraWorks.length){
-      worksMore.addEventListener('click',()=>{
-        const expanded=worksMore.getAttribute('aria-expanded')==='true';
-        extraWorks.forEach(card=>{card.hidden=expanded});
-        worksMore.setAttribute('aria-expanded',String(!expanded));
-        worksMore.querySelector('span:first-child').textContent=expanded?'VIEW MORE WORK':'SHOW LESS WORK';
-      });
     }
     const home=document.getElementById('home-view');
     const detail=document.getElementById('detail-view');
